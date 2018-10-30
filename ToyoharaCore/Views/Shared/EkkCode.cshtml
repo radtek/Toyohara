@@ -1,0 +1,200 @@
+﻿@model ToyoharaCore.Models.CustomModel.EkkCodeModel
+@using Newtonsoft.Json
+@using ToyoharaCore.Models.CustomModel
+
+
+
+
+<div id="@Model.FlowWindowName" class="modal fade ekkCodesWindow" tabindex="-1" role="dialog" style="overflow-y:scroll;">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='ClearEkkCode("@Model.FlowWindowName", @Convert.ToString(Model.HiddenFlag).ToLower(), "@Model.FullSearchName");'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Код ЕКК</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="">
+                        <tr>
+                            <td style="">
+                                <label>Поиск</label>
+                                <input type='text' class='ekkCodeSearch'>
+                                <div class="ekk_code"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick='SaveEkkCode("@Model.FlowWindowName", "@Model.EkkCodeTextId", @Convert.ToString(Model.HiddenFlag).ToLower(), "@Model.FullSearchName");'>
+                        <span class="dx-icon-floppy icon"></span>@*</i>*@
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@Model.Tree*@
+<link href="/lib/dist/themes/default/style.min.css" rel="stylesheet" />
+<script src="/lib/dist/jstree.min.js"></script>
+
+<script>
+
+    @*try {
+        var json_mass = JSON.parse(JSON.stringify(@Html.Raw(Json.Serialize(Model.Tree))));
+    }
+    catch (exc) { alert(exc);}*@
+    @*var str_ekk2 = JSON.parse(JSON.stringify('@Html.Raw(Model.Tree)'));*@
+    @*var str_ekk = JSON.parse((JSON.stringify(@(Html.Raw(Model.Tree))).replace(/(&quot\;)/g, "\"")));*@
+   // alert(str_ekk);
+   // alert(str_ekk);
+   // console.log(str_ekk+"  fasfadsf");
+    $('#'+'@Model.FlowWindowName'+' .ekk_code').jstree({
+        'core': {
+            'data': JSON.parse(JSON.stringify(@Html.Raw(Json.Serialize(Model.Tree))))
+        },
+        'plugins': ["wholerow", "checkbox", "search"]
+    });
+
+    $(function () {
+        var to = false;
+        $('#'+'@Model.FlowWindowName'+' .ekkCodeSearch').keyup(function () {
+            if (to) { clearTimeout(to); }
+            to = setTimeout(function () {
+                var v = $('#'+'@Model.FlowWindowName'+' .ekkCodeSearch').val();
+                $('#'+'@Model.FlowWindowName'+' .ekk_code').jstree(true).search(v);
+            }, 250);
+        });
+    });
+
+    $('#' + '@Model.FlowWindowName' + ' .ekk_code').on("changed.jstree", function (e, data) {
+        if (!clear) {
+
+            selected_node = data.selected.slice();
+            if (selected_node.length != 0)
+                selected_text = data.instance.get_node(data.selected[0]).text;
+            else
+                selected_text = '';
+        }
+    });
+
+    function SaveEkkCode(flowWindowName, ekkCodeTextId, hiddenFlag, FullSearchName) {
+        if (selected_node.length != 0) {
+            ekk_codes = ekk_codes.filter(function (elem) {
+                return (elem.name != flowWindowName);
+            });
+            var selects = selected_node;
+            ekk_codes.push({
+                selected_node: selects, selected_text: selected_text, name: flowWindowName, search: $('#' + flowWindowName + ' .ekkCodeSearch').val()
+            });
+        }
+        else { 
+            ekk_codes = ekk_codes.filter(function (elem) {
+                return (elem.name != flowWindowName);
+            });
+        }
+        $('#' + flowWindowName).modal('hide');
+        selected_node = [];
+        var s = ReturnEkkNodes(flowWindowName);
+        //alert(s.selected_text + '... ' + ' Всего:' + s.selected_node.length.toString());
+        //$('#FullSearch #ekk_text').html('gasgdasgas');
+        //alert('#' + flowWindowName + ' #' + ekkCodeTextId);
+        if (s.selected_text != "" && s.selected_node.length != 0)
+            $('#' + FullSearchName + ' #' + ekkCodeTextId).html(s.selected_text + '... ' + ' Всего:' + s.selected_node.length.toString());
+        else
+            $('#' + FullSearchName + ' #' + ekkCodeTextId).html('');
+        //alert(ReturnEkkNodes(flowWindowName));
+        if (hiddenFlag)
+            $('#' + FullSearchName).modal('show');
+    }
+    var clear = false;
+    function ClearEkkCode(flowWindowName, hiddenFlag, FullSearchName) {
+        clear = true;
+        $('#' + flowWindowName+' .ekk_code').jstree("deselect_all");
+        //ekk_codes=ekk_codes.filter(function (elem) {
+        //    return (elem.name != flowWindowName);
+
+
+        //});
+
+        $('#' + flowWindowName + ' .ekk_code').jstree(true).search("");
+
+        var elem = ekk_codes.filter(function (element) {
+            return (element.name == flowWindowName);
+        });
+        if (elem[0] != "undefined" && elem[0] != null)
+        {
+            $.each(elem[0].selected_node, function () {
+
+                $.each(this, function () {
+                    $('#' + flowWindowName + ' .ekk_code').jstree(true).select_node(this.toString());
+                });
+            });
+        
+            $('#' + flowWindowName + ' .ekkCodeSearch').val(elem[0].search);
+            var to = false;
+
+            if (to) { clearTimeout(to); }
+            to = setTimeout(function () {
+                var v = $('#' + flowWindowName + ' .ekkCodeSearch').val();
+                $('#' + flowWindowName + ' .ekk_code').jstree(true).search(v);
+            }, 250);
+        }
+        selected_node = [];
+
+        clear = false;
+
+        $('#' + flowWindowName).modal('hide');
+        if (hiddenFlag)
+            $('#' + FullSearchName).modal('show');
+    }
+
+    function OpenEkkCode(flowWindowName, hiddenFlag, FullSearchName) {
+        clear = true;
+        $('#' + flowWindowName + ' .ekk_code').jstree("deselect_all");
+        clear = false;
+        var elem = ekk_codes.filter(function (element) {
+            return (element.name == flowWindowName);
+        });
+        if (elem[0] != "undefined" && elem[0] != null) {
+            $.each(elem[0].selected_node, function (value) {
+                $('#' + flowWindowName + ' .ekk_code').jstree(true).select_node(this.toString());
+            });
+            $('#' + flowWindowName + ' .ekkCodeSearch').val(elem[0].search);
+            var to = false;
+
+            if (to) { clearTimeout(to); }
+            to = setTimeout(function () {
+                var v = $('#' + flowWindowName + ' .ekkCodeSearch').val();
+                $('#' + flowWindowName + ' .ekk_code').jstree(true).search(v);
+            }, 250);
+        }
+        $('#' + flowWindowName).modal('show');
+        if (hiddenFlag)
+            $('#' + FullSearchName).modal('hide');
+
+    }
+
+    function ReturnEkkNodes(flowWindowName) {
+        var elem = ekk_codes.filter(function (element) {
+            return (element.name == flowWindowName);
+        });
+        if (elem[0] != "undefined" && elem[0] != null)
+            return elem[0];
+        else
+            return { selected_node: "", selected_text: ""};
+    }
+</script>
+<style>
+    .ekkCodesWindow ul {
+    width:100%;
+
+    }
+
+    .ekkCodesWindow ul li a{
+        word-wrap: break-word;
+        white-space: normal;
+       width:100%;
+    }
+</style>

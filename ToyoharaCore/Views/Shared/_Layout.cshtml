@@ -1,0 +1,392 @@
+﻿<!DOCTYPE html>
+@{
+    @using Newtonsoft.Json;
+    @using Microsoft.AspNetCore.Http;
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor;
+    ToyoharaCore.SYS_AUTHORIZE_USERResult au = JsonConvert.DeserializeObject<ToyoharaCore.SYS_AUTHORIZE_USERResult>(HttpContextAccessor.HttpContext.Session.GetString("SYS_AUTHORIZE_USER2_R"));
+    IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult> sduc = JsonConvert.DeserializeObject<IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>>(HttpContextAccessor.HttpContext.Session.GetString("SYS_SELECT_DELEGATING_USERS_R"));
+    bool admin = JsonConvert.DeserializeObject<bool>(HttpContextAccessor.HttpContext.Session.GetString("admin_role"));
+    List<ToyoharaCore.UI_SELECT_SITE_MENUResult> site_map = JsonConvert.DeserializeObject<List<ToyoharaCore.UI_SELECT_SITE_MENUResult>>(HttpContextAccessor.HttpContext.Session.GetString("site_map"));
+    APL_SELECT_PROJECT_STATES_FOR_DDResult delegated_user = JsonConvert.DeserializeObject<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>(HttpContextAccessor.HttpContext.Session.GetString("deleagting_user"));
+    string FAQ = JsonConvert.DeserializeObject<string>(HttpContextAccessor.HttpContext.Session.GetString("FAQ"));
+    string message_panel = JsonConvert.DeserializeObject<string>(HttpContextAccessor.HttpContext.Session.GetString("message_panel"));
+    UI_SELECT_LINKResult link_info = JsonConvert.DeserializeObject<UI_SELECT_LINKResult>(HttpContextAccessor.HttpContext.Session.GetString("link_info"));
+    List<APL_SELECT_PROJECT_STATES_FOR_DDResult> SYS_SELECT_ROLES_FOR_DD = JsonConvert.DeserializeObject<List<APL_SELECT_PROJECT_STATES_FOR_DDResult>>(HttpContextAccessor.HttpContext.Session.GetString("SYS_SELECT_ROLES_FOR_DD"));
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+    string view = ViewContext.RouteData.Values["Action"].ToString();
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    @*<meta http-equiv="Cache-Control" content="no-cache" />*@
+
+
+    @*<meta http-equiv="cache-control" content="max-age=0" />
+        <meta http-equiv="cache-control" content="no-cache" />
+        <meta http-equiv="expires" content="0" />
+        <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />*@
+    <meta http-equiv="pragma" content="no-cache" />
+
+
+
+    <title>Портал ДМТОС</title>
+    <link href="~/favicon(1).ico?1" rel="shortcut icon" type="image/x-icon" />
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/devextreme/dx.common.css" rel="stylesheet" />
+    <link href="~/css/devextreme/dx.light.css" rel="stylesheet" />
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+    <script src="~/js/devextreme/cldr.js"></script>
+    <script src="~/js/devextreme/cldr/event.js"></script>
+    <script src="~/js/devextreme/cldr/supplemental.js"></script>
+    <script src="~/js/devextreme/cldr/unresolved.js"></script>
+
+    <script src="~/js/devextreme/globalize.js"></script>
+    <script src="~/js/devextreme/globalize/message.js"></script>
+    <script src="~/js/devextreme/globalize/number.js"></script>
+    <script src="~/js/devextreme/globalize/currency.js"></script>
+    <script src="~/js/devextreme/globalize/date.js"></script>
+
+
+    <script src="~/js/devextreme/dx.all.js"></script>
+    <script src="~/js/devextreme/vectormap-data/world.js"></script>
+    <script src="~/lib/devextreme-aspnet-data/js/dx.aspnet.data.js"></script>
+    <script src="~/js/devextreme/aspnet/dx.aspnet.mvc.js"></script>
+
+    <script src="https://unpkg.com/devextreme-intl/dist/devextreme-intl.min.js"></script>
+
+    <script src="~/js/devextreme/localization/dx.messages.ru.js"></script>
+    <script src="~/lib/fm.selectator.jquery.js"></script>
+
+    <link href="~/css/fm.selectator.jquery.min.css" rel="stylesheet" />
+
+    @*для редактора справки*@
+    <link href="~/css/summernote.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.1/summernote.css">
+    <script src="~/js/summernote.js"></script>
+    <script src="~/js/lang/summernote-ru-RU.js"></script>
+    <link href="~/css/ToyoharaMaster.css" rel="stylesheet" />
+    <script src="~/js/ToyoharaMaster.js"></script>
+    <script src="~/js/GridCard.js"></script>
+    <script src="~/js/TreeCard.js"></script>
+    @*<script type="text/javascript">
+            var control = '@ViewContext.RouteData.Values["Controller"].ToString()';
+            var view = '@ViewContext.RouteData.Values["Action"].ToString()';
+        </script>*@
+</head>
+
+<body style="padding-top:0;">
+    <div class="myheader" style="margin:0; padding:0;">
+        <div class='container-fluid alert_panel bubbles gradient @(message_panel!="" & message_panel!=null ? "gradient":"")' style="text-align:center;"><span>@Html.Raw(message_panel)</span></div>
+
+        <nav id="nav1" class="navbar navbar-light" style="background-color: #e3f2fd;">
+
+            <div class="navbar-form navbar-left pull-left">
+                <button type="button" id="nav-toggle-button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-main" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/Home/Index" style="display:inline-block;">
+                    <img src="~/img/app_h_logo.png" alt="Логотип" class="img-responsive pull-left" style="position:relative; top:-4px;">
+                </a>
+                <div style="display:inline-block; position:relative; top:6px; left:-5px;" class="hidden-sm hidden-md hidden-xs">
+                    <div style="display:table-cell; text-align:center;"><b style="font-size:14px; color:black;">СТРОЙГАЗМОНТАЖ</b>
+                    <br />
+                    <span style="font-size:14px; color:black; white-space:nowrap; font-family: inherit; ">Портал ДМТОС</span>
+                    </div>
+                    </div>
+            </div>
+            <div  class="navbar-form">
+                @*//navbar-left pull-left menu collapse
+                    //<div id="navbar" class="navbar-collapse collapse">*@
+                <div>
+                    <ul class="nav navbar-nav navbar-left pull-left navbar-collapse collapse" id="navbar-main" style="min-width:522px;">
+                        @foreach (ToyoharaCore.UI_SELECT_SITE_MENUResult map in site_map.Where(x => x.parent_id == 0))
+                        {
+                            <li class="dropdown" style="margin: -5px;">
+                                <a href="#" data-toggle="dropdown" class="dropdown-toggle">                                    
+                                    <img src="@map.img"  style=" height:20px; width:auto;"/>      
+                                    <b style="font-size:12px; left:-10px;" class="hidden-md hidden-xs hidden-sm">@map.description </b>&nbsp;<b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    @foreach (ToyoharaCore.UI_SELECT_SITE_MENUResult a in site_map.Where(x => x.parent_id == map.id))
+                                    {
+                                        <li><a href="@a.url">@a.description</a></li>
+                                    }
+                                </ul>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="navbar-form navbar-right pull-right">
+                <div class="navbar-form" id="right_nav">
+                    <div class="btn-group" id="user_btn">
+                        <button type="button" id="delegate_btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class='btn btn-primary dropdown-toggle @((delegated_user.id!=au.id)?"orange_user":"")' style='border-radius: 22px; @((delegated_user.id!=au.id)?"background-color:#F79640;":"")'><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<b style="font-size:14px;" class="hidden-xs">@delegated_user.description</b>&nbsp;<span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right pull-right scrollable" id="delegate_user">
+                            @foreach (var a in sduc.Where(x => x.id != delegated_user.id))
+                            {
+                                <li style="font-size:14px;">@Html.ActionLink(a.description, "Index", "Home", new { id = a.id }) </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div id="leftmenu">
+
+                    <a href="#ModalFAQ" data-toggle="modal" data-target="#ModalFAQ" id="FAQ_link" class="span-shadow">
+                        <img src="~/img/9.png" alt="Справка" title="Справка" class="pull-left" width="44" height="44" onmouseover="hover(this, 'question');" onmouseout="unhover(this, 'question');">
+                    </a>
+                    <div id="Call_link" class="span-shadow hidden-xs">
+                        <img src="~/img/21.png" alt="вызов 3458" title="вызов 3458" class="pull-right" width="44" height="44" onmouseover="hover(this,'phone');" onmouseout="unhover(this, 'phone');">
+                        <div class="dropdown-menu" id="phone_text">
+                            <span>
+                                По вопросам поддержки системы обратитесь<br />
+                                по номеру телефона 3458 (Старостина Оксана)<br />
+                                или <a href="http://portal.ooosgm.ru/Dit/Lists/List/NewForm4.aspx?RootFolder=">создайте заявку в службу ИТ</a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <nav id="nav2" style="background: #e1f7fb;   height: 30px; ">
+            <div class="container-fluid" style="color:#337ab7; font-family: inherit;  font-size: 14px; font-weight: 600; line-height:30px;">>>> @Html.Raw(link_info.description).ToString().ToUpper()</div>
+        </nav>
+
+
+        <div class="container-fluid my_content">
+            <div id="ModalFAQ" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" style="width: 80%; height:90%; margin-left: 10%; margin-top: 5%;" role="document">
+
+                    <div class="modal-content">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a data-toggle="tab" href="#panel1">Справка</a></li>
+                                    @if (admin)
+                                    {
+                                        <li><a data-toggle="tab" href="#panel2">Редактирование</a></li>
+                                        <li><a data-toggle="tab" href="#panel3">Элементы отображения данных</a></li>
+                                        <li><a data-toggle="tab" href="#panel4">Элементы управления данными</a></li>
+                                    }
+                                </ul>
+                                <div class="tab-content">
+                                    <div id="panel1" class="tab-pane fade in active">
+                                        <div id="span_FAQ" style="word-wrap: break-word;">@Html.Raw(FAQ)</div>
+                                    </div>
+                                    @if (admin)
+                                    {
+                                        <div id="panel2" class="tab-pane fade">
+                                            @(Html.DevExtreme().DataGrid<UI_SELECT_LINK_PAGE_NOTES2Result>()
+                                                                                                                                                                                                            .ID("FAQ_Grid")
+                                                                                                                                                                                                            .ShowBorders(true)
+                                                                                                                                                                                                            .ShowRowLines(true)
+                                                                                                                                                                                                            .CacheEnabled(false)
+                                                                                                                                                                                                            .DataSource(d => d.Mvc()
+                                                                                                                                                                                                            .LoadAction("GetFAQ")
+                                                                                                                                                                                                            .Controller("Common")
+                                                                                                                                                                                                            .Key("id")                                                                                                                                                                                                            
+                                                                                                                                                                                                            .LoadParams(new
+                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                        //control = control,
+                                                                                                                                                                                                                                        //view = view,
+                                                                                                                                                                                                                                        user_id = delegated_user.id
+                                                                                                                                                                                                            })
+                                                                                                                                                                                                            )
+                                                                                                                                                                                                    .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(false))
+                                                                                                                                                                .Columns(columns =>
+                                                                                                                                                                {   columns.AddFor(m => m.order_number).HeaderCellTemplate("Порядок").AllowEditing(false);
+                                                                                                                                                                    columns.AddFor(m => m.header).HeaderCellTemplate("Заголовок").AllowEditing(false);
+                                                                                                                                                                    columns.AddFor(m => m.list_roles_description).HeaderCellTemplate("Перечень ролей").AllowEditing(false);
+                                                                                                                                                                    columns.AddFor(m => m.list_roles_id).CssClass("layout_list_roles_id").Visible(false).AllowEditing(false);
+                                                                                                                                                                    columns.AddFor(m => m.html_text).CssClass("layout_html_text").Visible(false).AllowEditing(false);
+                                                                                                                                                                    columns.AddFor(m => m.id).Visible(false).AllowEditing(false);
+                                                                                                                                                                })
+                                                                                                                                                                .Paging(p => p.PageSize(30))
+                                                                                                                                                                .Pager(pager =>
+                                                                                                                                                                {
+                                                                                                                                                                    pager.ShowPageSizeSelector(true);
+                                                                                                                                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                                                                    pager.ShowInfo(true);
+                                                                                                                                                                    pager.ShowNavigationButtons(true);
+                                                                                                                                                                })
+                                                                                                                                                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                                                                .HeaderFilter(f => f.Visible(false))
+                                                                                                                                                                .RemoteOperations(operation => operation.Filtering(true).Grouping(true).GroupPaging(true).Paging(true))
+                                                                                                                                                                .ColumnAutoWidth(true)
+                                                                                                                                                                .FilterSyncEnabled(true)
+                                                                                                                                                                .Width("100%")
+                                                                                                                                                                .Summary(s => s
+                                                                                                                                                                .TotalItems(totalItems =>
+                                                                                                                                                                {
+                                                                                                                                                                    totalItems.AddFor(m => m.id).SummaryType(SummaryType.Count);
+                                                                                                                                                                })
+                                                                                                                                                                .GroupItems(groupItems =>
+                                                                                                                                                                {
+                                                                                                                                                                    groupItems.Add().SummaryType(SummaryType.Count);
+                                                                                                                                                                })
+
+                                                                                                                                                                )
+                                                                                                                                                                .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                                                                .AllowColumnResizing(true)
+                                                                                                                                                                .AllowColumnReordering(true)
+                                                                                                                                                                .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                                                                .WordWrapEnabled(true)
+                                                                                                                                                                .OnToolbarPreparing("onToolbarPreparingFAQ")
+                                                                                                                                                                .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
+                                                                                                                                                                )
+                                        </div>
+                                        <div id="panel3" class="tab-pane fade">
+                                            @(Html.DevExtreme().DataGrid<UI_SELECT_LINK_DATAResult>()
+                                                                                                                                                        .ID("SlectLinkData_layout_Grid")
+                                                                                                                                                        .ShowBorders(true)
+                                                                                                                                                        .ShowRowLines(true)
+                                                                                                                                                        .CacheEnabled(false)
+                                                                                                                                                        .DataSource(d => d.Mvc()
+                                                                                                                                                        .LoadAction("SelectLinkData")
+                                                                                                                                                        .Controller("Common")
+                                                                                                                                                        .Key("id")
+                                                                                                                                                        )
+                                                                                                                                           .Columns(columns =>
+                                                                                                                                           {
+                                                                                                                                               columns.AddFor(m => m.id).Width("4%").HeaderCellTemplate("ID").AllowEditing(false);
+                                                                                                                                               columns.AddFor(m => m.data_type).Width("11%").HeaderCellTemplate("Тип элемента").AllowEditing(false);
+                                                                                                                                               columns.AddFor(m => m.data_description).Width("15%").CssClass("").HeaderCellTemplate("Название элемента").AllowEditing(false);
+                                                                                                                                               columns.AddFor(m => m.comment).Width("40%").HeaderCellTemplate("Описание").AllowEditing(false);
+                                                                                                                                               columns.AddFor(m => m.stored_procedure).Width("30%").HeaderCellTemplate("Хранимая процедура");
+
+                                                                                                                                           })
+                                                                                                                                           .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                                           .HeaderFilter(f => f.Visible(false))
+                                                                                                                                           .RemoteOperations(operation => operation.Filtering(true).Grouping(true).GroupPaging(true).Paging(true))
+                                                                                                                                           .ColumnAutoWidth(true)
+                                                                                                                                           .FilterSyncEnabled(true)
+                                                                                                                                           .Width("100%")
+                                                                                                                                           .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                                           .AllowColumnResizing(true)
+                                                                                                                                           .AllowColumnReordering(false)
+                                                                                                                                           .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                                           .WordWrapEnabled(true)
+                                            )
+
+                                        </div>
+                                        <div id="panel4" class="tab-pane fade">
+                                            @(Html.DevExtreme().DataGrid<UI_SELECT_LINK_ACTIONSResult>()
+                                                                                                                                    .ID("SlectLink_layout_Grid")
+                                                                                                                                    .ShowBorders(true)
+                                                                                                                                    .ShowRowLines(true)
+                                                                                                                                    .CacheEnabled(false)
+                                                                                                                                    .DataSource(d => d.Mvc()
+                                                                                                                                    .LoadAction("SelectLinkActions")
+                                                                                                                                    .Controller("Common")
+                                                                                                                                    .Key("id")
+                                                                                                                                    )
+                                                                                                                                .Columns(columns =>
+                                                                                                                                {
+                                                                                                                                    columns.AddFor(m => m.id).Width("4%").HeaderCellTemplate("ID").AllowEditing(false);
+                                                                                                                                    columns.AddFor(m => m.action_code).Width("13%").HeaderCellTemplate("Код элемента").AllowEditing(false);
+                                                                                                                                    columns.AddFor(m => m.action_description).Width("15%").CssClass("").HeaderCellTemplate("Название элемента").AllowEditing(false);
+                                                                                                                                    columns.AddFor(m => m.comment).Width("33%").HeaderCellTemplate("Описание").AllowEditing(false);
+                                                                                                                                    columns.AddFor(m => m.stored_procedure).Width("20%").HeaderCellTemplate("Хранимая процедура");
+                                                                                                                                    columns.AddFor(m => m.redirect).Width("15%").HeaderCellTemplate("Переход");
+
+                                                                                                                                })
+                                                                                                                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                                .HeaderFilter(f => f.Visible(false))
+                                                                                                                                .RemoteOperations(operation => operation.Filtering(true).Grouping(true).GroupPaging(true).Paging(true))
+                                                                                                                                .ColumnAutoWidth(true)
+                                                                                                                                .FilterSyncEnabled(true)
+.Width("100%")
+.Sorting(s => s.Mode(GridSortingMode.Multiple))
+.AllowColumnResizing(true)
+.AllowColumnReordering(false)
+.Option("columnResizingMode", ColumnResizingMode.Widget)
+.WordWrapEnabled(true)
+                                            )
+                                        </div>
+                                    }
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div id="content">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <div id="AddFAQModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" style="width: 60%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="FAQ_title"></h4>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                        <tbody id="FAQ_add_table">
+                            <tr>
+                                <td style="width:10%;"><label for="role_id_list_layout">Список ролей</label></td>
+                                <td style="width:90%;">
+                                    <select id="role_id_list_layout" name="role_id_list_layout" style="width:100%;" multiple>
+                                        <option value=""></option>
+                                        @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)SYS_SELECT_ROLES_FOR_DD, "id", "description"))
+                                        {
+                                            <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                        }
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width:10%;"><label for="FAQ_header">Заголовок</label></td>
+                                <td style="width:90%;"><textarea id="FAQ_header" class="FAQ_header" rows="10" ; style="width:100%;  resize:both;"></textarea></td>
+                            </tr>
+                            <tr>
+                                <td style="width:10%;"><label for="FAQ_order_number">Порядок</label></td>
+                                <td style="width:90%;"><input type="number" id="FAQ_order_number" style="width:100%;" onblur='javascript:checkFloat(this.value);'/></td>
+                            </tr>
+
+                            <tr>
+                                <td style="width:10%;"><label for="FAQ_html_text">Текст справки</label></td>
+                                <td style="width:90%;"><textarea id="FAQ_html_text" class="FAQ_html_text" rows="30" ; style="width:100%;  resize:both;"></textarea></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick='UpdateFAQAdd();'>
+                            <span class="dx-icon-floppy icon"></span>@*</i>*@
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+</body>
+</html>
+
+
+<script>
+    var controller = '@control';
+</script>

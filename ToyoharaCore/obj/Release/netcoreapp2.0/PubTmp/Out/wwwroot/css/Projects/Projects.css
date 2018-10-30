@@ -1,0 +1,3 @@
+﻿.dx-datagrid-rowsview .dx-selection.dx-row > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > td, .dx-datagrid-rowsview .dx-selection.dx-row > tr > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > tr > td {
+    background-color: #e6e6e6 !important;
+}

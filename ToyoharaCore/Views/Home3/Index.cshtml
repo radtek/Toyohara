@@ -1,0 +1,432 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+
+
+
+<h3><bold>Грид с прокруткой</bold></h3>
+@*@(Html.DevExtreme().Button()
+                .Text("Refresh Grid")
+                .OnClick("reloadData")
+    )*@
+
+@*@(Html.DevExtreme().Button().Text("Настройки").OnClick("ShowSettings"))*@
+<div style="width:0; height:0; display:none;">
+    <button class="btn btn-primary" onclick="Reloading(true);">Искать</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#UserSettings">Настройки</button>
+    <button class="btn btn-primary" onclick="ReloadShowSelected(true);">Показать выбранные</button>
+    <button class="btn btn-primary" onclick="ReloadShowSelected(false);">Показать все</button>
+    <button class="btn btn-primary" onclick="ExportExcel();">Excel</button>
+    <input type="checkbox" class="form-check-input" id="only_new" checked>
+    <label class="form-check-label" for="only_new">Только новые позиции</label>
+</div>
+<button onclick="ClearFilters();" class="btn btn-primary">Очистить фильтры</button>
+
+@*<a href='@Url.Action("ExcelReport","Home")'>Excel</a>*@
+<!-- Широкое модальное окно -->
+@{await Html.RenderPartialAsync("Settings", (Settings)ViewBag.Settings);}
+@*<div id="UserSettings" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="myModalLabel">Настройки</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-sm-4">Название столбца</div>
+                                <div class="col-sm-4">Показывать столбец</div>
+                                <div class="col-sm-4">Ширина столбца</div>
+                                <div class="col-sm-4">Положение</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-primary">Сохранить</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+
+@(Html.DevExtreme().DataGrid<PRC_SELECT_ORDER_ITEMS_GKIResult>()
+                            .ID("Grid")
+                            .ShowBorders(true)
+                            //.DataSource(reloadData)
+                            //.DataSource("gridDataSource")
+                            //.DataSource(d=>d.Mvc().LoadAction("Get").OnBeforeSend("reloadData"))
+                            .DataSource(d => d.Mvc()
+                            .LoadAction("Get")
+                            .Controller("Home3")
+                            .Key("id")
+
+                            .LoadParams(new
+                            {
+                                test = new JS("function() { return '1231'; }"),
+                                showSelected = new JS("function(){return showSelected;}"),
+                                selectedRecord = new JS("function(){return selectedRecord;}"),
+                                only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
+                                rebind = new JS("function(){return rebind;}"),
+                    //filters=new JS("function GetFilters() {var filter = $('#Grid').dxDataGrid('instance').loadOptions().filter ? JSON.stringify($('#Grid').dxDataGrid('getDataSource').loadOptions().filter) : '';return filter;}"),
+                    sorts = new JS("function GetSort() {var sort = $('#Grid').dxDataGrid('getDataSource').loadOptions().sort ? JSON.stringify($('#Grid').dxDataGrid('getDataSource').loadOptions().sort) : '';return sort;}"),
+                                filters = new JS("function GetFilters() {var dataGrid = $('#Grid').dxDataGrid('instance'); var filter = dataGrid.option('filterValue') ? JSON.stringify(dataGrid.option('filterValue')) : ''; return filter;}")
+
+                    // var dataGrid = $("#Grid").dxDataGrid("instance"); dataGrid.option("filterValue");
+
+
+
+                })
+                            .UpdateAction("Put").OnBeforeSend("onBeforeSend")
+
+                            )
+                  //.DataSource(d => d.Mvc().LoadAction("Get"))
+                  //.DataSourceOptions(o => o.Paginate(true).PageSize(50))
+
+                  .Editing(editing =>
+                  {
+                      editing.Mode(GridEditMode.Batch);
+                      editing.AllowUpdating(true);
+                  })
+                    //.ElementAttr(new {@/id="some"})
+                    .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(false))
+
+///.DataSource(d => d.Mvc().Controller("Home").LoadAction("Get").Key("id"))
+.Columns(columns =>
+{
+//columns.AddFor(m => m.id).Visible(false);
+//columns.AddFor(m => m.color).MinWidth(10).Width(10).Caption("45").AllowExporting(false).Visible(true);//.CssClass("row_color")
+
+columns.AddFor(m => m.code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]);
+columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]);//.FilterValue("Нимнырская");
+columns.AddFor(m => m.item_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_item_description_ru"])).Visible((bool)ViewData["CK_UI_item_description"]).Width((int)ViewData["CK_UI_item_description_width"]).EncodeHtml(false).VisibleIndex(2).VisibleIndex((int)ViewData["CK_UI_item_description_pos"]).AllowEditing((bool)ViewData["CK_UI_item_description_edit"]);//.CssClass("wrap_of_text");
+columns.AddFor(m => m.item_additional_properties).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_item_additional_properties_ru"])).Visible((bool)ViewData["CK_UI_item_additional_properties"]).Width((int)ViewData["CK_UI_item_additional_properties_width"]).VisibleIndex((int)ViewData["CK_UI_item_additional_properties_pos"]).EncodeHtml(false).AllowEditing((bool)ViewData["CK_UI_item_additional_properties_edit"]);
+columns.AddFor(m => m.order_code).Caption(Convert.ToString(ViewData["CK_UI_order_code_ru"])).Visible((bool)ViewData["CK_UI_order_code"]).Width((int)ViewData["CK_UI_order_code_width"]).VisibleIndex((int)ViewData["CK_UI_order_code_pos"]).AllowEditing((bool)ViewData["CK_UI_order_code_edit"]);
+
+columns.AddFor(m => m.order_number).Caption(Convert.ToString(ViewData["CK_UI_order_number_ru"])).Visible((bool)ViewData["CK_UI_order_number"]).Width((int)ViewData["CK_UI_order_number_width"]).VisibleIndex((int)ViewData["CK_UI_order_number_pos"]).AllowEditing((bool)ViewData["CK_UI_order_number_edit"]);
+columns.AddFor(m => m.supply_manager).Caption(Convert.ToString(ViewData["CK_UI_supply_manager_ru"])).Visible((bool)ViewData["CK_UI_supply_manager"]).Width((int)ViewData["CK_UI_supply_manager_width"]).VisibleIndex((int)ViewData["CK_UI_supply_manager_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_manager_edit"]);
+columns.AddFor(m => m.order_item_note).Caption(Convert.ToString(ViewData["CK_UI_order_item_note_ru"])).Visible((bool)ViewData["CK_UI_order_item_note"]).Width((int)ViewData["CK_UI_order_item_note_width"]).VisibleIndex((int)ViewData["CK_UI_order_item_note_pos"]).AllowEditing((bool)ViewData["CK_UI_order_item_note_edit"]);
+columns.AddFor(m => m.order_item_modification_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_order_item_modification_date_ru"])).Visible((bool)ViewData["CK_UI_order_item_modification_date"]).Width((int)ViewData["CK_UI_order_item_modification_date_width"]).VisibleIndex((int)ViewData["CK_UI_order_item_modification_date_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_code_date_edit"]);
+columns.AddFor(m => m.gki_code).Caption(Convert.ToString(ViewData["CK_UI_gki_code_ru"]))
+                            .Visible((bool)ViewData["CK_UI_gki_code"])
+                            .Width((int)ViewData["CK_UI_gki_code_width"])
+                            .VisibleIndex((int)ViewData["CK_UI_gki_code_pos"])
+                            .AllowEditing((bool)ViewData["CK_UI_gki_code_edit"]);//.CssClass((bool)ViewData["CK_UI_gki_code_edit"] ? "stripe-3" : "");//.HeaderCellTemplate((true ? "<span class='stripe-3 height_width_100' >" : "") + Convert.ToString(ViewData["CK_UI_gki_code_ru"]) + (true ? "</span>" : ""))
+columns.AddFor(m => m.gki_code_date).Caption(Convert.ToString(ViewData["CK_UI_gki_code_date_ru"])).Visible((bool)ViewData["CK_UI_gki_code_date"]).Width((int)ViewData["CK_UI_gki_code_date_width"]).VisibleIndex((int)ViewData["CK_UI_gki_code_date_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_code_date_edit"]);
+
+columns.AddFor(m => m.gki_order_number).Caption(Convert.ToString(ViewData["CK_UI_gki_order_number_ru"])).Visible((bool)ViewData["CK_UI_gki_order_number"]).Width((int)ViewData["CK_UI_gki_order_number_width"]).VisibleIndex((int)ViewData["CK_UI_gki_order_number_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_order_number_edit"]);
+columns.AddFor(m => m.gki_order_date).Caption(Convert.ToString(ViewData["CK_UI_gki_order_date_ru"])).Visible((bool)ViewData["CK_UI_gki_order_date"]).Width((int)ViewData["CK_UI_gki_order_date_width"]).VisibleIndex((int)ViewData["CK_UI_gki_order_date_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_order_date_edit"]);
+//columns.AddFor(m => m.gki_state).Caption(Convert.ToString(ViewData["CK_UI_gki_state_ru"])).Visible((bool)ViewData["CK_UI_gki_order_date"]).Width((int)ViewData["CK_UI_gki_order_date_width"]).VisibleIndex((int)ViewData["CK_UI_gki_state_pos"]);
+columns.AddFor(m => m.gki_state_id).Lookup(lookup => lookup
+        .DataSource(new JS(ViewBag.StateDropdown))//.Mvc().Controller("DataGridStatesLookup").LoadAction("Get").Key("ID"))
+        .DisplayExpr("description")
+        .ValueExpr("id")
+    )
+.Caption(Convert.ToString(ViewData["CK_UI_gki_state_ru"])).Visible((bool)ViewData["CK_UI_gki_order_date"]).Width((int)ViewData["CK_UI_gki_order_date_width"]).VisibleIndex((int)ViewData["CK_UI_gki_state_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_state_edit"]);
+columns.AddFor(m => m.gki_state_date).Caption(Convert.ToString(ViewData["CK_UI_gki_state_date_ru"])).Visible((bool)ViewData["CK_UI_gki_state_date"]).Width((int)ViewData["CK_UI_gki_state_date_width"]).VisibleIndex((int)ViewData["CK_UI_gki_state_date_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_state_date_edit"]);
+columns.AddFor(m => m.note).Caption(Convert.ToString(ViewData["CK_UI_note_ru"])).Visible((bool)ViewData["CK_UI_note"]).Width((int)ViewData["CK_UI_note_width"]).VisibleIndex((int)ViewData["CK_UI_note_pos"]).AllowEditing((bool)ViewData["CK_UI_note_edit"]);
+columns.AddFor(m => m.gki_user).Caption(Convert.ToString(ViewData["CK_UI_gki_user_ru"])).Visible((bool)ViewData["CK_UI_gki_user"]).Width((int)ViewData["CK_UI_gki_user_width"]).VisibleIndex((int)ViewData["CK_UI_gki_user_pos"]).AllowEditing((bool)ViewData["CK_UI_gki_user_edit"]);
+columns.AddFor(m => m.color).HeaderCellTemplate("цвет").Visible(true).Width(1).VisibleIndex(1000);
+//columns.AddFor(m => m.color).MinWidth(0).Width(0).Caption("").CssClass("row_color").AllowEditing(false).AllowExporting(false).AllowFiltering(false).AllowGrouping(false).AllowHeaderFiltering(false).AllowReordering(false).AllowResizing(false).Visible(false);
+// columns.AddFor(m => m.gki_state_id)
+})
+                .Paging(p => p.PageSize(30))
+                .Pager(pager =>
+                {
+                    pager.ShowPageSizeSelector(true);
+                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                    pager.ShowInfo(true);
+                    pager.ShowNavigationButtons(true);
+                })
+                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.OnClick))
+                .HeaderFilter(f => f.Visible(false))
+                .RemoteOperations(true)
+
+                //.RowAlternationEnabled(true)
+                .ColumnAutoWidth(true)
+                .FilterSyncEnabled(true)
+                .Height(new JS("function() { return window.outerHeight - 270; }"))
+                .Width("100%")//new JS("function() { return window.outerWidth - 60; }"))
+                .Scrolling(scrolling => scrolling.Mode(GridScrollingMode.Infinite))//.ColumnRenderingMode(GridColumnRenderingMode.Virtual))
+                .LoadPanel(loadPanel => loadPanel.Enabled(false))
+                .Summary(s => s
+                    .TotalItems(totalItems =>
+                    {
+                        totalItems.AddFor(m => m.id).SummaryType(SummaryType.Count);
+                    })
+                    .GroupItems(groupItems =>
+                    {
+                        groupItems.Add().SummaryType(SummaryType.Count);
+                    })
+
+                )
+                .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                .OnSelectionChanged("selection_changed")
+                .AllowColumnResizing(true)
+                .AllowColumnReordering(true)
+                .Option("columnResizingMode", ColumnResizingMode.Widget)
+                .WordWrapEnabled(true)
+                .OnRowPrepared("getOnRowPrepared")
+                .OnContentReady("contentReady")
+
+)
+
+<script>
+    var selectedRecord = '';
+            var showSelected = null;
+            //function selRe() { return 1;}
+            function contentReady() {
+                rebind = false;
+    }
+    function ClearFilters() {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        dataGrid.clearFilter();
+
+    }
+           // function GetFilters() {var filter = dataGrid.option('filterValue') ? JSON.stringify(dataGrid.option('filterValue')) : '';return filter;}
+
+            //  var dataGrid = $("#Grid").dxDataGrid("instance");
+            // return JSON.stringify(dataGrid.getCombinedFilter(true));
+
+
+
+            function onBeforeSend(method, ajaxOptions) {
+                if (method === "update") {
+                    rebind = true;
+                    ajaxOptions.data.showSelected = showSelected;
+                    ajaxOptions.data.only_new = document.getElementById('only_new').checked;
+                    //.context = { showSelected: showSelected, only_new: document.getElementById('only_new').checked };
+                    //            ajaxOptions.data.extraParam = { showSelected: showSelected, only_new: document.getElementById('only_new').checked };
+                    //ajaxOptions.data = { showSelected: showSelected, only_new: document.getElementById('only_new').checked };
+
+                    }
+                }
+                rebind = false;
+                function getOnRowPrepared(e) {
+                    if (e.rowType == 'data') {
+                        try {
+                            if (e.values[e.values.length - 1].toString() != '')
+                            {
+                                e.rowElement.css('background-color', '#' + e.values[e.values.length - 1].toString());
+                            }
+
+                            //    //  $(e.row).children('.stocks_color').css('background-color', '#' + $(e.row).find('.color_stocks').html());
+                        }
+                        catch (err) {  }
+                    }
+                }
+
+
+
+
+
+                function ExportExcel() {
+                    var dataGrid = $("#Grid").dxDataGrid("instance");
+        //alert(dataGrid.getCombinedFilter(true));
+
+        $.ajax({
+                        async: true,
+            cache: false,
+            url: '@Url.Action("ExcelReport", "Home3")',
+            type: 'POST',
+            data: {
+                            filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                sort: $("#Grid").dxDataGrid("getDataSource").loadOptions().sort ? JSON.stringify($("#Grid").dxDataGrid("getDataSource").loadOptions().sort):"",
+                showSelected: showSelected,
+                selectedRecord: selectedRecord,
+                only_new: document.getElementById('only_new').checked
+            },
+            success: function (data) {
+                                window.location = "Home3/ReturnFile?physicalPath=" + data;
+
+
+                            }
+                        });
+
+            }
+            function ShowSettings() {
+                //alert('A');
+
+            }
+            var records;
+            function selection_changed(selectedItems) {
+                var data = selectedItems.selectedRowsData;
+                records = [];
+        $.each(data,function (i,val) {
+                    records.push(val.id);
+
+                });
+                selectedRecord = records.toString();
+                //alert(records);
+
+                /*var data = selectedItems.selectedRowsData[0];
+                if (data) {
+                    alert(data.id);
+                    alert(data.code);
+                }*/
+            }
+
+            function ReloadShowSelected(showSelectedRecord) {
+                //alert(JSON.stringify($("#Grid").dxDataGrid("getDataSource"))//.loadOptions()));
+                // alert(selectedRecord)
+                if (selectedRecord == "" || selectedRecord == null || selectedRecord == "undefined")
+                { return alert("Не выбрано ни одной записи!");}
+                showSelected = showSelectedRecord;
+
+        $("#Grid").dxDataGrid("getDataSource").reload();
+            }
+
+            var gridDataSource = new DevExpress.data.DataSource({
+        load: function (loadOptions) {
+
+
+                    var d = $.Deferred();
+            //alert(loadOptions.filter);
+            $.getJSON('/Home3/Get', {
+                skip: loadOptions.skip,
+                take: loadOptions.take,
+                sort: loadOptions.sort ? JSON.stringify(loadOptions.sort) : "",
+                filter: loadOptions.filter ? JSON.stringify(loadOptions.filter) : "",
+                requireTotalCount: loadOptions.requireTotalCount,
+                totalSummary: loadOptions.totalSummary ? JSON.stringify(loadOptions.totalSummary) : "",
+                group: loadOptions.group ? JSON.stringify(loadOptions.group) : "",
+                groupSummary: loadOptions.groupSummary ? JSON.stringify(loadOptions.groupSummary) : "",
+                requireGroupCount: loadOptions.requireGroupCount,
+                some: 1
+            }).done(function (result) {
+                d.resolve(result.data, {
+                    totalCount: result.totalCount,
+                    summary: result.summary
+                    });
+            });
+            return d.promise();
+
+        }
+    });
+
+
+
+    function Reloading() { var dataGrid = $("#Grid").dxDataGrid("getDataSource"); dataGrid.reload(); }
+
+    function GetLink() {
+        var link = '/Home3/Index';
+        return link;
+    }
+    function reloadData() {
+
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        alert(JSON.stringify($("#Grid").dxDataGrid("getDataSource").loadOptions().sort));
+        //alert(JSON.stringify(ds.loadOptions));
+        // alert(JSON.stringify(dataGrid.option("columns")));
+        /*
+        alert(dataGrid.columnOption(0, "sortIndex"));
+        alert(dataGrid.columnOption(0, "sortOrder"));
+        alert(dataGrid.columnOption("code", "sortIndex"));*/
+
+
+        //dataGrid.clearFilter();
+        alert(dataGrid.option("filterValue"));
+        // alert(dataGrid.option("sort"));
+        // alert(dataGrid.option("sortValue"));
+        //  alert(dataGrid._options.filtervalue);
+        //dataGrid.clearFilter();
+        //dataGrid.option("headerFilter.visible", data.value);
+
+
+        //var ds = $("#Grid").dxDataGrid("getDataSource");
+        //ds.skip = 100;
+        //ds.some = 1;
+        //ds.reload();
+
+        //grid.rebind({ search_project_code: search_project_code, search_storage_code: search_storage_code, search_specification: $('#search_specification').val(), search_item_description: $('#search_item_description').val(), search_project_description: $('#project_s1_t').val(),
+        //        search_storage_description: $('#storage_t').val(), press: true
+        //    });
+        //$("#Grid").dxDataGrid("getDataSource").some = "1";
+        //alert($("#Grid").dxDataGrid("getDataSource").take);
+        //$("#Grid").dxDataGrid("getDataSource").take = 100;
+        //alert($("#Grid").dxDataGrid("getDataSource").take);
+        // $("#Grid").DataSource("getDataSource").some = "1";
+        //$("#Grid").dxDataGrid("getDataSource") = "1";
+        //$("#Grid").DataSource("getDataSource").take = 100;
+        //$("#Grid").dxDataGrid("getDataSource").take = 100;
+        //$("#Grid").dxDataGrid("getDataSource").reload({test:"1"});
+    }
+
+    //$(function () {
+    //    $("#Grid").dxDataGrid({
+    //        // ...
+    //        elementAttr: {
+    //            id: "elementId",
+    //            class: "class-name"
+    //        }
+    //    });
+    //});
+
+
+</script>
+
+@*@(Html.DevExtreme().DataGrid<Order>()
+        .ShowBorders(true)
+        .DataSource(d => d.Mvc().Controller("Orders").LoadAction("Get").Key("OrderID").)
+        .Columns(columns =>
+        {
+            columns.AddFor(m => m.OrderID);
+            columns.AddFor(m => m.OrderDate);
+            columns.AddFor(m => m.CustomerName);
+            columns.AddFor(m => m.ShipCountry);
+            columns.AddFor(m => m.ShipCity);
+        })
+        .Paging(p => p.PageSize(10))
+        .FilterRow(f => f.Visible(true))
+        .HeaderFilter(f => f.Visible(true))
+        .GroupPanel(p => p.Visible(true))
+        .Grouping(g => g.AutoExpandAll(false))
+        .RemoteOperations(true)
+
+        .Summary(s => s
+            .TotalItems(totalItems =>
+            {
+                totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
+            })
+            .GroupItems(groupItems =>
+            {
+                groupItems.Add().SummaryType(SummaryType.Count);
+            })
+        )
+
+    )*@
+
+<style type="text/css">
+    /*.stripe-3 {
+        color: #000;
+        background: repeating-linear-gradient( 45deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2) 10px, rgba(0, 0, 0, 0.3) 10px, rgba(0, 0, 0, 0.3) 20px );
+    }*/
+
+    .height_width_100 {
+        width: 100%;
+        height: 100%;
+    }
+
+    div.dx-datagrid-text-conten {
+        height: 90%;
+        width: 90%;
+    }
+    /*td[aria-colindex="11"][role="columnheader"] {
+        color: #000;
+        background: repeating-linear-gradient( 45deg, #f6ba52, #f6ba52 10px, #ffd180 10px, #ffd180 20px );
+    }*/
+    /*.wrap_of_text {
+    height:auto;
+    word-wrap:normal;
+    }*/
+    display_none {
+        display: none;
+    }
+</style>

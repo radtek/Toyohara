@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2035
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToyoharaCore", "ToyoharaCore\ToyoharaCore.csproj", "{CBCBD2AB-B40D-4163-876F-EAC390CA7FDB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBCBD2AB-B40D-4163-876F-EAC390CA7FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBCBD2AB-B40D-4163-876F-EAC390CA7FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBCBD2AB-B40D-4163-876F-EAC390CA7FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBCBD2AB-B40D-4163-876F-EAC390CA7FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D51DC933-8102-433A-BF8A-2AFD170C9BE6}
+	EndGlobalSection
+EndGlobal

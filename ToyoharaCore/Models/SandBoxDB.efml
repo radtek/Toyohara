@@ -1,0 +1,1985 @@
+<?xml version="1.0" encoding="utf-8"?>
+<efcore namespace="ToyoharaCore" p1:name="PortalDMTOSModel" p1:Guid="d118c305-27f6-487a-bb36-09595b0d801d" xmlns:p1="http://devart.com/schemas/EntityDeveloper/1.0">
+  <class name="$ComplexTypes">
+    <component class="SYS_AUTHORIZE_USER2Result" p1:Guid="cb291f20-7b08-404b-9fa7-1afffb914f79">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="56a48b59-42ed-4822-9b1c-e50af0f5b874">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="147f544c-f71d-48ee-8fe6-f4873d25b24e">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="short_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="792afc8d-1152-456e-93a0-c2b19a85fc93">
+        <column name="short_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="login" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="92fdad4f-cfea-470d-956b-f98b4f748d69">
+        <column name="login" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="C_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="06985889-b874-473b-afcf-742bd8cc54b0">
+        <column name="`1C_code`" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="division_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e6225f47-ea31-403e-9994-5b00cec088d4">
+        <column name="division_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="position" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="cec530c8-c351-4cdc-96cd-5cdd8919fb05">
+        <column name="position" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="mail" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9b99668f-364f-4691-be7a-1985cf23c502">
+        <column name="mail" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="phone" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8cc465fd-ed1c-4a07-a5b8-5577e7964f9b">
+        <column name="phone" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="short_description_reverse" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="effc5591-c06d-485c-8098-a879c1e3161a">
+        <column name="short_description_reverse" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_locked" type="Boolean" p1:ValidateRequired="true" p1:Guid="90c682bc-5730-405e-9add-ac2a1524cbb3">
+        <column name="is_locked" not-null="True" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="creation_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="50132b29-b1b1-4b76-9e80-895b86ab010a">
+        <column name="creation_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="modification_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="560a5b91-27c4-4180-87ed-8b3780f09d10">
+        <column name="modification_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="not_in_SGM" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6806c2ef-a203-4142-8daa-563eb092ba1c">
+        <column name="not_in_SGM" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="site_map" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="29f8845e-774c-4ab7-aa71-12d4008b18e7">
+        <column name="site_map" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="site_map_subcontractor" type="String" p1:ValidateRequired="true" p1:Guid="4721dde3-c8b1-48d8-a3bd-fa05cb12aa51">
+        <column name="site_map_subcontractor" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="delegating_user_id" type="Int32" p1:ValidateRequired="true" p1:Guid="e6cdc348-726e-4201-b2bf-f420df50dd45">
+        <column name="delegating_user_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="delegating_user_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="dd2c25fa-00e4-4665-bfbc-c79d6c3f10bb">
+        <column name="delegating_user_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_administrator" type="Int32" p1:ValidateRequired="true" p1:Guid="15d4db44-9684-4c17-8ecf-c29f81924d1f">
+        <column name="is_administrator" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="department_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="51d333f8-f188-44f3-8131-85a3299d38c3">
+        <column name="department_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="system_message" type="String" p1:ValidateRequired="true" p1:Guid="208182f9-69fc-49b0-9bc3-8436634d0edf">
+        <column name="system_message" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="APL_SELECT_PROJECT_STATES_FOR_DDResult" p1:Guid="60fe03fd-4f24-4a01-ae4a-0ee9d4a9f6d7">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="0151fc52-8c84-42d7-a4b2-7ad2edaa9419">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="50d13413-0c4d-4e75-bdb1-58cc13a1d8e3">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="SYS_SELECT_MESSAGESResult" p1:Guid="579aa50c-7859-486a-96fe-19b756ed8a58">
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="304165f6-18b6-46c6-a236-0e887bb5d82b">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="SYS_SELECT_DELEGATING_USERSResult" p1:Guid="cd2fd008-df18-4995-8ebb-9a8a42209305">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="c989ea3b-546f-4006-b846-a8c70adb53f0">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="35ff1394-39fa-45ee-810c-8b900881c202">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="short_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5d19523e-21f8-4fcb-a9fc-e553753fd8cc">
+        <column name="short_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="login" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="cbdcddd7-dcd8-45d7-853d-02440fe6bc38">
+        <column name="login" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="C_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="874a2b2b-73d9-42e7-8611-22d529dcce51">
+        <column name="`1C_code`" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="division_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8b4005da-d9d6-4669-ab0f-6a651255a7cd">
+        <column name="division_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="position" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3f20f9d0-390d-4cb9-8ad9-90779dcefe32">
+        <column name="position" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="mail" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="96b3e951-1328-47f0-9577-c37044a327a3">
+        <column name="mail" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="phone" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="bb471135-a82a-43c5-949e-dfa043689971">
+        <column name="phone" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="short_description_reverse" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="38d908ef-10e2-4810-8211-86629d9aa5ac">
+        <column name="short_description_reverse" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_locked" type="Boolean" p1:ValidateRequired="true" p1:Guid="d1204da9-95aa-43d6-998c-0a83ae54d156">
+        <column name="is_locked" not-null="True" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="creation_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="a14a2420-7774-4155-9c17-9f73e0bbd84e">
+        <column name="creation_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="modification_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="277da55b-838f-439c-81d4-b1a339e0e58d">
+        <column name="modification_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="not_in_SGM" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5e35726d-a323-4368-a1e7-a6665ce7533b">
+        <column name="not_in_SGM" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="type" type="Int32" p1:ValidateRequired="true" p1:Guid="142940d1-75a1-447e-ac8c-8678b9e65b51">
+        <column name="type" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="PRC_SELECT_ORDER_ITEMS_GKI_with_pagingResult" p1:Guid="d12bc313-8358-4ff9-9e07-ffacfea5df9e">
+      <property name="row_count" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="404ad19b-3992-4f11-8032-a0c844884e91">
+        <column name="row_count" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="rank" type="Int64" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f70f77cd-b6bb-44cf-9719-7d834c7f7131">
+        <column name="rank" not-null="False" sql-type="bigint" p1:unicode="False" />
+      </property>
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="8610b1da-43c4-470c-87ee-d48cde4fb2b1">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="715c572b-2228-4902-8088-701949c69478">
+        <column name="code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4b70e3ad-ae2b-4bda-aed1-4143ea718a45">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="item_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="285e3bbd-45b4-458e-b030-9c05ffd22515">
+        <column name="item_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="item_additional_properties" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d5b2a9ee-1eee-41ea-bc86-826dfbdcb7e1">
+        <column name="item_additional_properties" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_code" type="Int32" p1:ValidateRequired="true" p1:Guid="0a0ca4d5-1ba9-4542-90fd-d18139fe2624">
+        <column name="order_code" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="order_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="eed08313-8ef3-4445-a57e-acb98ffb8000">
+        <column name="order_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="supply_manager" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b8548e3a-839d-4077-8101-95f454b3e776">
+        <column name="supply_manager" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_item_note" type="String" p1:ValidateRequired="true" p1:Guid="157e0745-a5e5-4a89-a7e6-fa8e5e3320d9">
+        <column name="order_item_note" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_item_modification_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="027995cd-b2a9-4c27-bf0e-c8f26eeb5861">
+        <column name="order_item_modification_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7086aed5-9872-4180-908c-4a869048553b">
+        <column name="gki_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_code_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ffbd2e47-2ffe-4e17-8d9b-fff71f142e64">
+        <column name="gki_code_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_order_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6babd40d-b795-4fdb-8598-d39b026f9b7d">
+        <column name="gki_order_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_order_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ede6fefe-7703-4fad-be2e-08f4b4644079">
+        <column name="gki_order_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_state_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="edec4d1e-7523-4dbe-b155-0d14d38516c7">
+        <column name="gki_state_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="gki_state" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="aa9c374d-93cc-4e5b-8af8-0afbffa5eee7">
+        <column name="gki_state" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_state_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="594683da-a8ec-42a5-b37d-05eece24eaa7">
+        <column name="gki_state_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="note" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f6b021c5-dbd5-4009-829a-3023abe7bcde">
+        <column name="note" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_user" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b5f1265a-d234-4c44-a761-7d41b443e9f8">
+        <column name="gki_user" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="color" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1259669c-630b-477f-aeb2-5b248c338d05">
+        <column name="color" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="checked" type="String" p1:ValidateRequired="true" p1:Guid="4eef7b15-2110-4b13-88ef-2afe77332eb6">
+        <column name="checked" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_SELECT_GRID_AUTO_SETTINGSResult" p1:Guid="2fb20f00-1dad-454a-83ab-aa7f15949725">
+      <property name="field_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3f7d0128-4032-440d-bbfe-e51605c702bf">
+        <column name="field_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="visible" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="47e5964c-b64f-4912-93a7-23fcb9a5f7f3">
+        <column name="visible" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="editable" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="15306b3b-3bac-4b8d-972a-d35721173ea3">
+        <column name="editable" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="SYS_SELECT_DELEGATING_USERResult" p1:Guid="d8117b04-a3bc-4703-b258-f4b78cfc1ab9">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="dc4b7e9f-3ef2-4ec6-a30c-7dc99eb88331">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7dc07821-f962-4529-b63a-f98e1458f9fa">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="login" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e7d26313-1fc2-48f4-b7ea-d03db93076db">
+        <column name="login" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="SYS_SELECT_ROLES_BY_USERResult" p1:Guid="8f466285-685c-475e-82b5-f964011cdfed">
+      <property name="role_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="dfd42506-b64d-4247-8056-27c09c549ad8">
+        <column name="role_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="SYS_AUTHORIZE_USERResult" p1:Guid="6dca19ab-a489-4380-bf2a-3e0d66c252d4">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="aa3ee8f6-396f-4107-b284-b6b5de1931da">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4e6417f7-41f3-4031-8dcc-9923a39e1b65">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="not_in_SGM" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="178e66d5-8c1b-4106-a52f-b0544b4c5723">
+        <column name="not_in_SGM" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINK_ACTIONSResult" p1:Guid="f5181102-659d-4f05-845b-e62602ab8862">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="ca0cd713-9fbc-4588-a600-a3e63b2fcc3b">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="action_code" type="String" p1:ValidateRequired="true" p1:Guid="f07b3aa7-6523-4015-9d42-305a15bf7fab">
+        <column name="action_code" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="action_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="df23c3d1-0880-4db4-b0b0-0e2977ca0b8d">
+        <column name="action_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="comment" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="bb5f3b2a-e82f-4404-a1a4-2f726847ba34">
+        <column name="comment" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="stored_procedure" type="String" p1:ValidateRequired="true" p1:Guid="5c7170ab-62d9-4ba4-82f5-f0e2b0f6dcc0">
+        <column name="stored_procedure" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="redirect" type="String" p1:ValidateRequired="true" p1:Guid="6f98db50-6164-47aa-a3d9-19ff0f16a699">
+        <column name="redirect" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINK_DATAResult" p1:Guid="84ac6b14-ff6a-4584-9fa9-e0bee512d869">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="f7e8a36e-6158-4b46-987e-9bee95f76b58">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="data_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="2b306d4c-ed6a-4360-9712-59a8cc88a991">
+        <column name="data_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="data_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="75cdb10b-3e58-4e13-990e-9a4bda04087f">
+        <column name="data_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="comment" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e87fd469-adf6-4760-a85f-0064ae890f78">
+        <column name="comment" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="stored_procedure" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0abb7408-cea2-40f4-806a-c39f18bbfab0">
+        <column name="stored_procedure" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINK_PAGE_NOTE2Result" p1:Guid="c47c9313-f92a-46f2-ac82-586d47b6ee6c">
+      <property name="http_text" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6d118d81-0287-423d-9759-1d85b68e1008">
+        <column name="http_text" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_SITE_MENUResult" p1:Guid="6bc627a1-1077-430e-b1cd-850edd2a7d29">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="13bda6e1-e5f0-4cf0-8753-6a58120d32f8">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="parent_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="531cf554-ad62-4bb9-a4da-ad272e71bc9f">
+        <column name="parent_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="order_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="31cfe203-a2e0-4336-8902-e9850472ca63">
+        <column name="order_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="img" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f3c0f8ca-9348-4078-ac70-7f6712b4948b">
+        <column name="img" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f9f8542b-3a30-4536-b392-b71c327301c1">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="url" type="String" p1:ValidateRequired="true" p1:Guid="cbcbbafc-159d-4388-9815-425ca5801bb6">
+        <column name="url" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINK_PAGE_NOTES2Result" p1:Guid="5e073057-edff-4a74-89f5-1cbfbd241639">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="748c4c5a-0254-481a-82d8-501f162fb42c">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="order_number" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="60c8320b-f06e-4805-b1a5-7174f4a6c8e0">
+        <column name="order_number" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="header" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3cb04b41-9970-4c95-8053-194222a95e35">
+        <column name="header" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="html_text" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="168d561a-f0a7-45d6-ae9e-84cbd4623e18">
+        <column name="html_text" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="list_roles_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="479fb271-0bc7-4ee0-9a4f-e699a47518f8">
+        <column name="list_roles_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="list_roles_id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="913a36e3-8cfa-4765-b588-e25df29dc0e0">
+        <column name="list_roles_id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="SYS_START_EVENTResult" p1:Guid="76ea7fe3-0f90-4a8f-b486-0b39434670d6">
+      <property name="event_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="217792cc-2f48-40fb-8a2b-29b5e997cf84">
+        <column name="event_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_DELETE_LINK_FUNCTIONResult" p1:Guid="a9a9ee9c-d4c5-4157-94cf-249c159631f1">
+      <property name="error_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="93289347-4e75-4eb4-bc87-069e5aa41e4f">
+        <column name="error_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINK_FUNCTIONSResult" p1:Guid="24c41dad-2602-4c30-89e2-9db3917df85a">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="c08b9c4d-4bca-4752-a520-46c52b16ce99">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="section_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="86becffe-ec5a-4387-a8da-86da75ba0d1d">
+        <column name="section_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e41e61cc-bbf2-48ea-ade2-91bc9271308c">
+        <column name="code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="section_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="81a9052a-7024-415d-a84a-fa98882d03f9">
+        <column name="section_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="title" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5dfa9324-0e29-49ac-8136-cbec857f5d81">
+        <column name="title" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="stored_procedure" type="String" p1:ValidateRequired="true" p1:Guid="50636f02-8af9-41ce-a484-8f5409e4ae2f">
+        <column name="stored_procedure" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e58f2ed1-4acf-4a6e-aa4b-a88568cd5f66">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="modification_user" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="edf2789a-dbbc-4614-9211-3d0666dd4576">
+        <column name="modification_user" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="modification_date" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1d7c874e-d08f-48ab-bbea-dc9535215dc0">
+        <column name="modification_date" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPHResult" p1:Guid="7293f4ff-fe0f-4bdc-b9f6-723d34d3aec4">
+      <property name="id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="925d7bcd-f1f2-4c22-afc1-7d158b7ad6fb">
+        <column name="id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="parent" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="2bf99647-c30a-4c5f-b07c-9b5ed50103b1">
+        <column name="parent" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="text" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="459b1c7b-0a1c-468d-a9bf-1ca295c52a08">
+        <column name="text" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="PRC_SELECT_ORDER_ITEMS_GKIResult" p1:Guid="db52107b-ea98-499f-bf2a-025058494586">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="2c9ac662-7147-446f-aca6-d4c662eacf28">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="32d7959f-cd0c-4570-8571-f9f56604e918">
+        <column name="code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ee84a819-cc98-4211-8715-82cf886a8fd7">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="item_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="359faf59-1c20-4867-a8a1-0555480205ca">
+        <column name="item_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="item_additional_properties" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1b79b15e-e299-4f83-91d1-28f17cde3947">
+        <column name="item_additional_properties" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_code" type="Int32" p1:ValidateRequired="true" p1:Guid="d472c058-d025-4786-8a0c-9d388ebf77cf">
+        <column name="order_code" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="order_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="88bdd148-ef34-443a-a28d-32404d71d83d">
+        <column name="order_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="supply_manager" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="88a0329b-db44-43c5-84e6-fc178e59a1e0">
+        <column name="supply_manager" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_item_note" type="String" p1:ValidateRequired="true" p1:Guid="92dd4613-8b4c-40ea-a037-d3d81275153d">
+        <column name="order_item_note" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="order_item_modification_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="94028579-4b81-447a-b6d0-7d4883cd7436">
+        <column name="order_item_modification_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c56e72a8-23ac-42e2-805c-32493a695d29">
+        <column name="gki_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_code_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1ea098d9-c6f3-4349-835e-b383a35015a6">
+        <column name="gki_code_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_order_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3065fa66-68f1-43e0-bc2e-d16c2f46579c">
+        <column name="gki_order_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_order_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="52c0a76f-a899-4046-b621-5ba0f56a3a1d">
+        <column name="gki_order_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="gki_state_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7c882aa5-7e20-4c5f-b413-77723d834a51">
+        <column name="gki_state_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="gki_state" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="2a937ed1-7859-4d33-b3c4-88ddfcf4f12e">
+        <column name="gki_state" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_state_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="843cfb36-17ba-4835-806e-844ca46c13a5">
+        <column name="gki_state_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="note" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="77cd958d-f8ef-4679-bf1f-04574258c3d6">
+        <column name="note" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="gki_user" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="88b79496-0e5c-4030-9de4-90bb6616335e">
+        <column name="gki_user" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="color" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="04f3da92-412e-479c-9e8c-ec4dcdd8ac46">
+        <column name="color" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="APL_SELECT_PROJECT_LOADING_ITEMSResult" p1:Guid="2ae78a60-d9b0-4dcc-a01f-9e3fc773e7fc">
+      <property name="subobject_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a8e6cbf9-7282-4cfb-871d-b2a58447068c">
+        <column name="subobject_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="start_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="efaa0d9c-477e-4e12-9cbe-f066189ced65">
+        <column name="start_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="finish_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e25319a8-9b67-4f60-b76f-103f2f075d81">
+        <column name="finish_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="error_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="57a3b15a-352d-4321-ba8a-1e8608451bf8">
+        <column name="error_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="warning_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="036006c2-76dc-4806-8baa-cda2b0e4776f">
+        <column name="warning_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="SYS_SELECT_LOADING_INFOResult" p1:Guid="45b6dd2d-f80e-4334-959e-f62982415c6c">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="6c3820ca-2389-4641-9e2d-f5387c9c106e">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="loading_state_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5b159bee-30f6-4760-989a-19790b7b6268">
+        <column name="loading_state_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="loading_state_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e021457b-1769-4c2c-bdc2-cc37daa2bc62">
+        <column name="loading_state_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="allow_commit" type="Int32" p1:ValidateRequired="true" p1:Guid="6db8b453-746c-4f28-b162-19e6975c43c7">
+        <column name="allow_commit" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1ec5c53f-9217-4073-a3ee-052a4b4f40d8">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="total_cnt" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3dd54b77-acc9-44f0-906e-9228b628fd13">
+        <column name="total_cnt" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="error_cnt" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4cae41c9-e744-4b36-84c5-4fc90ea5998d">
+        <column name="error_cnt" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="warning_cnt" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9d36bd79-c9dc-4bd8-9493-90458ddb7395">
+        <column name="warning_cnt" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="info_html" type="String" p1:ValidateRequired="true" p1:Guid="a35002ca-8f06-4d50-bfc1-2668b0d53268">
+        <column name="info_html" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="SYS_INSERT_LOADING2Result" p1:Guid="ec9b6b84-dab0-4be6-bb73-58499fb4e8cf">
+      <property name="loading_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="49b4b0e8-42b4-44dc-b961-67c17c789b74">
+        <column name="loading_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="column_cnt" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="427d1847-15cc-4af5-8f7f-1a1d8729febf">
+        <column name="column_cnt" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_SELECT_GRID_SETTINGSResult" p1:Guid="20d6fba3-d27f-40e7-9fb1-70450132cb89">
+      <property name="global_visible" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4d75ba18-3935-4b0e-bcb1-4f0b30370290">
+        <column name="global_visible" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="global_editable" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="47e4dcb0-7a68-42b4-9e51-000adb4e4d10">
+        <column name="global_editable" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="field_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="fba77009-7ce6-4fed-a492-19a82484b7cf">
+        <column name="field_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="russian_field_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ca7bff12-8758-48de-aa18-8196359d8d2d">
+        <column name="russian_field_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_visible" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="50570f0a-b198-405d-8222-8847b8d19171">
+        <column name="is_visible" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="width" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d1a946e5-b966-4b62-8395-20d46beb47de">
+        <column name="width" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="number" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="50ed5b0a-c8f5-4898-9ed3-2d37100aa0c9">
+        <column name="number" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="is_required" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="399e5e9f-ff8c-4e83-8c78-9b01f547f7be">
+        <column name="is_required" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="ui_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="92e0b73d-de19-4266-b45f-f53b934a253a">
+        <column name="ui_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="dropdown" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="621f44f2-d939-4ea4-9c63-575617bbc81e">
+        <column name="dropdown" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="APL_SELECT_PROJECT_LIST_INFO2Result" p1:Guid="b4026854-1090-4d1a-8491-df1c066843e1">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="e2b1143b-172a-4542-b684-42b8f09a8578">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ad6db034-2b8b-42c9-9a8f-03635c9683b4">
+        <column name="code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_short_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b6f35f98-fa55-4b36-abaa-2b3a3aff9dcc">
+        <column name="project_short_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4ecaf5ee-2f33-46ef-b1b4-dc2f0c0bf232">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_type_id" type="Int32" p1:ValidateRequired="true" p1:Guid="10ecfa45-9bd2-45ef-82d1-c5dececc7cb7">
+        <column name="project_type_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="86dabed8-7f7f-48ff-a9b5-539323f4a2dc">
+        <column name="project_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_state_id" type="Int32" p1:ValidateRequired="true" p1:Guid="22c535c8-bdd6-4a5d-821c-e517b0ffedf5">
+        <column name="project_state_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_state" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="eff78e30-8373-4562-934c-19a5dd1c0c89">
+        <column name="project_state" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="logistical_network_objects" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3038b0b7-26f4-4a97-8b4f-0babfbcafe3b">
+        <column name="logistical_network_objects" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subcontractors" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3ad8e0f6-8520-4fc7-b63e-b1dbd0a11fcb">
+        <column name="subcontractors" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="customer_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1d026151-9995-4327-8d94-0c91e55573d2">
+        <column name="customer_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="customer" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d136cec7-6714-4cba-a14e-b3f7f6cb50c6">
+        <column name="customer" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="designer_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="cafdf647-07cd-4488-a461-42182d22c2af">
+        <column name="designer_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="designer" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8f0a771d-62ee-47a5-843b-b4284bdc8499">
+        <column name="designer" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="start" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="78235afa-24ca-4f9e-b888-b86d48473c6e">
+        <column name="start" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="finish" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="801df6d7-6700-4289-a5e5-292ad4e490ba">
+        <column name="finish" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="year1" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0154345f-f46f-4c00-9554-53f679918c9a">
+        <column name="year1" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="year2" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="16ae4e60-527b-4ae7-9a66-4b1e08fbbbbe">
+        <column name="year2" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="finish_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e4a26558-5275-48d7-8a03-d84e9882ad64">
+        <column name="finish_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="build_curator_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="bd1e4546-796a-4940-974e-eb0eb5eed601">
+        <column name="build_curator_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="build_curator" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f1f24986-60c6-4f1d-be0f-59351cd57b9d">
+        <column name="build_curator" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="build_curator_list_id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="33abdd7d-3f09-4e99-a908-78eb20ac968a">
+        <column name="build_curator_list_id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="build_curator_list" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8981ecb1-a9a7-4285-8a66-df3e8ca0c194">
+        <column name="build_curator_list" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="package_curator_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="898ae83d-4ebc-4914-85b4-0e58bb5d0da1">
+        <column name="package_curator_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="package_curator" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0d081d47-c259-4aae-8051-31db6cd6e4d3">
+        <column name="package_curator" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="supply_curator_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="eee47e63-2cf1-4ef5-a09d-1f506b6941d3">
+        <column name="supply_curator_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="supply_curator" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="57060d75-623d-44ab-b360-20284be2585e">
+        <column name="supply_curator" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="supply_curator_list_id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a8af1aaf-1552-454c-af05-e3f6c4d8129a">
+        <column name="supply_curator_list_id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="supply_curator_list" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a2bfd178-f807-4ee4-9e1d-7623eeac1a78">
+        <column name="supply_curator_list" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="deliveryplan_curator_list_id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="38b34973-b3c4-4423-a1b3-97eac9eceba3">
+        <column name="deliveryplan_curator_list_id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="deliveryplan_curator_list" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="743f3ab1-4d44-4ebc-ba96-e8684103d2b1">
+        <column name="deliveryplan_curator_list" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_curator_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="02107265-c321-4624-b3ce-84b712090202">
+        <column name="project_curator_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_curator" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c204c7fc-5c03-473a-bf6d-70be62ac49cf">
+        <column name="project_curator" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="stocks_curator_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="861b8999-62ef-41f1-9eaa-8e409caaf32f">
+        <column name="stocks_curator_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="stocks_curator" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4895cb8b-03cd-4913-8a7a-761e159b4508">
+        <column name="stocks_curator" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="normative_delivery_time" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d3e8fcff-d836-4d68-ae64-aa4a71e35c7c">
+        <column name="normative_delivery_time" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="storage_contract" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8b0a39a9-749f-4161-8e9a-0d55c9997ef6">
+        <column name="storage_contract" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="storage_contract_finish_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9abbcedd-fcc8-4ac1-9abe-2208dac147b3">
+        <column name="storage_contract_finish_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="build_start_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="99125450-517c-4d02-87b4-093409ca7f0c">
+        <column name="build_start_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="build_finish_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="138775a9-93a7-4bcb-85bb-dd57445ece82">
+        <column name="build_finish_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="non_project_supplier_approve_required" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e24d4665-cde0-43d7-ae66-39f0bd233050">
+        <column name="non_project_supplier_approve_required" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+      <property name="rss_match_type_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="994db7ec-739d-4258-81b1-7e122417d209">
+        <column name="rss_match_type_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="rss_match_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5aae5009-df10-4f05-8fa4-1629df2fac17">
+        <column name="rss_match_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="tpsu_division_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7e5c25c6-62fa-4e91-a964-a624d71d8d2c">
+        <column name="tpsu_division_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="tpsu_division" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="13add8bd-f455-46bf-a1aa-400f001907c5">
+        <column name="tpsu_division" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subcontractor_info_list_id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f012a024-ed1c-48c0-8b5b-12f96bdf7abc">
+        <column name="subcontractor_info_list_id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subcontractor_info_list" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d8d00138-2155-40d8-9a9f-a615db87127d">
+        <column name="subcontractor_info_list" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_documentation_percent" type="String" p1:ValidateRequired="true" p1:Guid="2c0fee4f-2979-46c5-b641-a09acda71c97">
+        <column name="is_documentation_percent" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_documentation" type="String" p1:ValidateRequired="true" p1:Guid="a56fff65-d1d4-49ec-9bc4-9eed4f06eaae">
+        <column name="is_documentation" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_change_documentation_percent" type="String" p1:ValidateRequired="true" p1:Guid="26e46ddc-1b7d-45ba-acdf-1ad7ad13cad4">
+        <column name="is_change_documentation_percent" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_change_documentation" type="String" p1:ValidateRequired="true" p1:Guid="44126d9a-a9ce-425c-b40e-d02446e0094e">
+        <column name="is_change_documentation" not-null="True" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="total_sum_gk" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7025d3f5-9328-4aeb-9367-bc1508c08b0d">
+        <column name="total_sum_gk" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="total_sum_direct" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="229ee7f3-efc4-44ae-8d0c-4426c22cd12f">
+        <column name="total_sum_direct" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="advance_info" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="034b87a8-2433-4b30-8e57-338235189be2">
+        <column name="advance_info" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_GET_ACTION_ROLEResult" p1:Guid="c7bf7e62-6d13-4468-b744-9a44c1a76c98">
+      <property name="column0" type="Boolean" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="aaad43e4-29b2-43df-8b0b-81a14cd65463">
+        <column name="column0" not-null="False" sql-type="bit" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="APL_SELECT_OBJECTS_AND_SUBOBJECTSResult" p1:Guid="7fafeb25-5daf-44dd-9490-24bc8dc488f1">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="97103454-bbdc-4e9b-8965-93f0c9da78b0">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="parent_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="92005702-1581-485e-b9c8-e9ac0f208ddf">
+        <column name="parent_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7a6836b3-bbf3-4ff5-becb-6dcdcd97f232">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="start" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="75820e0f-d10c-4f2b-bba7-fbb226d1050e">
+        <column name="start" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="finish" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b1321d11-b61e-4b3a-a3f4-d13c0632d33b">
+        <column name="finish" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="tree_errors" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0807638e-cca5-4f7d-97c7-89d043101ee0">
+        <column name="tree_errors" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subcontractor_list" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="70050101-d3c2-4cde-b8e1-4f67ea15e36a">
+        <column name="subcontractor_list" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_1c_guid" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="29a939a4-f32f-4fcc-83cb-f2aab97d7f67">
+        <column name="project_1c_guid" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_1c" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d2e078cf-bc89-4385-8b49-0fa59ed26499">
+        <column name="project_1c" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="is_parent" type="Int32" p1:ValidateRequired="true" p1:Guid="ed54a350-5fdf-4fc9-8203-013b31a40db9">
+        <column name="is_parent" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="object_id" type="Int32" p1:ValidateRequired="true" p1:Guid="0dd8f66c-519a-41ac-9233-3de388a48cce">
+        <column name="object_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="object_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7c379be2-9e57-44b3-ad17-976e6d7d24f1">
+        <column name="object_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8004061f-e993-4776-94ba-9732e6cae330">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_FORM_SVR_ITEMS_DIFFResult" p1:Guid="8949a1f1-5074-464d-8885-d4079af328fc">
+      <property name="id" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="87ecaf2b-0890-4b44-8b2a-e252b51292d9">
+        <column name="id" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="fi_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4efb3841-48dc-4a28-a746-7d45bb4b934c">
+        <column name="fi_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="si_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d8f577b0-449e-495c-b377-59eb9bb6c9ff">
+        <column name="si_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="form_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="82029b0e-99fe-4a3c-8caf-715077898ecf">
+        <column name="form_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="svr_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="861f39f2-80c9-4c01-8ea1-30a2ba56d308">
+        <column name="svr_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="diff_type" type="String" p1:ValidateRequired="true" p1:Guid="2f60f1c8-5b2d-40cd-ba82-8aa05a5ec4b8">
+        <column name="diff_type" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="local_estimate_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="82088f99-c0c7-4d91-bf6e-b0c36f8530d6">
+        <column name="local_estimate_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_documentation_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="562f7974-87a9-4676-967d-d547796016e7">
+        <column name="project_documentation_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="01ba7a97-2c01-4057-9f76-2326cf3ddcbc">
+        <column name="number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="resource_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="25dfe798-f0c9-45dc-a681-47711afc35f8">
+        <column name="resource_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ba583032-8661-4637-99e0-47b8b82f9a11">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="last_unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1b749a9d-91bc-49c6-92b2-04df63f62b1c">
+        <column name="last_unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="new_unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="23b0e583-5ab0-45f6-a7b0-d06568f5f342">
+        <column name="new_unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="last_quantity" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="26a08079-11d0-401f-b9f5-f67ce2749046">
+        <column name="last_quantity" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="new_quantity" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="17d40d76-951d-4b8a-a71c-c2dfc6be06f2">
+        <column name="new_quantity" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="last_price" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7621d3fb-2def-438f-94e2-3bde9852bc6e">
+        <column name="last_price" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="new_price" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e8f396d1-86e0-4f88-b2f8-8462fc3718bf">
+        <column name="new_price" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="last_summa" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="01e709cf-608b-4cf2-ab79-1198d890fab2">
+        <column name="last_summa" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="new_summa" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3e8070c0-ed57-4c18-9630-706a823fed2d">
+        <column name="new_summa" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="last_turnover" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="96e4a2e1-3487-42bc-a2f5-752039d42332">
+        <column name="last_turnover" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="new_turnover" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7a86316b-bb79-4526-8e4c-79202e5b1145">
+        <column name="new_turnover" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="last_svr_delivery_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ea97244d-ce2b-47e2-b588-ea4b7a7e6ff1">
+        <column name="last_svr_delivery_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="new_svr_delivery_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="be240ef1-5247-45fa-b914-9d89008d10aa">
+        <column name="new_svr_delivery_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_SVRResult" p1:Guid="423e268b-355e-40c2-9b0b-2915ab78879f">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="ff54cd2d-2b60-4912-a5ad-1b8b10536d9d">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7248e747-0156-4265-80e9-f3c8ba1bdeb6">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="creation_date" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="77baf0ea-89df-4325-aa66-a8c6f6ec0c51">
+        <column name="creation_date" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="user_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4573efe8-8d47-4650-ad0b-f9b1f6b5ecce">
+        <column name="user_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="total_cnt" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="81057e57-3ee3-4ec9-a3ff-91b08b4f4126">
+        <column name="total_cnt" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="total_sum" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="28a07a0a-f6b4-4cae-bb77-27daebb4d087">
+        <column name="total_sum" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="error_cnt" type="String" p1:ValidateRequired="true" p1:Guid="f5439868-efb0-47ce-b7c6-19c3325ecea3">
+        <column name="error_cnt" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="last_version" type="String" p1:ValidateRequired="true" p1:Guid="4a0b3c3e-92ae-48cd-9fe9-8603ea705d47">
+        <column name="last_version" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_SVR_ITEMSResult" p1:Guid="d51a136f-b24d-4824-b847-10371971d259">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="da186347-9e8e-453e-bf15-caa7a353fbf1">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="local_estimate_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6aaa86be-6f88-4c86-9f6b-515fe4e035f9">
+        <column name="local_estimate_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_documentation_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f94cd81b-6575-4633-bcba-988911903ef7">
+        <column name="project_documentation_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="81343cc6-1ad1-4e69-90bb-2c48e3fd36db">
+        <column name="number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="resource_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="8d8cf9f8-c352-45e1-8c9f-337c06faf03f">
+        <column name="resource_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c01765dc-39d8-4eec-b607-71424dfc50b6">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="29e63cd4-1d65-4909-8e86-82c4ed115a9a">
+        <column name="unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="quantity" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="4d97b355-23f9-4527-98dd-2ba518e0cb03">
+        <column name="quantity" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="price" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="33b94106-d0cf-4396-8d15-061a23c8d528">
+        <column name="price" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="summa" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="46f11da3-76c5-4150-81a1-f3c24785bd5b">
+        <column name="summa" not-null="False" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="turnover" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="37d16170-f4ca-4322-bfdc-068abf2f3be4">
+        <column name="turnover" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="delivery_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0a34ae47-e650-41ce-abd6-19cc77d02664">
+        <column name="delivery_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="error_dmtos" type="String" p1:ValidateRequired="true" p1:Guid="176e2f84-bbf4-41fe-a1f3-f7d8c3cb8ac6">
+        <column name="error_dmtos" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_SVR_LOADING_ITEMResult" p1:Guid="0e8fb6af-ddff-4789-970e-a741bed81d0c">
+      <property name="number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="76c5833e-c545-4750-b5d0-5badd6a7416f">
+        <column name="number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="resource_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="93fe6a23-e7c4-4103-b8ec-2e67cf0f46e2">
+        <column name="resource_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3b2b5313-e970-439d-a288-345eda973f77">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ae9e7f3c-754e-4f9e-941c-7c5506d42804">
+        <column name="unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="quantity_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1ef83e7b-9c24-4359-b922-434445518c17">
+        <column name="quantity_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="price_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c8fffb25-c482-4fd4-b301-5b270a3dde15">
+        <column name="price_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="summa_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="40e4c4b9-af76-4bb4-a4b9-32ddd1e5fb23">
+        <column name="summa_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="local_estimate_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b05dc73a-fa23-4a4e-8d90-2927fa1c5acc">
+        <column name="local_estimate_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_documentation_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5b5524a9-1346-422d-8649-045c46983948">
+        <column name="project_documentation_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="turnover" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b596d79d-d443-446c-bdfd-8181eb1d8d03">
+        <column name="turnover" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="error_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c6a25278-98e2-4f61-adba-da23c8f11f55">
+        <column name="error_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="warning_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="cb0a2ff1-aa73-489b-826a-44c907e1bd59">
+        <column name="warning_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_FORMSResult" p1:Guid="8a25ee40-9671-481d-9b6d-0ef9613be666">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="c36fc889-159a-423d-b84d-a9d3ee5531c3">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="form_id" type="Int32" p1:ValidateRequired="true" p1:Guid="71641180-7179-49e8-8995-b9af37246175">
+        <column name="form_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="form_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="bc6c9fcb-9ff4-4c64-bc61-a991c669889d">
+        <column name="form_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_id" type="Int32" p1:ValidateRequired="true" p1:Guid="2b0e089d-a488-4420-bb5b-d51b53cbc5fd">
+        <column name="project_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="18540d5b-97a3-4036-b707-f60ccdba50a1">
+        <column name="project_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="modification_date" type="DateTime" p1:ValidateRequired="true" p1:Guid="cd446169-6e7e-46ee-928b-9e521f53d4be">
+        <column name="modification_date" not-null="True" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="owner_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="1429a6fc-588b-4db2-a698-7fe7c191da39">
+        <column name="owner_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="total_cnt" type="Int32" p1:ValidateRequired="true" p1:Guid="a48e6bdc-6e41-487f-849b-ccad01756ad0">
+        <column name="total_cnt" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="total_diff" type="Int32" p1:ValidateRequired="true" p1:Guid="bdfb570d-14fd-44bf-926a-a54f02d04abe">
+        <column name="total_diff" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="unsi_declined" type="Int32" p1:ValidateRequired="true" p1:Guid="987d33e4-6bca-4a31-864c-bc48b2219363">
+        <column name="unsi_declined" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="dmtos_declined" type="Int32" p1:ValidateRequired="true" p1:Guid="d4cbf3d1-126e-4a65-90e6-f97d4d55c579">
+        <column name="dmtos_declined" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_FORM_RSS_ITEMSResult" p1:Guid="8ec8059a-7f91-45f8-a256-2cbd5e5d6659">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="f6d8b392-6524-4921-9969-5d2834d5fd35">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="form_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="280eed60-2d6f-4995-bb31-6a2dbe68ac63">
+        <column name="form_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d50af513-c181-4b47-806f-caf812eb5f12">
+        <column name="code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="object_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="518608f7-9ba6-4806-8d0e-362629e0b6ae">
+        <column name="object_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subobject_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="31736506-dada-44a1-8b82-18a2caf98fb9">
+        <column name="subobject_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="subcontractor_id" type="Int32" p1:ValidateRequired="true" p1:Guid="0c145140-8313-4d09-aefa-ae415aed3019">
+        <column name="subcontractor_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="subcontractor_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="13015dc8-c2a4-48d5-a4af-84b4e593ac9d">
+        <column name="subcontractor_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="lno_id" type="Int32" p1:ValidateRequired="true" p1:Guid="c29c5c3f-c0d8-4ecf-ada5-0627ca521894">
+        <column name="lno_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="lno_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6fc9f5b1-57d2-43e7-91c8-ace2f654bd89">
+        <column name="lno_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_documentation_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="6345aaf5-27f3-4a98-a2cd-024147c1e62f">
+        <column name="project_documentation_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="revision_number" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3f795e24-4403-4c90-9262-12efb554fed9">
+        <column name="revision_number" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="ekk_code" type="String" p1:ValidateRequired="true" p1:Guid="65af842f-c7f6-40c4-916a-7e1f42ea3c7c">
+        <column name="ekk_code" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="price_manager_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="24c514e2-f126-46fc-8107-d754f4754548">
+        <column name="price_manager_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="price_manager_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f41d309b-9649-4253-a5a4-37775db1cafb">
+        <column name="price_manager_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c9fd289e-d75e-433a-a64b-993f7bb9ab52">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="additional_properties" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f1d7c466-3754-4005-af6f-a1837ee4416e">
+        <column name="additional_properties" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="package_contents" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b555f264-b994-4360-81ac-918ffacdb5a8">
+        <column name="package_contents" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="manufacturer" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="dd166789-3a6e-4689-9d24-f8f6b7421837">
+        <column name="manufacturer" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unit_id" type="Int32" p1:ValidateRequired="true" p1:Guid="80fdce22-37ab-420f-b912-06c761f78e21">
+        <column name="unit_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="17b3873b-cd08-4430-a94e-ca764730896e">
+        <column name="unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="quantity" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="56d4100c-99d0-43ae-a89c-394d3a33b55f">
+        <column name="quantity" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="mass_per_unit" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="645b86cf-5754-4e87-8f3e-c228b6a13d71">
+        <column name="mass_per_unit" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="mass_size" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="91a6cc06-19d9-4d4d-887c-2ea2a169d052">
+        <column name="mass_size" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="summary" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="68f352a2-ea81-40b4-a6a4-5ecda96ef99f">
+        <column name="summary" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="summary2" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="257e3673-05fd-4bf9-8d78-eefc9d30624a">
+        <column name="summary2" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_requirement_source" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5725dae2-ae66-410c-b965-74c8cb5a5083">
+        <column name="project_requirement_source" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="delivery_type_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="82f3f4df-4ede-4023-b223-e5b020ed7f7f">
+        <column name="delivery_type_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="suggested_delivery_type_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7dad271a-e3f9-43c0-a9c7-0f96f1af36d8">
+        <column name="suggested_delivery_type_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="suggested_delivery_type_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9cc9aa86-3756-4804-a4d0-f185c19d3a11">
+        <column name="suggested_delivery_type_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="delivery_type_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="0aacfd23-c5ec-43ac-ac78-7be430069c3d">
+        <column name="delivery_type_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="delivery_type_description1" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3e4b3235-7934-48d5-8853-3d2b1a1d8875">
+        <column name="delivery_type_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unsi_comment" type="String" p1:ValidateRequired="true" p1:Guid="14908eef-1e58-40e2-a397-042042142617">
+        <column name="unsi_comment" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="dmtos_comment" type="String" p1:ValidateRequired="true" p1:Guid="36ab7733-8311-40e1-b235-e619ec0df1db">
+        <column name="dmtos_comment" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="chanhes_info" type="String" p1:ValidateRequired="true" p1:Guid="769062f8-5410-466c-b6b4-488cd5d3735e">
+        <column name="chanhes_info" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="commit_changes_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="82a66978-a6cf-4bdd-82c2-d4f539d5b72c">
+        <column name="commit_changes_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="project_requirement_state_id" type="Int32" p1:ValidateRequired="true" p1:Guid="70dc1659-538f-407a-b4bd-64db53bb6edc">
+        <column name="project_requirement_state_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="project_requirement_state_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f228fbf7-7570-49c3-bf9c-33a53a4ae3b9">
+        <column name="project_requirement_state_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="for_pricing" type="String" p1:ValidateRequired="true" p1:Guid="129b2a9f-92f0-4439-b204-75897bd53b1e">
+        <column name="for_pricing" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="OMC_SELECT_FORM_SVR_ITEMSResult" p1:Guid="4b7b51e8-ff5e-424c-a2de-08094f06c5e0">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="b985869b-06c5-4fc9-9f68-64cbd930b635">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="form_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="145d6201-9a08-489e-b938-6d02a918d5bc">
+        <column name="form_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="local_estimate_number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e2a09bdc-c54a-46eb-9d0a-8853cbfdebbe">
+        <column name="local_estimate_number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="project_documentation_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e3b70b28-9fe6-45fb-b8b0-932d8d4a45cf">
+        <column name="project_documentation_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="number" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="fefa6c16-6212-47ea-9777-6485830d08cc">
+        <column name="number" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="resource_code" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="58b64ed8-7739-4608-b10b-c4ceed6f8d9b">
+        <column name="resource_code" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="ekk_code" type="String" p1:ValidateRequired="true" p1:Guid="bae29271-d190-4b27-868f-1a3a747e7bff">
+        <column name="ekk_code" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="price_manager_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="c37fb356-4d3e-4b27-80cc-bb45bed7ff1f">
+        <column name="price_manager_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="price_manager_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="a088f879-8b0c-4f6e-86ab-8c0fec5d416f">
+        <column name="price_manager_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="983d0751-2d06-422a-bac6-97cf270219fd">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unit_id" type="Int32" p1:ValidateRequired="true" p1:Guid="b2fdac36-b94e-4b36-9b1d-a6bfcea89e64">
+        <column name="unit_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="unit_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="f3f74f47-ae0f-4467-bae9-2b69b9c476b6">
+        <column name="unit_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="quantity" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="b5a7ebcc-fd35-44e8-a1fb-eca17cf7fe4c">
+        <column name="quantity" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="price" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="34c575e3-12a1-417b-a259-70e0053b6df2">
+        <column name="price" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="summa" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3a0cde57-3d28-465d-b918-d14a0e1a5911">
+        <column name="summa" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="turnover" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3daa216c-856a-4473-8c34-a8aabb9f3ce4">
+        <column name="turnover" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="svr_delivery_type" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d0a46a5f-f83e-45e7-b9e1-394ac9b648ba">
+        <column name="svr_delivery_type" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="add_info" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="9e361eab-94da-4692-8e0a-9906ff4f7e19">
+        <column name="add_info" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="suggested_delivery_type_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="3a37649c-cb2d-438c-b323-7d3a6abe04d4">
+        <column name="suggested_delivery_type_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="suggested_delivery_type_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="ed144841-24d1-45c1-ad57-5f69a179d6a5">
+        <column name="suggested_delivery_type_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="delivery_type_id" type="Int32" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="dc5d2a53-c27d-4012-9b68-46796296bee3">
+        <column name="delivery_type_id" not-null="False" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="delivery_type_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="27011653-f628-4bc8-b33e-967ebe3b1a04">
+        <column name="delivery_type_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="unsi_comment" type="String" p1:ValidateRequired="true" p1:Guid="2b45298f-abaa-40b9-96b6-292efa4e931f">
+        <column name="unsi_comment" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="dmtos_comment" type="String" p1:ValidateRequired="true" p1:Guid="bb7af7ba-5a3f-4adc-8f6b-0dd4236ff770">
+        <column name="dmtos_comment" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="changes_info" type="String" p1:ValidateRequired="true" p1:Guid="b8fd47da-43fa-44b7-8597-03f3542cfb9e">
+        <column name="changes_info" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+      <property name="commit_changes_date" type="DateTime" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="7fa819c6-8cf1-4d57-aadb-be93170104ef">
+        <column name="commit_changes_date" not-null="False" sql-type="datetime" p1:unicode="False" />
+      </property>
+      <property name="for_pricing" type="String" p1:ValidateRequired="true" p1:Guid="cdf3e395-631a-4340-a59a-b9350d320a27">
+        <column name="for_pricing" not-null="True" sql-type="varchar(max)" p1:unicode="False" />
+      </property>
+    </component>
+    <component class="UI_SELECT_LINKResult" p1:Guid="c3451671-d211-4c89-8988-9ed75322e744">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="1e44946b-e426-4dba-ace3-460ecd649531">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="73640623-78c7-44af-939e-9314323b1863">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="legend" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="5b4ee6af-ad8b-43b2-9b3c-7e21fdd13f46">
+        <column name="legend" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="UI_SELECT_DROPDOWN_TXTResult" p1:Guid="76210975-893e-4827-bba7-23ea79547f3a">
+      <property name="guid" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="17e7939b-aed0-43eb-8eaf-f39f0fa3c402">
+        <column name="guid" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="053c1e63-9702-4e59-b3b0-ce54faa1575d">
+        <column name="description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+    </component>
+    <component class="APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTSResult" p1:Guid="1c6d2738-664a-4f38-9686-0c3b573e3755">
+      <property name="id" type="Int32" p1:ValidateRequired="true" p1:Guid="57673ac9-ce53-4a67-94f7-f57798e813e0">
+        <column name="id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="lno_id" type="Int32" p1:ValidateRequired="true" p1:Guid="5c5e0b6e-5497-4fb1-97c6-f6eaa745bc94">
+        <column name="lno_id" not-null="True" sql-type="int" p1:unicode="False" />
+      </property>
+      <property name="lno_description" type="String" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="e4a13c22-0bb4-4f28-9b9b-506808f559c3">
+        <column name="lno_description" not-null="False" sql-type="nvarchar(max)" p1:unicode="True" />
+      </property>
+      <property name="start" type="Double" p1:ValidateRequired="true" p1:Guid="1dd6467d-f2cd-4058-9982-5a074e8ba08e">
+        <column name="start" not-null="True" sql-type="float" p1:unicode="False" />
+      </property>
+      <property name="finish" type="Double" p1:nullable="True" p1:ValidateRequired="false" p1:Guid="d7243567-d986-4c7d-bb0b-6d89813f61ac">
+        <column name="finish" not-null="False" sql-type="float" p1:unicode="False" />
+      </property>
+    </component>
+  </class>
+  <method name="SYS_AUTHORIZE_USER2" p1:procedure="dbo.SYS_AUTHORIZE_USER2" p1:Guid="6b5a4631-60f6-47ac-bfbd-b983a63935f6">
+    <return class="SYS_AUTHORIZE_USER2Result">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+      <return-property name="short_description" column="short_description" />
+      <return-property name="login" column="login" />
+      <return-property name="C_code" column="1C_code" />
+      <return-property name="division_id" column="division_id" />
+      <return-property name="position" column="position" />
+      <return-property name="mail" column="mail" />
+      <return-property name="phone" column="phone" />
+      <return-property name="short_description_reverse" column="short_description_reverse" />
+      <return-property name="is_locked" column="is_locked" />
+      <return-property name="creation_date" column="creation_date" />
+      <return-property name="modification_date" column="modification_date" />
+      <return-property name="not_in_SGM" column="not_in_SGM" />
+      <return-property name="site_map" column="site_map" />
+      <return-property name="site_map_subcontractor" column="site_map_subcontractor" />
+      <return-property name="delegating_user_id" column="delegating_user_id" />
+      <return-property name="delegating_user_description" column="delegating_user_description" />
+      <return-property name="is_administrator" column="is_administrator" />
+      <return-property name="department_id" column="department_id" />
+      <return-property name="system_message" column="system_message" />
+    </return>
+    <parameter name="login" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="browser" type="String" sql-type="nvarchar" />
+    <parameter name="server_name" type="String" sql-type="nvarchar" length="510" />
+  </method>
+  <method name="APL_SELECT_PROJECT_STATES_FOR_DD" p1:procedure="dbo.APL_SELECT_PROJECT_STATES_FOR_DD" p1:Guid="ad387700-692b-46a0-95e6-8817371ed19a">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+  </method>
+  <method name="SYS_SELECT_MESSAGES" p1:procedure="dbo.SYS_SELECT_MESSAGES" p1:Guid="61a57381-ddf5-4c2b-9fac-4d6d5e48c0c1">
+    <return class="SYS_SELECT_MESSAGESResult">
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_DELEGATING_USERS" p1:procedure="dbo.SYS_SELECT_DELEGATING_USERS" p1:Guid="90f3f260-3aa6-4802-a879-f714294e40f1">
+    <return class="SYS_SELECT_DELEGATING_USERSResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+      <return-property name="short_description" column="short_description" />
+      <return-property name="login" column="login" />
+      <return-property name="C_code" column="1C_code" />
+      <return-property name="division_id" column="division_id" />
+      <return-property name="position" column="position" />
+      <return-property name="mail" column="mail" />
+      <return-property name="phone" column="phone" />
+      <return-property name="short_description_reverse" column="short_description_reverse" />
+      <return-property name="is_locked" column="is_locked" />
+      <return-property name="creation_date" column="creation_date" />
+      <return-property name="modification_date" column="modification_date" />
+      <return-property name="not_in_SGM" column="not_in_SGM" />
+      <return-property name="type" column="type" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="delegating_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="PRC_SELECT_ORDER_ITEMS_GKI_STATES_FOR_DD" p1:procedure="dbo.PRC_SELECT_ORDER_ITEMS_GKI_STATES_FOR_DD" p1:Guid="0ff83318-4cfb-434b-8370-b9d6c9d36703">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+  </method>
+  <method name="PRC_UPDATE_ORDER_ITEM_GKI" p1:procedure="dbo.PRC_UPDATE_ORDER_ITEM_GKI" p1:Guid="48491722-9b55-4066-8ea9-77b52bd0837d">
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="gki_code" type="String" sql-type="nvarchar" />
+    <parameter name="gki_state_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="gki_order_number" type="String" sql-type="nvarchar" />
+    <parameter name="note" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="PRC_SELECT_ORDER_ITEMS_GKI_with_paging" p1:procedure="dbo.PRC_SELECT_ORDER_ITEMS_GKI_with_paging" p1:Guid="dcda6773-cbd4-4512-a23c-2b11792b3fbd">
+    <return class="PRC_SELECT_ORDER_ITEMS_GKI_with_pagingResult">
+      <return-property name="row_count" column="row_count" />
+      <return-property name="rank" column="rank" />
+      <return-property name="id" column="id" />
+      <return-property name="code" column="code" />
+      <return-property name="project_description" column="project_description" />
+      <return-property name="item_description" column="item_description" />
+      <return-property name="item_additional_properties" column="item_additional_properties" />
+      <return-property name="order_code" column="order_code" />
+      <return-property name="order_number" column="order_number" />
+      <return-property name="supply_manager" column="supply_manager" />
+      <return-property name="order_item_note" column="order_item_note" />
+      <return-property name="order_item_modification_date" column="order_item_modification_date" />
+      <return-property name="gki_code" column="gki_code" />
+      <return-property name="gki_code_date" column="gki_code_date" />
+      <return-property name="gki_order_number" column="gki_order_number" />
+      <return-property name="gki_order_date" column="gki_order_date" />
+      <return-property name="gki_state_id" column="gki_state_id" />
+      <return-property name="gki_state" column="gki_state" />
+      <return-property name="gki_state_date" column="gki_state_date" />
+      <return-property name="note" column="note" />
+      <return-property name="gki_user" column="gki_user" />
+      <return-property name="color" column="color" />
+      <return-property name="checked" column="checked" />
+    </return>
+    <parameter name="page" p1:parameter-direction="InOut" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="page_size" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="sort_member" type="String" sql-type="nvarchar" length="510" />
+    <parameter name="selected_records" type="String" sql-type="nvarchar" length="510" />
+    <parameter name="filter" type="String" sql-type="nvarchar" />
+    <parameter name="show_classified" type="Boolean" sql-type="bit" />
+    <parameter name="only_new" type="Boolean" sql-type="bit" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_DELEGATING_USER" p1:procedure="dbo.SYS_SELECT_DELEGATING_USER" p1:Guid="4ad90296-32be-4086-8bbc-e8000ee8f639">
+    <return class="SYS_SELECT_DELEGATING_USERResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+      <return-property name="login" column="login" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="delegating_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_ROLES_BY_USER" p1:procedure="dbo.SYS_SELECT_ROLES_BY_USER" p1:Guid="6cf4db4f-be5a-453e-9d2d-c3ec97b8fa30">
+    <return class="SYS_SELECT_ROLES_BY_USERResult">
+      <return-property name="role_id" column="role_id" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_ROLES_FOR_DD" p1:procedure="dbo.SYS_SELECT_ROLES_FOR_DD" p1:Guid="3e522244-2a8f-4946-b9c2-a64e66d33f27">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_DELEGATING_USERS2" p1:procedure="dbo.SYS_SELECT_DELEGATING_USERS2" p1:Guid="f7a75ced-b6ba-4349-9c15-9a30b42fbc16">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_AUTHORIZE_USER" p1:procedure="dbo.SYS_AUTHORIZE_USER" p1:Guid="a8ac5e39-e501-4d80-8280-8f926db1007a">
+    <return class="SYS_AUTHORIZE_USERResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+      <return-property name="not_in_SGM" column="not_in_SGM" />
+    </return>
+    <parameter name="login" type="String" sql-type="nvarchar" />
+    <parameter name="server_name" type="String" sql-type="nvarchar" />
+    <parameter name="browser" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="UI_DELETE_LINK_PAGE" p1:procedure="dbo.UI_DELETE_LINK_PAGE" p1:Guid="fb96d06c-e8a4-4fab-9679-0531814cf8e6">
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_ACTIONS" p1:procedure="dbo.UI_SELECT_LINK_ACTIONS" p1:Guid="b6100de2-e6ea-4dc4-858e-a1a08d931806">
+    <return class="UI_SELECT_LINK_ACTIONSResult">
+      <return-property name="id" column="id" />
+      <return-property name="action_code" column="action_code" />
+      <return-property name="action_description" column="action_description" />
+      <return-property name="comment" column="comment" />
+      <return-property name="stored_procedure" column="stored_procedure" />
+      <return-property name="redirect" column="redirect" />
+    </return>
+    <parameter name="link_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_DATA" p1:procedure="dbo.UI_SELECT_LINK_DATA" p1:Guid="11381077-5627-4a99-9aaf-c807e840291e">
+    <return class="UI_SELECT_LINK_DATAResult">
+      <return-property name="id" column="id" />
+      <return-property name="data_type" column="data_type" />
+      <return-property name="data_description" column="data_description" />
+      <return-property name="comment" column="comment" />
+      <return-property name="stored_procedure" column="stored_procedure" />
+    </return>
+    <parameter name="link_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_PAGE_NOTE2" p1:procedure="dbo.UI_SELECT_LINK_PAGE_NOTE2" p1:Guid="b9fc26ce-7e52-424f-b164-0d09100585da">
+    <return class="UI_SELECT_LINK_PAGE_NOTE2Result">
+      <return-property name="http_text" column="http_text" />
+    </return>
+    <parameter name="link_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_DEFOLT_GRID_SETTINGS" p1:procedure="dbo.UI_DEFOLT_GRID_SETTINGS" p1:Guid="61164a90-cad9-4d0d-abf1-81dd7cfa5099">
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="UI_SELECT_SITE_MENU" p1:procedure="dbo.UI_SELECT_SITE_MENU" p1:Guid="d42e6c03-d241-49e7-9e6f-db6c53be6657">
+    <return class="UI_SELECT_SITE_MENUResult">
+      <return-property name="id" column="id" />
+      <return-property name="parent_id" column="parent_id" />
+      <return-property name="order_id" column="order_id" />
+      <return-property name="img" column="img" />
+      <return-property name="description" column="description" />
+      <return-property name="url" column="url" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_UPDATE_LINK_PAGE_NOTE2" p1:procedure="dbo.UI_UPDATE_LINK_PAGE_NOTE2" p1:Guid="903890ea-dde5-49e1-8d7b-039b081d9665">
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="link_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="header" type="String" sql-type="nvarchar" />
+    <parameter name="html_text" type="String" sql-type="nvarchar" />
+    <parameter name="role_id_list" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="order_number" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_PAGE_NOTES2" p1:procedure="dbo.UI_SELECT_LINK_PAGE_NOTES2" p1:Guid="1978391d-0a15-44e5-b98d-cfd45b792a31">
+    <return class="UI_SELECT_LINK_PAGE_NOTES2Result">
+      <return-property name="id" column="id" />
+      <return-property name="order_number" column="order_number" />
+      <return-property name="header" column="header" />
+      <return-property name="html_text" column="html_text" />
+      <return-property name="list_roles_description" column="list_roles_description" />
+      <return-property name="list_roles_id" column="list_roles_id" />
+    </return>
+    <parameter name="link_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_FINISH_EVENT" p1:procedure="dbo.SYS_FINISH_EVENT" p1:Guid="d862505f-4e1e-4b75-b1e3-39aa1cf87437">
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="file_name" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="SYS_START_EVENT" p1:procedure="dbo.SYS_START_EVENT" p1:Guid="6c747657-565a-4049-b567-fab1a0d4b4aa">
+    <return class="SYS_START_EVENTResult">
+      <return-property name="event_id" column="event_id" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+    <parameter name="params" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="UI_DELETE_LINK_FUNCTION" p1:procedure="dbo.UI_DELETE_LINK_FUNCTION" p1:Guid="9ac5c1e1-5784-4d0a-8be5-f243c435246e">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_INSERT_LINK_FUNCTION" p1:procedure="dbo.UI_INSERT_LINK_FUNCTION" p1:Guid="5bee1762-de43-4893-9863-989b4f8d842c">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="section_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="title" type="String" sql-type="nvarchar" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_FUNCTIONS" p1:procedure="dbo.UI_SELECT_LINK_FUNCTIONS" p1:Guid="4bea2e8d-6d5a-4c75-b5be-586c7a5fde29">
+    <return class="UI_SELECT_LINK_FUNCTIONSResult">
+      <return-property name="id" column="id" />
+      <return-property name="section_id" column="section_id" />
+      <return-property name="code" column="code" />
+      <return-property name="section_description" column="section_description" />
+      <return-property name="title" column="title" />
+      <return-property name="stored_procedure" column="stored_procedure" />
+      <return-property name="description" column="description" />
+      <return-property name="modification_user" column="modification_user" />
+      <return-property name="modification_date" column="modification_date" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_LINK_SECTIONS_FOR_DD" p1:procedure="dbo.UI_SELECT_LINK_SECTIONS_FOR_DD" p1:Guid="8a13ed72-7e84-4d54-a308-0e94552fcfa4">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_UPDATE_LINK_FUNCTION" p1:procedure="dbo.UI_UPDATE_LINK_FUNCTION" p1:Guid="e0f13b08-c7b3-4321-b452-fbd409f09550">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="section_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="title" type="String" sql-type="nvarchar" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPH" p1:procedure="dbo.MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPH" p1:Guid="10a3a606-b490-4724-b5be-a367195e71fc">
+    <return class="MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPHResult">
+      <return-property name="id" column="id" />
+      <return-property name="parent" column="parent" />
+      <return-property name="text" column="text" />
+    </return>
+  </method>
+  <method name="PRC_SELECT_ORDER_ITEMS_GKI" p1:procedure="dbo.PRC_SELECT_ORDER_ITEMS_GKI" p1:Guid="d74d81f4-623c-44c7-a9da-602b1da145e5">
+    <return class="PRC_SELECT_ORDER_ITEMS_GKIResult">
+      <return-property name="id" column="id" />
+      <return-property name="code" column="code" />
+      <return-property name="project_description" column="project_description" />
+      <return-property name="item_description" column="item_description" />
+      <return-property name="item_additional_properties" column="item_additional_properties" />
+      <return-property name="order_code" column="order_code" />
+      <return-property name="order_number" column="order_number" />
+      <return-property name="supply_manager" column="supply_manager" />
+      <return-property name="order_item_note" column="order_item_note" />
+      <return-property name="order_item_modification_date" column="order_item_modification_date" />
+      <return-property name="gki_code" column="gki_code" />
+      <return-property name="gki_code_date" column="gki_code_date" />
+      <return-property name="gki_order_number" column="gki_order_number" />
+      <return-property name="gki_order_date" column="gki_order_date" />
+      <return-property name="gki_state_id" column="gki_state_id" />
+      <return-property name="gki_state" column="gki_state" />
+      <return-property name="gki_state_date" column="gki_state_date" />
+      <return-property name="note" column="note" />
+      <return-property name="gki_user" column="gki_user" />
+      <return-property name="color" column="color" />
+    </return>
+    <parameter name="show_classified" type="Boolean" sql-type="bit" />
+    <parameter name="only_new" type="Boolean" sql-type="bit" />
+    <parameter name="ekk_guid_list" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_INSERT_PROJECT_LOADING_ITEM" p1:procedure="dbo.APL_INSERT_PROJECT_LOADING_ITEM" p1:Guid="9e89e107-a174-479c-92cd-5d3453266ea9">
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="object_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="subobject_description" type="String" sql-type="nvarchar" />
+    <parameter name="start_description" type="String" sql-type="nvarchar" />
+    <parameter name="finish_description" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_SELECT_PROJECT_LOADING_ITEMS" p1:procedure="dbo.APL_SELECT_PROJECT_LOADING_ITEMS" p1:Guid="e8eabc61-ef40-4971-8e30-b1038a2c5f72">
+    <return class="APL_SELECT_PROJECT_LOADING_ITEMSResult">
+      <return-property name="subobject_description" column="subobject_description" />
+      <return-property name="start_description" column="start_description" />
+      <return-property name="finish_description" column="finish_description" />
+      <return-property name="error_description" column="error_description" />
+      <return-property name="warning_description" column="warning_description" />
+    </return>
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_COMMIT_LOADING" p1:procedure="dbo.SYS_COMMIT_LOADING" p1:Guid="c3f2b0eb-52fa-4497-97c7-2d7401bcc88a">
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_SELECT_LOADING_INFO" p1:procedure="dbo.SYS_SELECT_LOADING_INFO" p1:Guid="7fa4b0a5-020d-4a97-bb4a-c74ede6bef37">
+    <return class="SYS_SELECT_LOADING_INFOResult">
+      <return-property name="id" column="id" />
+      <return-property name="loading_state_id" column="loading_state_id" />
+      <return-property name="loading_state_description" column="loading_state_description" />
+      <return-property name="allow_commit" column="allow_commit" />
+      <return-property name="description" column="description" />
+      <return-property name="total_cnt" column="total_cnt" />
+      <return-property name="error_cnt" column="error_cnt" />
+      <return-property name="warning_cnt" column="warning_cnt" />
+      <return-property name="info_html" column="info_html" />
+    </return>
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="SYS_INSERT_LOADING2" p1:procedure="dbo.SYS_INSERT_LOADING2" p1:Guid="f4336a51-dd7d-43d0-9650-b2b97f5d6cf2">
+    <return class="SYS_INSERT_LOADING2Result">
+      <return-property name="loading_id" column="loading_id" />
+      <return-property name="column_cnt" column="column_cnt" />
+    </return>
+    <parameter name="loading_type_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="file_name" type="String" sql-type="nvarchar" />
+    <parameter name="summary" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_UPDATE_GRID_SETTING2" p1:procedure="dbo.UI_UPDATE_GRID_SETTING2" p1:Guid="c6fc80b2-6380-4caa-8a18-4363d5aeba01">
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+    <parameter name="field_description" type="String" sql-type="nvarchar" />
+    <parameter name="is_visible" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="width" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="number" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_DROPDOWN" p1:procedure="dbo.UI_SELECT_DROPDOWN" p1:Guid="19a7c8d9-dc74-449e-9bfd-c24975490caf">
+    <return class="APL_SELECT_PROJECT_STATES_FOR_DDResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="dropdown" type="String" sql-type="nvarchar" />
+    <parameter name="param" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="UI_SELECT_GRID_SETTINGS" p1:procedure="dbo.UI_SELECT_GRID_SETTINGS" p1:Guid="fad0a89a-9dbe-40b2-94c1-ff26c77b8b08">
+    <return class="UI_SELECT_GRID_SETTINGSResult">
+      <return-property name="global_visible" column="global_visible" />
+      <return-property name="global_editable" column="global_editable" />
+      <return-property name="field_description" column="field_description" />
+      <return-property name="russian_field_description" column="russian_field_description" />
+      <return-property name="is_visible" column="is_visible" />
+      <return-property name="width" column="width" />
+      <return-property name="number" column="number" />
+      <return-property name="is_required" column="is_required" />
+      <return-property name="ui_type" column="ui_type" />
+      <return-property name="dropdown" column="dropdown" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="stored_procedure" type="String" sql-type="nvarchar" />
+    <parameter name="param_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="data_type_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_SELECT_PROJECT_LIST_INFO2" p1:procedure="dbo.APL_SELECT_PROJECT_LIST_INFO2" p1:Guid="e8417ca1-3236-482c-bf3a-fb788cf2a108">
+    <return class="APL_SELECT_PROJECT_LIST_INFO2Result">
+      <return-property name="id" column="id" />
+      <return-property name="code" column="code" />
+      <return-property name="project_short_description" column="project_short_description" />
+      <return-property name="project_description" column="project_description" />
+      <return-property name="project_type_id" column="project_type_id" />
+      <return-property name="project_type" column="project_type" />
+      <return-property name="project_state_id" column="project_state_id" />
+      <return-property name="project_state" column="project_state" />
+      <return-property name="logistical_network_objects" column="logistical_network_objects" />
+      <return-property name="subcontractors" column="subcontractors" />
+      <return-property name="customer_id" column="customer_id" />
+      <return-property name="customer" column="customer" />
+      <return-property name="designer_id" column="designer_id" />
+      <return-property name="designer" column="designer" />
+      <return-property name="start" column="start" />
+      <return-property name="finish" column="finish" />
+      <return-property name="year1" column="year1" />
+      <return-property name="year2" column="year2" />
+      <return-property name="finish_date" column="finish_date" />
+      <return-property name="build_curator_id" column="build_curator_id" />
+      <return-property name="build_curator" column="build_curator" />
+      <return-property name="build_curator_list_id" column="build_curator_list_id" />
+      <return-property name="build_curator_list" column="build_curator_list" />
+      <return-property name="package_curator_id" column="package_curator_id" />
+      <return-property name="package_curator" column="package_curator" />
+      <return-property name="supply_curator_id" column="supply_curator_id" />
+      <return-property name="supply_curator" column="supply_curator" />
+      <return-property name="supply_curator_list_id" column="supply_curator_list_id" />
+      <return-property name="supply_curator_list" column="supply_curator_list" />
+      <return-property name="deliveryplan_curator_list_id" column="deliveryplan_curator_list_id" />
+      <return-property name="deliveryplan_curator_list" column="deliveryplan_curator_list" />
+      <return-property name="project_curator_id" column="project_curator_id" />
+      <return-property name="project_curator" column="project_curator" />
+      <return-property name="stocks_curator_id" column="stocks_curator_id" />
+      <return-property name="stocks_curator" column="stocks_curator" />
+      <return-property name="normative_delivery_time" column="normative_delivery_time" />
+      <return-property name="storage_contract" column="storage_contract" />
+      <return-property name="storage_contract_finish_date" column="storage_contract_finish_date" />
+      <return-property name="build_start_date" column="build_start_date" />
+      <return-property name="build_finish_date" column="build_finish_date" />
+      <return-property name="non_project_supplier_approve_required" column="non_project_supplier_approve_required" />
+      <return-property name="rss_match_type_id" column="rss_match_type_id" />
+      <return-property name="rss_match_type" column="rss_match_type" />
+      <return-property name="tpsu_division_id" column="tpsu_division_id" />
+      <return-property name="tpsu_division" column="tpsu_division" />
+      <return-property name="subcontractor_info_list_id" column="subcontractor_info_list_id" />
+      <return-property name="subcontractor_info_list" column="subcontractor_info_list" />
+      <return-property name="is_documentation_percent" column="is_documentation_percent" />
+      <return-property name="is_documentation" column="is_documentation" />
+      <return-property name="is_change_documentation_percent" column="is_change_documentation_percent" />
+      <return-property name="is_change_documentation" column="is_change_documentation" />
+      <return-property name="total_sum_gk" column="total_sum_gk" />
+      <return-property name="total_sum_direct" column="total_sum_direct" />
+      <return-property name="advance_info" column="advance_info" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="hide_closed" type="Boolean" sql-type="bit" />
+    <parameter name="show_mine" type="Boolean" sql-type="bit" />
+  </method>
+  <method name="UI_GET_ACTION_ROLE" p1:procedure="dbo.UI_GET_ACTION_ROLE" p1:Guid="6907fb86-203a-431d-af54-8df6fa6d77ca">
+    <return class="UI_GET_ACTION_ROLEResult">
+      <return-property name="column0" column="column0" />
+    </return>
+    <parameter name="url" type="String" sql-type="nvarchar" length="510" />
+    <parameter name="action" type="String" sql-type="nvarchar" length="510" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="param" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="APL_UPDATE_PROJECT2" p1:procedure="dbo.APL_UPDATE_PROJECT2" p1:Guid="f76d61d2-6c19-4888-a452-e230616fbc84">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="project_description" type="String" sql-type="nvarchar" />
+    <parameter name="project_short_description" type="String" sql-type="nvarchar" length="510" />
+    <parameter name="project_type_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="project_state_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="customer_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="designer_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="normative_delivery_time" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="start" type="Double" sql-type="float" precision="53" />
+    <parameter name="finish" type="Double" sql-type="float" precision="53" />
+    <parameter name="year1" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="year2" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="finish_date" type="DateTime" sql-type="date" />
+    <parameter name="build_curator_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="build_curator_list_id" type="String" sql-type="nvarchar" />
+    <parameter name="package_curator_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="supply_curator_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="supply_curator_list_id" type="String" sql-type="nvarchar" />
+    <parameter name="deliveryplan_curator_list_id" type="String" sql-type="nvarchar" />
+    <parameter name="project_curator_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="stocks_curator_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="storage_contract" type="String" sql-type="nvarchar" />
+    <parameter name="storage_contract_finish_date" type="DateTime" sql-type="date" />
+    <parameter name="non_project_supplier_approve_required" type="Boolean" sql-type="bit" />
+    <parameter name="rss_match_type_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="tpsu_division_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="subcontractor_info_list_id" type="String" sql-type="nvarchar" />
+    <parameter name="is_documentation_percent" type="String" sql-type="nvarchar" />
+    <parameter name="is_documentation" type="String" sql-type="nvarchar" />
+    <parameter name="is_change_documentation_percent" type="String" sql-type="nvarchar" />
+    <parameter name="is_change_documentation" type="String" sql-type="nvarchar" />
+    <parameter name="total_sum_gk" type="Double" sql-type="float" precision="53" />
+    <parameter name="total_sum_direct" type="Double" sql-type="float" precision="53" />
+    <parameter name="advance_info" type="Double" sql-type="float" precision="53" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_SELECT_OBJECTS_AND_SUBOBJECTS" p1:procedure="dbo.APL_SELECT_OBJECTS_AND_SUBOBJECTS" p1:Guid="a4b6e699-b7b0-42e5-af3a-a5af423a8498">
+    <return class="APL_SELECT_OBJECTS_AND_SUBOBJECTSResult">
+      <return-property name="id" column="id" />
+      <return-property name="parent_id" column="parent_id" />
+      <return-property name="description" column="description" />
+      <return-property name="start" column="start" />
+      <return-property name="finish" column="finish" />
+      <return-property name="tree_errors" column="tree_errors" />
+      <return-property name="subcontractor_list" column="subcontractor_list" />
+      <return-property name="project_1c_guid" column="project_1c_guid" />
+      <return-property name="project_1c" column="project_1c" />
+      <return-property name="is_parent" column="is_parent" />
+      <return-property name="object_id" column="object_id" />
+      <return-property name="object_description" column="object_description" />
+      <return-property name="project_description" column="project_description" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="project_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_INSERT_SVR_LOADING_ITEM" p1:procedure="dbo.OMC_INSERT_SVR_LOADING_ITEM" p1:Guid="7477e802-09ab-4f98-9ebc-bdc49a42e2df">
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="project_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="number" type="String" sql-type="nvarchar" />
+    <parameter name="resource_code" type="String" sql-type="nvarchar" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="unit_description" type="String" sql-type="nvarchar" />
+    <parameter name="quantity_description" type="String" sql-type="nvarchar" />
+    <parameter name="price_description" type="String" sql-type="nvarchar" />
+    <parameter name="summa_description" type="String" sql-type="nvarchar" />
+    <parameter name="local_estimate_number" type="String" sql-type="nvarchar" />
+    <parameter name="project_documentation_code" type="String" sql-type="nvarchar" />
+    <parameter name="turnover" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_SELECT_FORM_SVR_ITEMS_DIFF" p1:procedure="dbo.OMC_SELECT_FORM_SVR_ITEMS_DIFF" p1:Guid="229c3123-f7e8-4d89-a460-cf3d5e14cc6f">
+    <return class="OMC_SELECT_FORM_SVR_ITEMS_DIFFResult">
+      <return-property name="id" column="id" />
+      <return-property name="fi_id" column="fi_id" />
+      <return-property name="si_id" column="si_id" />
+      <return-property name="form_id" column="form_id" />
+      <return-property name="svr_id" column="svr_id" />
+      <return-property name="diff_type" column="diff_type" />
+      <return-property name="local_estimate_number" column="local_estimate_number" />
+      <return-property name="project_documentation_code" column="project_documentation_code" />
+      <return-property name="number" column="number" />
+      <return-property name="resource_code" column="resource_code" />
+      <return-property name="description" column="description" />
+      <return-property name="last_unit_description" column="last_unit_description" />
+      <return-property name="new_unit_description" column="new_unit_description" />
+      <return-property name="last_quantity" column="last_quantity" />
+      <return-property name="new_quantity" column="new_quantity" />
+      <return-property name="last_price" column="last_price" />
+      <return-property name="new_price" column="new_price" />
+      <return-property name="last_summa" column="last_summa" />
+      <return-property name="new_summa" column="new_summa" />
+      <return-property name="last_turnover" column="last_turnover" />
+      <return-property name="new_turnover" column="new_turnover" />
+      <return-property name="last_svr_delivery_type" column="last_svr_delivery_type" />
+      <return-property name="new_svr_delivery_type" column="new_svr_delivery_type" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="form_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_SELECT_SVR" p1:procedure="dbo.OMC_SELECT_SVR" p1:Guid="d6e76eff-89b7-452b-a8aa-4d94ad3c77ef">
+    <return class="OMC_SELECT_SVRResult">
+      <return-property name="id" column="id" />
+      <return-property name="project_description" column="project_description" />
+      <return-property name="creation_date" column="creation_date" />
+      <return-property name="user_description" column="user_description" />
+      <return-property name="total_cnt" column="total_cnt" />
+      <return-property name="total_sum" column="total_sum" />
+      <return-property name="error_cnt" column="error_cnt" />
+      <return-property name="last_version" column="last_version" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_SELECT_SVR_ITEMS" p1:procedure="dbo.OMC_SELECT_SVR_ITEMS" p1:Guid="96141916-119c-4e05-80bf-5e1307bca2d3">
+    <return class="OMC_SELECT_SVR_ITEMSResult">
+      <return-property name="id" column="id" />
+      <return-property name="local_estimate_number" column="local_estimate_number" />
+      <return-property name="project_documentation_code" column="project_documentation_code" />
+      <return-property name="number" column="number" />
+      <return-property name="resource_code" column="resource_code" />
+      <return-property name="description" column="description" />
+      <return-property name="unit_description" column="unit_description" />
+      <return-property name="quantity" column="quantity" />
+      <return-property name="price" column="price" />
+      <return-property name="summa" column="summa" />
+      <return-property name="turnover" column="turnover" />
+      <return-property name="delivery_type" column="delivery_type" />
+      <return-property name="error_dmtos" column="error_dmtos" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="SVR_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_SELECT_SVR_LOADING_ITEM" p1:procedure="dbo.OMC_SELECT_SVR_LOADING_ITEM" p1:Guid="031e212a-2e2b-4320-b8a6-b4796eefde3b">
+    <return class="OMC_SELECT_SVR_LOADING_ITEMResult">
+      <return-property name="number" column="number" />
+      <return-property name="resource_code" column="resource_code" />
+      <return-property name="description" column="description" />
+      <return-property name="unit_description" column="unit_description" />
+      <return-property name="quantity_description" column="quantity_description" />
+      <return-property name="price_description" column="price_description" />
+      <return-property name="summa_description" column="summa_description" />
+      <return-property name="local_estimate_number" column="local_estimate_number" />
+      <return-property name="project_documentation_code" column="project_documentation_code" />
+      <return-property name="turnover" column="turnover" />
+      <return-property name="error_description" column="error_description" />
+      <return-property name="warning_description" column="warning_description" />
+    </return>
+    <parameter name="loading_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="OMC_SELECT_FORMS" p1:procedure="dbo.OMC_SELECT_FORMS" p1:Guid="e69b1e61-193d-4752-9faf-c36124a96eda">
+    <return class="OMC_SELECT_FORMSResult">
+      <return-property name="id" column="id" />
+      <return-property name="form_id" column="form_id" />
+      <return-property name="form_description" column="form_description" />
+      <return-property name="project_id" column="project_id" />
+      <return-property name="project_description" column="project_description" />
+      <return-property name="modification_date" column="modification_date" />
+      <return-property name="owner_description" column="owner_description" />
+      <return-property name="total_cnt" column="total_cnt" />
+      <return-property name="total_diff" column="total_diff" />
+      <return-property name="unsi_declined" column="unsi_declined" />
+      <return-property name="dmtos_declined" column="dmtos_declined" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="hide_archive" type="Boolean" sql-type="bit" />
+  </method>
+  <method name="OMC_SELECT_FORM_RSS_ITEMS" p1:procedure="dbo.OMC_SELECT_FORM_RSS_ITEMS" p1:Guid="7738b20f-a99f-418e-bb4d-cf771823b6ad">
+    <return class="OMC_SELECT_FORM_RSS_ITEMSResult">
+      <return-property name="id" column="id" />
+      <return-property name="form_id" column="form_id" />
+      <return-property name="code" column="code" />
+      <return-property name="object_description" column="object_description" />
+      <return-property name="subobject_description" column="subobject_description" />
+      <return-property name="subcontractor_id" column="subcontractor_id" />
+      <return-property name="subcontractor_description" column="subcontractor_description" />
+      <return-property name="lno_id" column="lno_id" />
+      <return-property name="lno_description" column="lno_description" />
+      <return-property name="project_documentation_code" column="project_documentation_code" />
+      <return-property name="revision_number" column="revision_number" />
+      <return-property name="ekk_code" column="ekk_code" />
+      <return-property name="price_manager_id" column="price_manager_id" />
+      <return-property name="price_manager_description" column="price_manager_description" />
+      <return-property name="description" column="description" />
+      <return-property name="additional_properties" column="additional_properties" />
+      <return-property name="package_contents" column="package_contents" />
+      <return-property name="manufacturer" column="manufacturer" />
+      <return-property name="unit_id" column="unit_id" />
+      <return-property name="unit_description" column="unit_description" />
+      <return-property name="quantity" column="quantity" />
+      <return-property name="mass_per_unit" column="mass_per_unit" />
+      <return-property name="mass_size" column="mass_size" />
+      <return-property name="summary" column="summary" />
+      <return-property name="summary2" column="summary2" />
+      <return-property name="project_requirement_source" column="project_requirement_source" />
+      <return-property name="delivery_type_description" column="delivery_type_description" />
+      <return-property name="suggested_delivery_type_id" column="suggested_delivery_type_id" />
+      <return-property name="suggested_delivery_type_description" column="suggested_delivery_type_description" />
+      <return-property name="delivery_type_id" column="delivery_type_id" />
+      <return-property name="delivery_type_description1" column="delivery_type_description" />
+      <return-property name="unsi_comment" column="unsi_comment" />
+      <return-property name="dmtos_comment" column="dmtos_comment" />
+      <return-property name="chanhes_info" column="chanhes_info" />
+      <return-property name="commit_changes_date" column="commit_changes_date" />
+      <return-property name="project_requirement_state_id" column="project_requirement_state_id" />
+      <return-property name="project_requirement_state_description" column="project_requirement_state_description" />
+      <return-property name="for_pricing" column="for_pricing" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="form_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="show_only_for_pricing" type="Boolean" sql-type="bit" />
+  </method>
+  <method name="OMC_SELECT_FORM_SVR_ITEMS" p1:procedure="dbo.OMC_SELECT_FORM_SVR_ITEMS" p1:Guid="9f8645a9-e78e-4c31-b0d1-c3972274a7eb">
+    <return class="OMC_SELECT_FORM_SVR_ITEMSResult">
+      <return-property name="id" column="id" />
+      <return-property name="form_id" column="form_id" />
+      <return-property name="local_estimate_number" column="local_estimate_number" />
+      <return-property name="project_documentation_code" column="project_documentation_code" />
+      <return-property name="number" column="number" />
+      <return-property name="resource_code" column="resource_code" />
+      <return-property name="ekk_code" column="ekk_code" />
+      <return-property name="price_manager_id" column="price_manager_id" />
+      <return-property name="price_manager_description" column="price_manager_description" />
+      <return-property name="description" column="description" />
+      <return-property name="unit_id" column="unit_id" />
+      <return-property name="unit_description" column="unit_description" />
+      <return-property name="quantity" column="quantity" />
+      <return-property name="price" column="price" />
+      <return-property name="summa" column="summa" />
+      <return-property name="turnover" column="turnover" />
+      <return-property name="svr_delivery_type" column="svr_delivery_type" />
+      <return-property name="add_info" column="add_info" />
+      <return-property name="suggested_delivery_type_id" column="suggested_delivery_type_id" />
+      <return-property name="suggested_delivery_type_description" column="suggested_delivery_type_description" />
+      <return-property name="delivery_type_id" column="delivery_type_id" />
+      <return-property name="delivery_type_description" column="delivery_type_description" />
+      <return-property name="unsi_comment" column="unsi_comment" />
+      <return-property name="dmtos_comment" column="dmtos_comment" />
+      <return-property name="changes_info" column="changes_info" />
+      <return-property name="commit_changes_date" column="commit_changes_date" />
+      <return-property name="for_pricing" column="for_pricing" />
+    </return>
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="form_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="show_only_for_pricing" type="Boolean" sql-type="bit" />
+  </method>
+  <method name="UI_SELECT_LINK" p1:procedure="dbo.UI_SELECT_LINK" p1:Guid="236fd871-ae80-4b6d-881f-5d9614995b45">
+    <return class="UI_SELECT_LINKResult">
+      <return-property name="id" column="id" />
+      <return-property name="description" column="description" />
+      <return-property name="legend" column="legend" />
+    </return>
+    <parameter name="action" type="String" sql-type="nvarchar" />
+    <parameter name="controller" type="String" sql-type="nvarchar" />
+    <parameter name="param" type="String" sql-type="nvarchar" />
+  </method>
+  <method name="UI_SELECT_DROPDOWN_TXT" p1:procedure="dbo.UI_SELECT_DROPDOWN_TXT" p1:Guid="1afb7924-568f-4936-a690-d88ed38fd204">
+    <return class="UI_SELECT_DROPDOWN_TXTResult">
+      <return-property name="guid" column="guid" />
+      <return-property name="description" column="description" />
+    </return>
+    <parameter name="dropdown" type="String" sql-type="nvarchar" />
+    <parameter name="param" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_UPDATE_OBJECT2" p1:procedure="dbo.APL_UPDATE_OBJECT2" p1:Guid="e633001e-f793-414f-9b83-a45fca2209b4">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="start" type="Double" sql-type="float" precision="53" />
+    <parameter name="finish" type="Double" sql-type="float" precision="53" />
+    <parameter name="project_1c_guid" type="String" sql-type="nvarchar" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_UPDATE_SUBOBJECT2" p1:procedure="dbo.APL_UPDATE_SUBOBJECT2" p1:Guid="7ff67b70-1260-430e-ad31-7c08532ddff1">
+    <return class="UI_DELETE_LINK_FUNCTIONResult">
+      <return-property name="error_description" column="error_description" />
+    </return>
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="object_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="description" type="String" sql-type="nvarchar" />
+    <parameter name="start" type="Double" sql-type="float" precision="53" />
+    <parameter name="finish" type="Double" sql-type="float" precision="53" />
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+  <method name="APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS" p1:procedure="dbo.APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS" p1:Guid="03ca7816-1efa-444a-8000-a949731ace9d">
+    <return class="APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTSResult">
+      <return-property name="id" column="id" />
+      <return-property name="lno_id" column="lno_id" />
+      <return-property name="lno_description" column="lno_description" />
+      <return-property name="start" column="start" />
+      <return-property name="finish" column="finish" />
+    </return>
+    <parameter name="user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="real_user_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="event_id" type="Int32" sql-type="int" precision="10" scale="0" />
+    <parameter name="id" type="Int32" sql-type="int" precision="10" scale="0" />
+  </method>
+</efcore>

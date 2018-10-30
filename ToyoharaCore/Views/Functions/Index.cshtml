@@ -1,0 +1,120 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml"; string controller = ViewContext.RouteData.Values["Controller"].ToString();}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+
+<link href="~/css/Functions/Functions.css" rel="stylesheet" />
+<script src="~/js/Functions/Functions.js"></script>
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+@(Html.DevExtreme().DataGrid<UI_SELECT_LINK_FUNCTIONSResult>()
+                                            .ID("Functions_grid")
+                                            .ShowBorders(true)
+                                            .ShowRowLines(true)
+                                            .CacheEnabled(false)
+                                            .DataSource(d => d.Mvc()
+                                            //.LoadAction("GetFunctions")
+                                            .LoadAction("GetData")
+                                            .Controller("Common")
+                                            //.Controller("Functions")
+                                            .Key("id")
+                                            .LoadParams(new
+                                            {
+                                    //showSelected = new JS("function(){return showSelected;}"),
+                                    //selectedRecord = new JS("function(){return selectedRecord;}"),
+                                    //rebind = new JS("function(){return rebind;}")
+                                    additionalParams = new JS("function(){return AdditionalParams('" + controller + "');}")
+
+                                            })
+                                )
+                                .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+                                .Columns(columns =>
+                                {
+                                    columns.AddFor(m => m.section_description).HeaderCellTemplate("Раздел").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_section_description_ru"])).Visible((bool)ViewData["CK_UI_section_description"]).Width((int)ViewData["CK_UI_section_description_width"]).VisibleIndex((int)ViewData["CK_UI_section_description_pos"]).AllowEditing((bool)ViewData["CK_UI_section_description_edit"]);
+                                    columns.AddFor(m => m.code).HeaderCellTemplate("Код").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]);
+                                    columns.AddFor(m => m.title).HeaderCellTemplate("Заголовок").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_title_ru"])).Visible((bool)ViewData["CK_UI_title"]).Width((int)ViewData["CK_UI_title_width"]).VisibleIndex((int)ViewData["CK_UI_title_pos"]).AllowEditing((bool)ViewData["CK_UI_title_edit"]);
+                                    columns.AddFor(m => m.stored_procedure).HeaderCellTemplate("Хранимая процедура").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stored_procedure_ru"])).Visible((bool)ViewData["CK_UI_stored_procedure"]).Width((int)ViewData["CK_UI_stored_procedure_width"]).VisibleIndex((int)ViewData["CK_UI_stored_procedure_pos"]).AllowEditing((bool)ViewData["CK_UI_stored_procedure_edit"]);
+                                    columns.AddFor(m => m.modification_user).HeaderCellTemplate("Автор последнего изменения").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_modification_user_ru"])).Visible((bool)ViewData["CK_UI_modification_user"]).Width((int)ViewData["CK_UI_modification_user_width"]).VisibleIndex((int)ViewData["CK_UI_modification_user_pos"]).AllowEditing((bool)ViewData["CK_UI_modification_user_edit"]);
+                                    columns.AddFor(m => m.modification_date).HeaderCellTemplate("Дата последнего изменения").AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_modification_date_ru"])).Visible((bool)ViewData["CK_UI_modification_date"]).Width((int)ViewData["CK_UI_modification_date_width"]).VisibleIndex((int)ViewData["CK_UI_modification_date_pos"]).AllowEditing((bool)ViewData["CK_UI_modification_date_edit"]);
+                                    columns.AddFor(m => m.section_id).AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_section_id_ru"])).Visible((bool)ViewData["CK_UI_section_id"]).Width((int)ViewData["CK_UI_section_id_width"]).VisibleIndex((int)ViewData["CK_UI_section_id_pos"]).AllowEditing((bool)ViewData["CK_UI_section_id_edit"]);
+                                    columns.AddFor(m => m.description).AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]).EncodeHtml(false);
+                                    columns.AddFor(m => m.id).AllowEditing(false).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).CssClass("row_id");
+                                })
+                                    .Paging(p => p.PageSize(30))
+                                    .Pager(pager =>
+                                      {
+                                          pager.ShowPageSizeSelector(true);
+                                          pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                          pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                          pager.ShowInfo(true);
+                                          pager.ShowNavigationButtons(true);
+                                          pager.Visible(true);
+                                      })
+                                    .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                    .HeaderFilter(f => f.Visible(true))
+                                    .RemoteOperations(true)
+                                    .ShowRowLines(true)
+                                    .ColumnAutoWidth(true)
+                                    .FilterSyncEnabled(true)
+                                    .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                    .Width("100%")//new JS("function() { return window.outerWidth - 60; }"))
+                                                  //Scrolling(scrolling => scrolling.ColumnRenderingMode(GridColumnRenderingMode.Virtual))
+                                    .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                            .OnRowClick("onRowClick")
+                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                            .AllowColumnResizing(true)
+                            .AllowColumnReordering(true)
+                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                            .WordWrapEnabled(true)
+                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
+                            .OnToolbarPreparing("onToolbarPreparing")
+                            .OnSelectionChanged("selection_changed")
+
+)
+
+
+<div id="AddFunctionModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="AddFunction_title"></h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="Function_add_table">
+                        <tr>
+                            <td style="width:10%;"><label for="FunctionSection">Раздел<span style="color:red;">*</span></label></td>
+                            <td style="width:90%;">
+                                <select id="FunctionSection" name="FunctionSection" style="width:100%;">
+                                    <option value=""></option>
+                                    @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)ViewBag.FunctionSection, "id", "description"))
+                                    {
+                                        <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;"><label for="FunctionHeader">Заголовок<span style="color:red;">*</span></label></td>
+                            <td style="width:90%;"><input type="text" id="FunctionHeader" class="FunctionHeader" style="width:100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;"><label for="FunctionStoredProc">Хранимая процедура</label></td>
+                            <td style="width:90%;"><input type="text" id="FunctionStoredProc" style="width:100%;" /></td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;"><label for="FunctionHtmlText">Описание функции</label></td>
+                            <td style="width:90%;"><textarea id="FunctionHtmlText" class="FunctionHtmlText" rows="30" ; style="width:100%;  resize:both;"></textarea></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick='UpdateFunctions();'>
+                        <span class="dx-icon-floppy icon"></span>@*</i>*@
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

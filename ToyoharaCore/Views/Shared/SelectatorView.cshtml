@@ -1,0 +1,21 @@
+﻿@model ToyoharaCore.Models.CustomModel.SelectatorModel
+@using Newtonsoft.Json
+@using ToyoharaCore.Models.CustomModel
+
+<select id="@Model.SelectatorId" name="@Model.SelectatorId" class="@Model.SelectatorClass" @Model.Multiple>
+    @if (Model.SelectatorList.Any(x => Convert.ToString(x.id) != ""))
+    {<option value=""></option>}
+    @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)Model.SelectatorList, "id", "description"))
+    {
+        <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+    }
+</select>
+<script>
+
+    $('#' + '@Model.SelectatorId').selectator({
+        showAllOptionsOnFocus: true,
+        searchFields: 'value text subtitle right'
+    }
+    );
+
+</script>

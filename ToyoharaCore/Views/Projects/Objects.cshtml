@@ -1,0 +1,348 @@
+﻿
+@{
+
+    ViewData["Title"] = "Objects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+
+}
+@*<script src="~/js/TreeCard.js"></script>*@
+<div id="part"></div>
+@*@Html.Partial("UpdateTreeGridCard", (ToyoharaCore.Models.CustomModel.UpdateGridCardModel)ViewBag.GridCard)*@
+@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.Settings)
+@(Html.DevExtreme().TreeList<APL_SELECT_OBJECTS_AND_SUBOBJECTSResult>
+                        ()
+                        .ID("ObjectsTree")
+                        .DataSource(ds => ds.Mvc()
+                        .Controller("Common")
+                        .LoadAction("GetData")
+                        .Key("id").LoadParams(new
+                        {
+                            additionalParams = new JS("function(){return ReturnData('" + control + "', " + ViewBag.project_id + ");}")
+                //showSelected = new JS("function(){return showSelected;}"),
+                //selectedRecord = new JS("function(){return selectedRecord;}"),
+                //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
+                //rebind = new JS("function(){return rebind;}"),
+                //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
+            })
+                        )
+                        .KeyExpr("id")
+                        .ParentIdExpr("parent_id")
+                        //.SearchPanel(searchPanel => searchPanel.Visible(true).Width(250))
+                        .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                        .Selection(s => s
+                        .Mode(SelectionMode.Single)
+                        )
+                        //.ColumnChooser(cc => cc.Enabled(true))
+                        .ColumnAutoWidth(true)
+                        .WordWrapEnabled(true)
+                        .ShowBorders(true)
+                        .Columns(columns =>
+                        {
+                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
+                            columns.AddFor(m => m.parent_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_parent_id_ru"])).Visible((bool)ViewData["CK_UI_parent_id"]).Width((int)ViewData["CK_UI_parent_id_width"]).VisibleIndex((int)ViewData["CK_UI_parent_id_pos"]).AllowEditing((bool)ViewData["CK_UI_parent_id_edit"]);
+                            columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]);
+                            columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_ru"])).Visible((bool)ViewData["CK_UI_start"]).Width((int)ViewData["CK_UI_start_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_edit"]);
+                            columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_ru"])).Visible((bool)ViewData["CK_UI_finish"]).Width((int)ViewData["CK_UI_finish_width"]).VisibleIndex((int)ViewData["CK_UI_finish_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_edit"]);
+                            columns.AddFor(m => m.tree_errors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tree_errors_ru"])).Visible((bool)ViewData["CK_UI_tree_errors"]).Width((int)ViewData["CK_UI_tree_errors_width"]).VisibleIndex((int)ViewData["CK_UI_tree_errors_pos"]).AllowEditing((bool)ViewData["CK_UI_tree_errors_edit"]);
+                            columns.AddFor(m => m.subcontractor_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_list_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_list"]).Width((int)ViewData["CK_UI_subcontractor_list_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_list_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_list_edit"]);
+                            columns.AddFor(m => m.project_1c_guid).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_guid_ru"])).Visible((bool)ViewData["CK_UI_project_1c_guid"]).Width((int)ViewData["CK_UI_project_1c_guid_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_guid_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_guid_edit"]);
+                            columns.AddFor(m => m.project_1c).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_ru"])).Visible((bool)ViewData["CK_UI_project_1c"]).Width((int)ViewData["CK_UI_project_1c_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_edit"]);
+                            columns.AddFor(m => m.is_parent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_parent_ru"])).Visible((bool)ViewData["CK_UI_is_parent"]).Width((int)ViewData["CK_UI_is_parent_width"]).VisibleIndex((int)ViewData["CK_UI_is_parent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_parent_edit"]);
+                            columns.AddFor(m => m.object_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_id_ru"])).Visible((bool)ViewData["CK_UI_object_id"]).Width((int)ViewData["CK_UI_object_id_width"]).VisibleIndex((int)ViewData["CK_UI_object_id_pos"]).AllowEditing((bool)ViewData["CK_UI_object_id_edit"]);
+                            columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ru"])).Visible((bool)ViewData["CK_UI_object_description"]).Width((int)ViewData["CK_UI_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_edit"]);
+                            columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]);
+
+                        }
+                        //.Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard))
+
+                        ).Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard).UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)).Paging(p => p.PageSize(30).Enabled(true))
+                                                                                                        .Pager(pager =>
+                                                                                                        {
+                                                                                                            pager.ShowPageSizeSelector(true);
+                                                                                                            pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                //pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                pager.ShowInfo(true);
+                                                                                                            pager.ShowNavigationButtons(true);
+                                                                                                            pager.Visible(true);
+                                                                                                        })
+
+                                                                                                        .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                        .HeaderFilter(f => f.Visible(true))
+                                                                                                        //.RemoteOperations(op=>op.Filtering(true).Grouping(true))
+                                                                                                        .ShowRowLines(true)
+                                                                                                        .ColumnAutoWidth(true)
+                                                                                                        .FilterSyncEnabled(true)
+                                                                                                        .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                                                        .Width("100%")
+                                                                                                        .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                                        .OnContentReady("contentReady")
+                                                                                                        .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                        .AllowColumnResizing(true)
+                                                                                                        .AllowColumnReordering(true)
+                                                                                                        .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                        .WordWrapEnabled(true)
+        .OnToolbarPreparing("onToolbarPreparing")
+        .OnContentReady("contentReady")
+    //.OnRowClick("onRowClick")
+    //.Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
+)
+<script>
+
+    $(function () {
+        var str = '@ViewBag.InsertObject'.toLowerCase();
+        var str2 = '@ViewBag.InsertSubobject'.toLowerCase();
+
+        if (str === 'true') {
+            //$('#AddItem').show();
+            $('#AddObject').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#AddObject').hide();
+        }
+
+        if (str2 === 'true') {
+            //$('#AddItem').show();
+            $('#AddSubObject').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#AddSubObject').hide();
+        }
+    });
+
+    function GetLink() {
+        var link = '/Projects/Objects?project_id=@ViewBag.project_id'+'&project_description=';
+        return link;
+    }
+
+    @*$(function () {
+        var str = '@ViewBag.RoleAddUpdate'.toLowerCase();
+        if (str === 'true') {
+            //$('#AddItem').show();
+            $('#AddObject').show(); $('#AddSubObject').show();  }
+        else {
+            //$('#AddItem').hide();
+            $('#AddObject').hide(); $('#AddSubObject').hide();
+        }
+    });*@
+
+    function contentReady() {
+        rebind_obj.rebind = false;
+    }
+    var rebind_obj = new Object();
+    rebind_obj.rebind = true;
+    function ReturnData(controller, project_id) {
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: rebind_obj.rebind,
+            storedProcedure: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+            controller: controller,
+            id: null,
+            project_id: project_id
+        };
+        return JSON.stringify(obj);
+    }
+
+    function FiltersBeforeGridString(addObject, addSubObject, reloading, clearFilters, update, settings, otherFilters) {
+        //reloading, clearFilters, fullSearch, excel, showSelected,
+        return $(
+            //    "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + showSelected.function + "' id='" + showSelected.id + "'><img src='/../../img/GridBtn/1-7.png' style='height:18px; width:auto;' alt='Показать выбранные'></img></button>" +
+            "<button title='Добавить объект' style='padding:6px; margin-right: 5px;' class='btn btn-primary' onclick='" + addObject.function + ";' id='" + addObject.id + "'>Добавить объект</button>" +
+            "<button title='Добавить подобъект' style='padding:6px;  margin-right: 5px;' class='btn btn-primary' onclick='" + addSubObject.function + ";' id='" + addSubObject.id + "'>Добавить подобъект</button>" +
+            "<button title='Редактировать' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + update.name + "();' id='" + update.id + "'><img src='/../../img/GridBtn/1-2.png' style='height:18px; width:auto;' alt='Редактировать'></img></button>" +
+            //"<button title='Добавить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + add.name + "();' id='" + add.id + "'><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
+            "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+            "<button title='Очистить фильтры' onclick='" + clearFilters.name + "' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+            //"<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='" + fullSearch.function + "' id='" + fullSearch.id + "' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
+            //"<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+            "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
+            otherFilters);
+    }
+    function onToolbarPreparing(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            template: FiltersBeforeGridString(
+                { function: 'AddObject()', id: 'AddObject'},
+                { function: 'AddSubObject()', id: 'AddSubObject'},
+                { function: 'Reloading("ObjectsTree")', id: 'Reloading', grid: 'Grid' },
+                { name: 'ClearFiltersTreeList("ObjectsTree")', id: 'ClearFilters' },
+                { name: 'UpdateItem', id: 'UpdateItem' },
+
+                //{ function: 'SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("show");', id: 'FullSearch' },
+                //{ name: 'ExportExcel', id: 'ExportExcel' },
+                //{ name: 'AddItem', id: 'AddItem' },
+                //{ function: 'showSelectedPicture(this,"Grid")', id: 'showSelectedPicture', grid: 'Grid' },
+                { name: 'UserSettings', id: 'UserSettings' },
+                '')
+        });
+    }
+
+    var object_id = new Object();
+    object_id.find_row_id = FindRowId;
+    object_id.without_id = NullRowId;
+    var ParamObj = new Object();
+    ParamObj.paramFunc = ParamFunc;
+
+    function NullRowId() {
+        return null;
+    }
+    function ParamFunc() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedData = dataGrid.getSelectedRowsData();
+        return selectedData[0]["id"];
+    }
+
+    function FindRowId() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedData = dataGrid.getSelectedRowsData();
+        return selectedData[0]["id"];
+    }
+
+    function AddObject() {
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Common/GridCardTreePartialUpdate",
+            type: "Get",
+            data: {
+                param_id: null,
+                selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                flowWindowName: "GridCard",
+                flowWindowRussianName: "Создание нового объекта",
+                gridId: "ObjectsTree",
+                binding: true,
+                close_Window: true,
+                updateProc: "APL_UPDATE_OBJECT2",
+                id_func: "without_id",
+                additionalParams:""
+                /*selectedData[0]['id']*/
+            },
+            success: function (partialViewResult) {
+                $("#part").html(partialViewResult);
+                OpenTreeCard(false, "GridCard", "ObjectsTree", null);
+            }
+        });
+    }
+    function AddSubObject() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку!");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 1)
+            return alert("Для создания подобъекта необходимо выбрать объект");
+        var object_id = selectedData[0]["object_id"];
+        dataGrid.deselectAll();
+        var additionalParams = { object_id: object_id };
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Common/GridCardTreePartialUpdate",
+            type: "Get",
+            data: {
+                param_id: null,
+                selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                flowWindowName: "GridCard",
+                flowWindowRussianName: "Создание нового подобъекта",
+                gridId: "ObjectsTree",
+                binding: true,
+                close_Window: true,
+                updateProc: "APL_UPDATE_SUBOBJECT2",
+                id_func: "without_id",
+                additionalParams: JSON.stringify(additionalParams)
+                /*selectedData[0]['id']*/
+            },
+            success: function (partialViewResult) {
+                $("#part").html(partialViewResult);
+                OpenTreeCard(false, "GridCard", "ObjectsTree", null);
+            }
+        });
+    }
+        //function AddItem() {
+        // var dataGrid = $("#Grid").dxDataGrid("instance");
+        // var selectedData = dataGrid.getSelectedRowsData();
+        //$("#GridCard").load('/Common/GridCardPartialUpdate?param_id=' + selectedData[0]['id'] +
+        //    '&selectProc=APL_SELECT_PROJECT_LIST_INFO2&flowWindowName=GridCard&flowWindowRussianName=Карточка&gridId=Grid&binding=false' +
+        //    '&close_Window=false&updateProc=APL_UPDATE_PROJECT2&id_func=' + selectedData[0]['id']);
+        //OpenCard(true, "GridCard", "Grid", "paramFunc");
+
+
+
+    function UpdateItem() {
+
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку!");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] == 1) {
+
+            //dataGrid.deselectAll();
+            
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/GridCardTreePartialUpdate",
+                type: "Get",
+                data: {
+                    param_id: null,
+                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                    flowWindowName: "GridCard",
+                    flowWindowRussianName: "Просмотр/Редактирование",
+                    gridId: "ObjectsTree",
+                    binding: true,
+                    close_Window: true,
+                    updateProc: "APL_UPDATE_OBJECT2",
+                    id_func: "find_row_id",
+                    additionalParams: JSON.stringify(additionalParams)
+                    /*selectedData[0]['id']*/
+                },
+                success: function (partialViewResult) {
+                    $("#part").html(partialViewResult);
+                    OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+                }
+            });
+        }
+        else { 
+            var object_id = selectedData[0]["object_id"];
+            var additionalParams = { object_id: object_id };
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/GridCardTreePartialUpdate",
+                type: "Get",
+                data: {
+                    param_id: null,
+                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                    flowWindowName: "GridCard",
+                    flowWindowRussianName: "Просмотр/Редактирование",
+                    gridId: "ObjectsTree",
+                    binding: true,
+                    close_Window: true,
+                    updateProc: "APL_UPDATE_SUBOBJECT2",
+                    id_func: "find_row_id",
+                    additionalParams: JSON.stringify(additionalParams)
+                    /*selectedData[0]['id']*/
+                },
+                success: function (partialViewResult) {
+                    $("#part").html(partialViewResult);
+                    OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+                }
+            });
+
+        }
+
+    }
+
+    function ClearFiltersTreeList(listName) {
+            var dataGrid = $("#" + listName).dxTreeList("instance");
+            dataGrid.clearFilter();
+
+    }
+
+    function Reloading(grid) { rebind_obj.rebind = true; var dataGrid = $("#" + grid).dxTreeList("getDataSource"); dataGrid.reload(); }
+</script>

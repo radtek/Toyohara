@@ -1,0 +1,164 @@
+﻿@model ToyoharaCore.Models.CustomModel.UpdateGridCardModel
+@using Newtonsoft.Json
+@using ToyoharaCore.Models.CustomModel
+@{List<UI_SELECT_GRID_SETTINGSResult> v = Model.GridSettings; }
+<style>
+    .w100 {
+        width: 100%;
+    }
+
+    .w60 {
+        width: 60%;
+    }
+</style>
+<div id="@(Model.FlowWindowName)" class="modal fade" tabindex="-1" role="dialog" style="height:100%; width:100%; z-index:100000;">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">@Model.FlowWindowRussianName</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <input type="hidden" class="grid_field" value='@Html.Raw(JsonConvert.SerializeObject(Model.GridSettings))' />
+                    @*<h5>Выберите настройки таблицы</h5>*@
+                    @*<div class="text-right">
+                            <button type="button" class="btn btn-default" data-dismiss="modal" style="display:inline-block; text-align:right;">Закрыть</button>
+                            <button type="button" class="btn btn-primary" onclick='DefaultSettingsOfGrid("@Model.storedProcedure", GetLink());'>Вернуть настройки по умолчанию</button>
+                            <button type="button" class="btn btn-primary" style="margin-left:auto; margin-right:0; " onclick='UpdateSettingsOfGrid("@Model.controllerName", "@Model.actionName","@Model.storedProcedure",GetLink(), "@Model.checkBoxClass", "@Model.widthClass", "@Model.positionClass");'>Сохранить</button>
+                        </div>*@
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            @*<div class="container">
+                                    <div class="row">
+                                        <div class="col-sm-4">Название столбца</div>
+                                        <div class="col-sm-4">Показывать столбец</div>
+                                        <div class="col-sm-4">Ширина столбца</div>
+                                        <div class="col-sm-4">Положение</div>
+                                    </div>
+                                </div>*@
+                            @*<thead>
+                                    <tr>
+                                        <th>Название столбца</th>
+                                        <th>Показывать столбец</th>
+
+                                    </tr>
+                                </thead>*@
+                            <tbody>
+                                @foreach (var field in v)
+                                {
+                                    <tr class="@(Convert.ToBoolean(field.global_editable)?"":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible") @(field.ui_type == null | field.ui_type == "dropdown_list_description" | field.ui_type == "dropdown_description"   | field.ui_type == "dropdown_txt_description"| field.ui_type == "dropdown_txt_list_description" ? "null_type" : "")" name="@field.field_description">
+                                        @if (field.ui_type != "dropdown_list_id" && field.ui_type != "dropdown_id" && field.ui_type != "dropdown_txt_id" && field.ui_type != "dropdown_txt_list_id")
+                                        {
+                                            <td>
+                                                <span>@(CommonMethods.HtmlToText(field.russian_field_description))<span style='@(Convert.ToBoolean(field.is_required) ? "color:red;" : "display:none;")'>*</span>&nbsp;:</span>
+                                            </td>
+                                        }
+                                        else if (field.ui_type == "dropdown_list_id" || field.ui_type == "dropdown_id")
+                                        {
+                                            <td>
+                                                <span>@(CommonMethods.HtmlToText(Model.GridSettings.Where(x => x.field_description == field.field_description.Substring(0, field.field_description.Length - 3)).FirstOrDefault().russian_field_description))<span style='@(Convert.ToBoolean(field.is_required) ? "color:red;" : "display:none;")'>*</span>&nbsp;:</span>
+                                            </td>
+                                        }
+                                        else if (field.ui_type == "dropdown_txt_list_id" || field.ui_type == "dropdown_txt_id")
+                                        {
+                                            <td>
+                                                <span>@(CommonMethods.HtmlToText(Model.GridSettings.Where(x => x.field_description == field.field_description.Substring(0, field.field_description.Length - 5)).FirstOrDefault().russian_field_description))<span style='@(Convert.ToBoolean(field.is_required) ? "color:red;" : "display:none;")'>*</span>&nbsp;:</span>
+                                            </td>
+                                        }
+                                        @switch (field.ui_type)
+                                        {
+                                            case ("textbox_string"):
+                                                <td class="w60 "><input class="@(field.ui_type) text_b w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" type="text" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)" /></td> break;
+                                            case ("textbox_int"):
+                                                <td class="w60 "><input class="@(field.ui_type) text_b w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" type="number" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)" /></td>break;
+                                            case ("textbox_float"):
+                                                <td class="w60 "><input class="@(field.ui_type) text_b w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" type="text" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)" /></td>break;
+                                            case ("textarea"):
+                                                <td class="w60 "><textarea class="@(field.ui_type) text_b w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" type="text" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)"></textarea></td>break;
+                                            case ("checkbox"):
+                                                <td class="w60 "><input class="td_value @field.ui_type @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" type="checkbox" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)" /></td>break;
+                                            case ("dropdown_id"):
+                                                <td class="w60 ">
+                                                    @*<input class="@field.ui_type" type="text" name="@("card"+field.field_description)" id="@("card"+field.field_description)" />*@
+                                                    @*@Html.Partial("SelectatorView", Model.SelectLists.Where(x => x.Key == field.field_description).FirstOrDefault().Value)*@
+                                                    <select class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)"></select>
+                                                </td>
+                                                break;
+                                            case ("dropdown_description"):
+                                                <td class="w60 ">
+                                                    @*<input class="@field.ui_type" type="text" name="@("card"+field.field_description)" id="@("card"+field.field_description)" />*@
+                                                    @*@Html.Partial("SelectatorView", Model.SelectLists.Where(x => x.Key == field.field_description).FirstOrDefault().Value)*@
+                                                    <div class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="div_html" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown"></div>
+                                                </td>
+                                                break;
+                                            case ("dropdown_list_id"):
+                                                <td class="w60 ">
+                                                    <select class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" multiple="multiple" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)"></select>
+                                                </td>
+                                                break;
+                                            case ("dropdown_list_description"):
+                                                <td class="w60 ">
+                                                    <div class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" element_type="div_html"></div>
+                                                </td>
+                                                break;
+                                            case ("dropdown_txt_id"):
+                                                <td class="w60 ">
+                                                    @*<input class="@field.ui_type" type="text" name="@("card"+field.field_description)" id="@("card"+field.field_description)" />*@
+                                                    @*@Html.Partial("SelectatorView", Model.SelectLists.Where(x => x.Key == field.field_description).FirstOrDefault().Value)*@
+                                                    <select class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)"></select>
+                                                </td>
+                                                break;
+                                            case ("dropdown_txt_description"):
+                                                <td class="w60 ">
+                                                    @*<input class="@field.ui_type" type="text" name="@("card"+field.field_description)" id="@("card"+field.field_description)" />*@
+                                                    @*@Html.Partial("SelectatorView", Model.SelectLists.Where(x => x.Key == field.field_description).FirstOrDefault().Value)*@
+                                                    <div class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="div_html" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown"></div>
+                                                </td>
+                                                break;
+                                            case ("dropdown_txt_list_id"):
+                                                <td class="w60 ">
+                                                    <select class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" multiple="multiple" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)"></select>
+                                                </td>
+                                                break;
+                                            case ("dropdown_txt_list_description"):
+                                                <td class="w60 ">
+                                                    <div class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" name="@(field.field_description)" id="@("card"+field.field_description)" drop="@field.dropdown" element_type="div_html"></div>
+                                                </td>
+                                                break;
+                                            case ("date"):
+                                                <td class="w60"><div class="@field.ui_type  w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="@field.ui_type" name="@(field.field_description)" id="@("card"+field.field_description)" requd='@(Convert.ToBoolean(field.is_required) ? "required" : "no_required")' rus_name="@(field.russian_field_description)" /></td>break;
+                                            case (null):
+                                                <td class="w60"><div class="null_type div_val w100 td_value @(Convert.ToBoolean(field.global_editable)?"editable":"non_editable") @(Convert.ToBoolean(field.global_visible)?"global_visible":"global_non_visible")" element_type="div_html" name="@(field.field_description)" id="@("card"+field.field_description)">@field.field_description</div></td>;
+                                                break;
+                                            default: break;
+                                        }
+                                    </tr>
+                                    @*<div class="row">
+                                            <div class="col-sm-4">@(setting.columnRussianName+":")</div>
+                                            <div class="col-sm-4"><input type='checkbox' class='@Model.checkBoxClass' id='@("CK_UI_"+setting.columnName)' name='@("CK_UI_"+setting.columnName)' value='@setting.columnName' @((setting.columnVisible==true)?  " checked=\"checked\"" : "")></div>
+                                            <div class="col-sm-4"><input type='number' class='@Model.widthClass' id='@("UI_"+setting.columnName)' name='@("UI_"+setting.columnName)' onblur='javascript:checkFloat(this.value);' value='@setting.columnWidth'/></div>
+                                            <div class="col-sm-4"><input type='number' class= '@Model.positionClass' id='@("UI_"+setting.columnPosition+"_pos")' name='@("UI_"+setting.columnPosition+"_pos")' onblur='javascript:checkFloat(this.value);' value='@setting.columnPosition'/></div>
+                                        </div>*@
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom:15px;">
+                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>*@
+                    <button type="button" class="btn btn_icon" onclick='InsertCard("@Model.FlowWindowName","@Model.GridId","@Model.Bindning","@Model.Close_window","@Model.StoredProcedure", "@Model.Id_func", JSON.stringify(@(Html.Raw(JsonConvert.SerializeObject(Model.AdditionalParams)))));'>
+                        <span class="dx-icon-floppy icon"></span>@*</i>*@
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+</script>

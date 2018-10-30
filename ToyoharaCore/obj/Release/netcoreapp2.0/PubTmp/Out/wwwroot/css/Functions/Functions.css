@@ -1,0 +1,21 @@
+﻿.dx-loadindicator {
+    width: 200px;
+    height: 200px;
+}
+
+#AddFunctionModal .table {
+    margin-bottom: 0;
+}
+
+div .panel {
+    margin-bottom: 0;
+}
+
+#AddFunctionModal .modal-footer {
+    padding-bottom: 0;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > td, .dx-datagrid-rowsview .dx-selection.dx-row > tr > td, .dx-datagrid-rowsview .dx-selection.dx-row:hover > tr > td {
+    background-color: inherit !important;
+    /*background: repeating-linear-gradient( 45deg, #ccc, #ccc 1px, 1px, transparent 40px) !important;*/
+}

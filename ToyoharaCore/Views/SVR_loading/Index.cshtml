@@ -1,0 +1,105 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<link href="~/css/GKCodes/GKCodes.css" rel="stylesheet" />
+<script src="~/js/SVR_loading/Index.js"></script>
+
+
+
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+<div id="part">
+    @Html.Partial("FileUploader", (FileUploader)ViewBag.FileUploader)
+</div>
+
+<div id="ChooseProject" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Закрыть">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Загрузить новую форму СВР</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <label class='form-check-label btn_in_grid' for='notcloseproject'>Выберите проект</label>
+
+                                <select id="notcloseproject" name="notcloseproject" style="width:100%;" onchange="OnChangeChooseProject();
+                                        ">
+                                    <option value=""></option>
+                                    @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)ViewBag.NOT_CLOSE_PROJECTS_FOR_DD, "id", "description"))
+                                    {
+                                        <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@(Html.DevExtreme().DataGrid<OMC_SELECT_SVRResult>()
+                                                                            .ID("Grid")
+                                                                            .ShowBorders(true)
+                                                                            .DataSource(d => d.Mvc()
+                                                                            .LoadAction("GetData")
+                                                                            .Controller("Common")
+                                                                            .Key("id")
+
+                                                                            .LoadParams(new
+                                                                            {
+                                                                                additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                                            })
+                                                                            )
+
+                                                                        .Columns(columns =>
+                                                                        {
+                                                                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
+                                                                            columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]);
+                                                                            columns.AddFor(m => m.creation_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_creation_date_ru"])).Visible((bool)ViewData["CK_UI_creation_date"]).Width((int)ViewData["CK_UI_creation_date_width"]).VisibleIndex((int)ViewData["CK_UI_creation_date_pos"]).AllowEditing((bool)ViewData["CK_UI_creation_date_edit"]);
+                                                                            columns.AddFor(m => m.user_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_user_description_ru"])).Visible((bool)ViewData["CK_UI_user_description"]).Width((int)ViewData["CK_UI_user_description_width"]).VisibleIndex((int)ViewData["CK_UI_user_description_pos"]).AllowEditing((bool)ViewData["CK_UI_user_description_edit"]);
+                                                                            columns.AddFor(m => m.total_cnt).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_cnt_ru"])).Visible((bool)ViewData["CK_UI_total_cnt"]).Width((int)ViewData["CK_UI_total_cnt_width"]).VisibleIndex((int)ViewData["CK_UI_total_cnt_pos"]).AllowEditing((bool)ViewData["CK_UI_total_cnt_edit"]);
+                                                                            columns.AddFor(m => m.total_sum).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_sum_ru"])).Visible((bool)ViewData["CK_UI_total_sum"]).Width((int)ViewData["CK_UI_total_sum_width"]).VisibleIndex((int)ViewData["CK_UI_total_sum_pos"]).AllowEditing((bool)ViewData["CK_UI_total_sum_edit"]);
+                                                                            columns.AddFor(m => m.error_cnt).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_error_cnt_ru"])).Visible((bool)ViewData["CK_UI_error_cnt"]).Width((int)ViewData["CK_UI_error_cnt_width"]).VisibleIndex((int)ViewData["CK_UI_error_cnt_pos"]).AllowEditing((bool)ViewData["CK_UI_error_cnt_edit"]);
+                                                                            columns.AddFor(m => m.last_version).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_version_ru"])).Visible((bool)ViewData["CK_UI_last_version"]).Width((int)ViewData["CK_UI_last_version_width"]).VisibleIndex((int)ViewData["CK_UI_last_version_pos"]).AllowEditing((bool)ViewData["CK_UI_last_version_edit"]);
+                                                                        })
+                                                                            .Paging(p => p.PageSize(30))
+                                                                                    .Pager(pager =>
+                                                                                    {
+                                                                                        pager.ShowPageSizeSelector(true);
+                                                                                        pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                        pager.ShowInfo(true);
+                                                                                        pager.ShowNavigationButtons(true);
+                                                                                        pager.Visible(true);
+                                                                                    })
+                                                                                    .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                    .HeaderFilter(f => f.Visible(true))
+                                                                                    .RemoteOperations(true)
+                                                                                    .ShowRowLines(true)
+                                                                                    .ColumnAutoWidth(true)
+                                                                                    .FilterSyncEnabled(true)
+                                                                                    .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                                    .Width("100%")
+                                                                                    .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                    .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                    .AllowColumnResizing(true)
+                                                                                    .AllowColumnReordering(true)
+                                                                                    .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                    .WordWrapEnabled(true)
+                                                                                    .OnRowClick("onRowClick")
+                                                                                    .OnContentReady("contentReady")
+                                                                                    .OnToolbarPreparing("onToolbarPreparing")
+                                                                                    .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+
