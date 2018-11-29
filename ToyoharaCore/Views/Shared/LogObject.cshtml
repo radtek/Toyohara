@@ -1,0 +1,123 @@
+﻿@using Newtonsoft.Json
+@model ToyoharaCore.Models.CustomModel.LogObject
+
+
+
+
+
+<div id ="ll" name="ll" class="modal fade object_log" tabindex="-1" role="dialog">
+    <div class="modal-dialog" style="width: 80%; height:90%; margin-left: 10%; margin-top: 5%;">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title myModalLabel">История изменения</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <input type="hidden" name="objecttype" id="objecttype">
+                    <input type="hidden" name="objectid" id="objectid">
+
+                    @Html.Partial("Settings", Model.logSettings)
+
+                    @(Html.DevExtreme().DataGrid<SYS_SELECT_OBJECT_LOGResult>
+                                                                                                 ()
+                                                                                                 .ID("GridLogObject")
+                                                                                                 .ShowBorders(true)
+                                                                                                 .DataSource(d => d.Mvc()
+                                                                                                 .LoadAction("GetData")
+                                                                                                 .Controller("Common")
+                                                                                                 .Key("id")
+                                                                                                 .LoadParams(new
+                                                                                                 {
+                                                                                                     additionalParams = new JS("function(){return ReturnDataLogObject(document.getElementById(\"objecttype\").value,document.getElementById(\"objectid\").value);}")
+                                                                                                 })
+                                                                                                 )
+                                                                                                 .Columns(columns =>
+                                                                                                 {
+                                                                                                     columns.AddFor(m => m.id).HeaderCellTemplate(Model.id.russianName).Visible((bool)Model.id.visible).Width((int)Model.id.width).VisibleIndex((int)Model.id.position);
+                                                                                                     columns.AddFor(m => m.object_type).HeaderCellTemplate(Model.object_type.russianName).Visible((bool)Model.object_type.visible).Width((int)Model.object_type.width).VisibleIndex((int)Model.object_type.position);
+                                                                                                     columns.AddFor(m => m.object_id).HeaderCellTemplate(Model.object_id.russianName).Visible((bool)Model.object_id.visible).Width((int)Model.object_id.width).VisibleIndex((int)Model.object_id.position);
+                                                                                                     columns.AddFor(m => m.object_description).HeaderCellTemplate(Model.object_description.russianName).Visible((bool)Model.object_description.visible).Width((int)Model.object_description.width).VisibleIndex((int)Model.object_description.position);
+                                                                                                     columns.AddFor(m => m.action_type).HeaderCellTemplate(Model.action_type.russianName).Visible((bool)Model.action_type.visible).Width((int)Model.action_type.width).VisibleIndex((int)Model.action_type.position);
+                                                                                                     columns.AddFor(m => m.action_description).HeaderCellTemplate(Model.action_description.russianName).Visible((bool)Model.action_description.visible).Width((int)Model.action_description.width).VisibleIndex((int)Model.action_description.position);
+                                                                                                     columns.AddFor(m => m.action_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Model.action_date.russianName).Visible((bool)Model.action_date.visible).Width((int)Model.action_date.width).VisibleIndex((int)Model.action_date.position);
+                                                                                                     columns.AddFor(m => m.action_user_id).HeaderCellTemplate(Model.action_user_id.russianName).Visible((bool)Model.action_user_id.visible).Width((int)Model.action_user_id.width).VisibleIndex((int)Model.action_user_id.position);
+                                                                                                     columns.AddFor(m => m.action_user).HeaderCellTemplate(Model.action_user.russianName).Visible((bool)Model.action_user.visible).Width((int)Model.action_user.width).VisibleIndex((int)Model.action_user.position);
+                                                                                                     columns.AddFor(m => m.action_real_user_id).HeaderCellTemplate(Model.action_real_user_id.russianName).Visible((bool)Model.action_real_user_id.visible).Width((int)Model.action_real_user_id.width).VisibleIndex((int)Model.action_real_user_id.position);
+                                                                                                     columns.AddFor(m => m.action_real_user).HeaderCellTemplate(Model.action_real_user.russianName).Visible((bool)Model.action_real_user.visible).Width((int)Model.action_real_user.width).VisibleIndex((int)Model.action_real_user.position);
+                                                                                                     columns.AddFor(m => m.attribute).HeaderCellTemplate(Model.attribute.russianName).Visible((bool)Model.attribute.visible).Width((int)Model.attribute.width).VisibleIndex((int)Model.attribute.position);
+                                                                                                     columns.AddFor(m => m.last_value).HeaderCellTemplate(Model.last_value.russianName).Visible((bool)Model.last_value.visible).Width((int)Model.last_value.width).VisibleIndex((int)Model.last_value.position);
+                                                                                                     columns.AddFor(m => m.new_value).HeaderCellTemplate(Model.new_value.russianName).Visible((bool)Model.new_value.visible).Width((int)Model.new_value.width).VisibleIndex((int)Model.new_value.position);
+                                                                                                     columns.AddFor(m => m.add_attr_last_value).HeaderCellTemplate(Model.add_attr_last_value.russianName).Visible((bool)Model.add_attr_last_value.visible).Width((int)Model.add_attr_last_value.width).VisibleIndex((int)Model.add_attr_last_value.position);
+                                                                                                     columns.AddFor(m => m.add_attr_new_value).HeaderCellTemplate(Model.add_attr_new_value.russianName).Visible((bool)Model.add_attr_new_value.visible).Width((int)Model.add_attr_new_value.width).VisibleIndex((int)Model.add_attr_new_value.position);
+
+                                                                                                 })
+                                                                                                                         .Paging(p => p.PageSize(30))
+                                                                                                                         .Pager(pager =>
+                                                                                                                         {
+                                                                                                                             pager.ShowPageSizeSelector(true);
+                                                                                                                             pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                             pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                             pager.ShowInfo(true);
+                                                                                                                             pager.ShowNavigationButtons(true);
+                                                                                                                             pager.Visible(true);
+                                                                                                                         })
+
+                                                                                                                         .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                         .HeaderFilter(f => f.Visible(true))
+                                                                                                                         .RemoteOperations(true)
+                                                                                                                         .ShowRowLines(true)
+                                                                                                                         .ColumnAutoWidth(true)
+                                                                                                                         .FilterSyncEnabled(true)
+                                                                                                                         .Height(new JS("function() { return window.innerHeight-$('div.myheader').height()-200;}"))
+                                                                                                                         .Width("100%")                                                                                                                         
+                                                                                                                         .LoadPanel(load => load.IndicatorSrc("/../../img/orig2.gif").ShowIndicator(true).Height(200).Width(200).Enabled(true).ShowPane(true))
+                                                                                                                         .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                         .AllowColumnResizing(true)
+                                                                                                                         .AllowColumnReordering(true)
+                                                                                                                         .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                         .WordWrapEnabled(true)
+                                                                                                                         .OnContentReady("contentReadyLogObject")
+                                                                                                                         .OnToolbarPreparing("onToolbarPreparingLogObject")
+                                                                                                                         .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+                </div>
+                <div class="modal-footer" style="padding-bottom:15px;">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script type="text/javascript">
+    //заполнение модели для грида
+    function ReturnDataLogObject(object_type, object_id) {
+        var obj = {
+            showSelected: null,
+            selectedRecord: '',
+            id: null,
+            rebind: true,
+            storedProcedure: "SYS_SELECT_OBJECT_LOG",
+            controller: '',
+            object_type: object_type,
+            object_id: parseFloat(object_id)
+        };
+        return JSON.stringify(obj);
+    }
+    
+    function showLogObj(object_type, object_id) {
+        document.getElementById("objecttype").value = object_type;
+        document.getElementById("objectid").value = object_id;
+        $('#ObjectLog .object_log').modal('show');
+        Reloading("GridLogObject");
+    }
+
+</script>

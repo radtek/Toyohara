@@ -18,7 +18,7 @@ function ReturnData(controller) {
 
 function FiltersBeforeGridString(reloading, clearFilters, fullSearch, excel, showSelected, settings, otherFilters) {
 
-    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
         "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + showSelected.function + "' id='" + showSelected.id + "'><img src='/../../img/GridBtn/1-7.png' style='height:18px; width:auto;' alt='Показать выбранные'></img></button>" +
         "<button title='Очистить фильтры' onclick='" + clearFilters.name + "();' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
         "<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='" + fullSearch.function + "' id='" + fullSearch.id + "' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
@@ -144,7 +144,3 @@ var gridDataSource = new DevExpress.data.DataSource({
     }
 });
 
-function GetLink() {
-    var link = '/GKCodes/Index';
-    return link;
-}

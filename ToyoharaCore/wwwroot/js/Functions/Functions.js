@@ -1,4 +1,4 @@
-﻿var rebind = false;
+﻿var rebind = true;
 var Function_create_or_update = true;
 var selectedRecord = '';
 var showSelected = null;
@@ -72,7 +72,6 @@ function RemoveFunctions() {
                     alert(data.replace(/__/gi, '\n'));
                 $("#Functions_grid").dxDataGrid("getDataSource").reload();
                 dataGrid.deselectAll();
-                rebind = false;
             }
         });
     }
@@ -81,10 +80,7 @@ function ClearFilters() {
     var dataGrid = $("#Functions_grid").dxDataGrid("instance");
     dataGrid.clearFilter();
 }
-function GetLink() {
-    var link = '/Functions/Index';
-    return link;
-}
+
 
 function ExportExcel() {
     var dataGrid = $("#Functions_grid").dxDataGrid("instance");
@@ -107,12 +103,15 @@ function ExportExcel() {
 
 function FiltersBeforeGridString(reloading, clearFilters, excel, showSelected, settings, otherFilters) {
 
-    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' width='18' height='18' alt='Искать' ></img></button>" +
+    return $(
+        otherFilters+
+        "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' width='18' height='18' alt='Искать' ></img></button>" +
+
         "<button title='Очистить фильтры' onclick='" + clearFilters.name + "();' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' width='18' height='18'  alt='Очистить фильтры'></img></button>" +
         "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' width='18' height='18' alt='Выгрузить Excel'></img></button>" +
         "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + showSelected.function + "' id='" + showSelected.id + "'><img src='/../../img/GridBtn/1-7.png' width='18' height='18' alt='Показать выбранные'></img></button>" +
-        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' width='18' height='18' alt='Настройки'></img></button>" +
-        otherFilters);
+        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' width='18' height='18' alt='Настройки'></img></button>" 
+        );
 }
 
 function onToolbarPreparing(e) {
@@ -120,14 +119,14 @@ function onToolbarPreparing(e) {
     e.toolbarOptions.items.unshift({
         location: "after",
         template: FiltersBeforeGridString(
-            { function: 'Reloading("Functions_grid")', id: 'Reloading' },
+            { function: 'ReloadingGrid(\"Functions_grid\")', id: 'Reloading' },
             { name: 'ClearFilters', id: 'ClearFilters' },
             { name: 'ExportExcel', id: 'ExportExcel' },
             { function: 'showSelectedPicture(this, "Functions_grid");', id: 'showSelectedPicture', grid: 'Functions_grid' },
-            { name: 'UserSettings', id: 'UserSettings' },
-            "<button type='button' title='Удалить' onclick='RemoveFunctions();' class='btn btn_in_grid dx-button btn_pad_grid'><img src='/../../img/GridBtn/1-3.png' width='18 height='18' alt='Удалить' /></button>" +
+            { name: 'UserSettings', id: 'UserSettings' },           
             "<button type='button' title='Добавить' onclick='AddFunctionsOpen();' class='btn btn_in_grid dx-button btn_pad_grid'><img src='/../../img/GridBtn/1-1.png' width='18' height='18' alt='Добавить' /></button>" +
-            "<button type='button' title='Редактировать' data-toggle='modal' onclick='UpdateFunctionsOpen();' class='btn btn_in_grid dx-button btn_pad_grid'><img src='/../../img/GridBtn/1-2.png' width='18' height='18' alt='Редактировать' /></button>"
+            "<button type='button' title='Редактировать' data-toggle='modal' onclick='UpdateFunctionsOpen();' class='btn btn_in_grid dx-button btn_pad_grid'><img src='/../../img/GridBtn/1-2.png' width='18' height='18' alt='Редактировать' /></button>" +
+            "<button type='button' title='Удалить' onclick='RemoveFunctions();' class='btn btn_in_grid dx-button btn_pad_grid'><img src='/../../img/GridBtn/1-3.png' width='18 height='18' alt='Удалить' /></button>" 
         )
     });
 }
@@ -224,11 +223,9 @@ function UpdateFunctions() {
             if (data != "" && data != null)
                 alert(data);
             else {
-                Reloading('Functions_grid');
+                ReloadingGrid('Functions_grid');
                 $('#AddFunctionModal').modal('hide');
             }
-            rebind = false;
-
         }
     });
 }

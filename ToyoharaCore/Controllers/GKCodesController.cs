@@ -39,7 +39,7 @@ namespace ToyoharaCore.Controllers
 
             SYS_AUTHORIZE_USERResult au = JsonConvert.DeserializeObject<SYS_AUTHORIZE_USERResult>(HttpContext.Session.GetString("SYS_AUTHORIZE_USER2_R"));
             APL_SELECT_PROJECT_STATES_FOR_DDResult delegated_user = JsonConvert.DeserializeObject<APL_SELECT_PROJECT_STATES_FOR_DDResult>(HttpContext.Session.GetString("deleagting_user"));
-            List<UI_SELECT_GRID_SETTINGSResult> grid_settings = portalDMTOS.UI_SELECT_GRID_SETTINGS(delegated_user.id, "PRC_SELECT_ORDER_ITEMS_GKI",null,1).ToList();
+            List<UI_SELECT_GRID_SETTINGSResult> grid_settings = portalDMTOS.UI_SELECT_GRID_SETTINGS(delegated_user.id, "PRC_SELECT_ORDER_ITEMS_GKI", null, 1).ToList();
             ViewBag.EkkCode = new EkkCodeModel(portalDMTOS.MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPH().ToList(), "ekk_code_name", "ekk_text", true, "FullSearch");
             //ViewBag.EkkCode2 = new EkkCodeModel(portalDMTOS.MDM_SELECT_INVENTORY_CLASSES_FOR_GRAPH().ToList(), "ekk_code_name2");
             Settings settings = new Settings();
@@ -70,13 +70,6 @@ namespace ToyoharaCore.Controllers
             ViewData["Columns_Array"] = grid_settings;//homeGridSettings;
             List<APL_SELECT_PROJECT_STATES_FOR_DDResult> dd = portalDMTOS.PRC_SELECT_ORDER_ITEMS_GKI_STATES_FOR_DD();
             ViewBag.StateDropdown = JsonConvert.SerializeObject(dd);
-
-
-            FileUploader fileUploader = new FileUploader("Uploader", "UploadFileAccept", "/Common/UploadFile", "ReportGk", "upload_class", "UploaderFlowWindow", "[{Name:\"loading_id\", Value:30}, {Name:\"object_id\", Value:null},  {Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "},{ Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]",
-               "[{Name:\"loading_id\", Value:\"\"}, {Name:\"loading_id\", Value:null}, {Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "}," +
-               "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]", "APL_INSERT_PROJECT_LOADING_ITEM", "APL_SELECT_PROJECT_LOADING_ITEMS", "ExcelInsert", "PRC_SELECT_ORDER_ITEMS_GKI", 30, "ReportGk", "", 1,1,1,2,0,"Лодер"
-                );
-            ViewBag.FileUploader = fileUploader;
             return View();
         }
 
@@ -165,7 +158,7 @@ namespace ToyoharaCore.Controllers
             if (event_id != null)
                 portalDMTOS.SYS_FINISH_EVENT(event_id, physicalPath);
 
-                return Convert.ToString(guid);
+            return Convert.ToString(guid);
         }
 
         //[HttpPut]

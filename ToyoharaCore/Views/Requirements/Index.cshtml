@@ -1,0 +1,182 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<style>
+    .popover.confirmation.fade.bottom.in {
+    z-index:10000000;
+    }
+    .dx-item-content dx-toolbar-item-content {
+        opacity: 0.99;
+    }
+</style>
+<link href="~/css/Forms/Index.css" rel="stylesheet" />
+<script src="~/js/Requirements/Index.js"></script>
+
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+
+
+@*<button title='Направить форму РСС в ДМТОС' class='btn btn_in_grid dx-button btn_pad_grid' id='SendRSSToDMTOSBtn2'>Направить форму РСС в ДМТОС</button>*@
+
+<div id="ObjectLog"></div>
+@*<button class="btn btn-large btn-primary" data-toggle="confirmation"
+            data-btn-ok-label="Continue" data-btn-ok-class="btn-success"
+            data-btn-ok-icon-class="material-icons" data-btn-ok-icon-content="check"
+            data-btn-cancel-label="Stoooop!" data-btn-cancel-class="btn-danger"
+            data-btn-cancel-icon-class="material-icons" data-btn-cancel-icon-content="close"
+            data-title="Is it ok?" data-content="This might be dangerous">
+      Confirmation
+    </button>*@
+
+<div id="FullSearch" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearch", "", "");'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Расширенный поиск</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="">
+                        <tr>
+                            <td style="">
+                                <label class='form-check-label btn_in_grid' for='hide_closed'> Скрыть завершенные проекты</label>
+                                <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='hide_closed' data_type="check" checked>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="">
+                                <label class='form-check-label btn_in_grid' for='show_mine'> Показывать только мои проекты</label>
+                                <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='show_mine' data_type="check" checked>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick='SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("hide"); Reloading("Grid",true);'>
+                        <span class="dx-icon-floppy icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@(Html.DevExtreme().DataGrid<APL_SELECT_PROJECTS_FOR_REQUIREMENTSResult>()
+                                                    .ID("Grid")
+                                                    .ShowBorders(true)
+                                                    .DataSource(d => d.Mvc()
+                                                    .LoadAction("GetData")
+                                                    .Controller("Common")
+                                                    .Key("id")
+
+                                                    .LoadParams(new
+                                                    {
+                                                        additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                    })
+                                                    )
+                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                .Columns(columns =>
+                                                {
+                                                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_code_ru"])).Visible((bool)ViewData["CK_UI_project_code"]).Width((int)ViewData["CK_UI_project_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_code_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_type_ru"])).Visible((bool)ViewData["CK_UI_project_type"]).Width((int)ViewData["CK_UI_project_type_width"]).VisibleIndex((int)ViewData["CK_UI_project_type_pos"]).AllowEditing((bool)ViewData["CK_UI_project_type_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_state_ru"])).Visible((bool)ViewData["CK_UI_project_state"]).Width((int)ViewData["CK_UI_project_state_width"]).VisibleIndex((int)ViewData["CK_UI_project_state_pos"]).AllowEditing((bool)ViewData["CK_UI_project_state_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.cnt_total)
+                                                    //.Format("#,##0.###,#")
+                                                    .HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_cnt_total_ru"])).Visible((bool)ViewData["CK_UI_cnt_total"]).Width((int)ViewData["CK_UI_cnt_total_width"]).VisibleIndex((int)ViewData["CK_UI_cnt_total_pos"]).AllowEditing((bool)ViewData["CK_UI_cnt_total_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.unsi_declined)
+                                                    //.Format("#,##0.###,#")
+                                                    .HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unsi_declined_ru"])).Visible((bool)ViewData["CK_UI_unsi_declined"]).Width((int)ViewData["CK_UI_unsi_declined_width"]).VisibleIndex((int)ViewData["CK_UI_unsi_declined_pos"]).AllowEditing((bool)ViewData["CK_UI_unsi_declined_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.dmtos_declined)
+                                                    //.Format("#,##0.###,#")
+                                                    .HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_dmtos_declined_ru"])).Visible((bool)ViewData["CK_UI_dmtos_declined"]).Width((int)ViewData["CK_UI_dmtos_declined_width"]).VisibleIndex((int)ViewData["CK_UI_dmtos_declined_pos"]).AllowEditing((bool)ViewData["CK_UI_dmtos_declined_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.not_in_kv)
+                                                    //.Format("#,##0.###,#")
+                                                    .HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_not_in_kv_ru"])).Visible((bool)ViewData["CK_UI_not_in_kv"]).Width((int)ViewData["CK_UI_not_in_kv_width"]).VisibleIndex((int)ViewData["CK_UI_not_in_kv_pos"]).AllowEditing((bool)ViewData["CK_UI_not_in_kv_edit"]).EncodeHtml(false);
+                                                })
+
+                                                    .Paging(p => p.PageSize(30))
+                                                            .Pager(pager =>
+                                                            {
+                                                                pager.ShowPageSizeSelector(true);
+                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                pager.ShowInfo(true);
+                                                                pager.ShowNavigationButtons(true);
+                                                                pager.Visible(true);
+                                                            })
+                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                            .HeaderFilter(f => f.Visible(true))
+                                                            .RemoteOperations(true)
+                                                            .ShowRowLines(true)
+                                                            .ColumnAutoWidth(true)
+                                                            .FilterSyncEnabled(true)
+                                                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                            .Width("100%")
+                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                            .AllowColumnResizing(true)
+                                                            .AllowColumnReordering(true)
+                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                            .WordWrapEnabled(true)
+                                                            .OnRowClick("onRowClick")
+                                                            .OnContentReady("contentReady")
+                                                            .OnToolbarPreparing("onToolbarPreparing")                                                           
+                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+<script>
+    $(function () {
+        var SendRSSToDMTOSBtn = '@ViewBag.SendRSSToDMTOSBtn'.toLowerCase();
+        if (SendRSSToDMTOSBtn === 'true') {
+            //$('#AddItem').show();
+            $('#SendRSSToDMTOSBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#SendRSSToDMTOSBtn').hide();
+        }
+
+        var SetState9Btn = '@ViewBag.SetState9Btn'.toLowerCase();
+        if (SetState9Btn === 'true') {
+            //$('#AddItem').show();
+            $('#SetState9Btn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#SetState9Btn').hide();
+        }
+
+        var CancelState9 = '@ViewBag.CancelState9Btn'.toLowerCase();
+        if (CancelState9 === 'true') {
+            //$('#AddItem').show();
+            $('#CancelState9Btn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#CancelState9Btn').hide();
+        }
+
+        @*var SetColorBtn = '@ViewBag.SetColorBtn'.toLowerCase();
+        if (SetColorBtn === 'true') {
+            //$('#AddItem').show();
+            $('#SetColorBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#SetColorBtn').hide();
+        }*@
+
+        //$('[data-toggle=confirmation]').confirmation({
+        //    rootSelector: '[data-toggle=confirmation]',
+        //    // other options
+        //});
+
+
+
+    });
+</script>

@@ -2,12 +2,34 @@
 
 
 
+
 function OnCommitSuccess() {
     window.location.reload();
 }
 
 
+function ReloadingGrid(gridName) {
+    rebind = true;
+    var dataGrid = $("#" + gridName).dxDataGrid("getDataSource");
+    dataGrid.reload();
+}
 
+function ClearFiltersGrid(gridName) {
+    var dataGrid = $("#" + gridName).dxDataGrid("instance");
+    dataGrid.clearFilter();
+}
+
+
+function getOnRowPrepared(e) {
+    if (e.rowType === 'data') {
+        try {
+            if (e.data.color.toString() !== '') {
+                e.rowElement.css('background-color', '#' + e.data.color.toString());
+            }
+        }
+        catch (err) { ; }
+    }
+}
 
 
 function onToolbarPreparingFAQ(e) {
@@ -26,6 +48,9 @@ function hover(element, name) {
     if (name == "question") {
         element.setAttribute('src', '/../../img/10.png');
     }
+    if (name == "history") {
+        element.setAttribute('src', '/../../img/35.png');
+    }
 }
 
 function unhover(element, name) {
@@ -35,6 +60,9 @@ function unhover(element, name) {
     }
     if (name == "question") {
         element.setAttribute('src', '/../../img/9.png');
+    }
+    if (name == "history") {
+        element.setAttribute('src', '/../../img/34.png');
     }
 }
 var FAQrecords = [];
@@ -183,7 +211,7 @@ function RemoveFAQ() {
     }
 }
 
-function UpdateFAQAdd() {
+function UpdateFAQAdd(info_id) {
     if ($('#FAQ_header').val() == null | $('#FAQ_header').val() == "" | $('#FAQ_header').val() == "undefined")
         return alert('Заголовок должен был заполнен');
     $("#AddFAQModal .note-editor button.active.btn-codeview").click();
@@ -203,7 +231,9 @@ function UpdateFAQAdd() {
            // control: control //'@ViewContext.RouteData.Values["Controller"].ToString()',
            // view: view//'@ViewContext.RouteData.Values["Action"].ToString()',
             order_number: $('#FAQ_order_number').val(),
-            id: row_id
+            id: row_id,
+            info_id: info_id
+        
         },
         success: function (data) {
 
@@ -225,7 +255,7 @@ function checkFloat(n) {
     }
     return true;
 }
-function Reloading(grid) { rebind = true; var dataGrid = $("#" + grid).dxDataGrid("getDataSource"); dataGrid.reload(); }
+function Reloading(grid, rebindgrid) { rebind = rebindgrid; var dataGrid = $("#" + grid).dxDataGrid("getDataSource"); dataGrid.reload(); }
 showSelectedPicture.flag = false;
 function showSelectedPicture(element, grid) {
     if (selectedRecord == "" || selectedRecord == null || selectedRecord == "undefined") { return alert("Не выбрано ни одной записи!"); }
@@ -328,8 +358,7 @@ $(function () {
 
 
 
-function UpdateSettingsOfGrid(controller, action, procedure_name, link, checkboxClass, widthClass, positionClass, str) {
-
+function UpdateSettingsOfGrid(controller, action, procedure_name, checkboxClass, widthClass, positionClass, str, flowwindow, parsialDivName, openParsialDivFunction) {
     var columns_names = [];
     var columns_is_visible = [];
     var columns_width = [];
@@ -359,8 +388,8 @@ function UpdateSettingsOfGrid(controller, action, procedure_name, link, checkbox
     uniqueArray = columns_position.filter(function (item, pos) {
         return columns_position.indexOf(item) == pos;
     });
-    if (uniqueArray.length != columns_width.length)
-        return alert("Номера позиций в таблице не могут повторяться!");
+    ////if (uniqueArray.length != columns_width.length)
+    ////    return alert("!Номера позиций в таблице не могут повторяться!");
     //$('#LoadingGif').show();
     //var str = ;
     $.ajax({
@@ -376,13 +405,25 @@ function UpdateSettingsOfGrid(controller, action, procedure_name, link, checkbox
             columns_position: columns_position.toString(),
             defaultSettings: str
         },
-        success: function (data) { window.location = link; }
+        success: function (data) {
+            $('#' + flowwindow.toString()).modal('hide');
+
+            if (parsialDivName == "") {
+                window.location.href = window.location.href;
+            }
+            else {
+                $('#' + parsialDivName.toString()).modal('hide');
+                window[openParsialDivFunction]();
+            }
+            
+            // window.location = link;
+        }
     });
     // $('#LoadingGif').hide();
 }
 //data: { column_names: columns_names.toString(), columns_is_visible: columns_is_visible.toString(), columns_width: columns_width.toString(), procedure_name: procedure_name, columns_position: columns_position, defaultSettings: JSON.stringify(('@*(JsonConvert.SerializeObject(Model.gridSettings))')) },*@
 
-function DefaultSettingsOfGrid(procedure_name, link) {
+function DefaultSettingsOfGrid(procedure_name, flowwindow, parsialDivName, openParsialDivFunction) {
 
     $.ajax({
         async: true,
@@ -391,7 +432,17 @@ function DefaultSettingsOfGrid(procedure_name, link) {
         url: '/Common/DefaultSettingsOfGrid',
         type: 'POST',
         data: { procedure_name: procedure_name },
-        success: function (data) { window.location = link; }
+        success: function (data) {
+            $('#' + flowwindow.toString()).modal('hide');
+
+            if (parsialDivName == "") {
+                window.location.href = window.location.href;
+            }
+            else {
+                $('#' + parsialDivName.toString()).modal('hide');
+                window[openParsialDivFunction]();
+            }
+        }
     });
 }
 function isFloat(val) {
@@ -770,3 +821,8 @@ function isInt(val) {
 
 //    $('#' + CardId).modal("show");
 //}
+
+
+
+
+

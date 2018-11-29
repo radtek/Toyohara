@@ -1,0 +1,242 @@
+﻿@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+@{
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+
+<style>
+    #GridLogPerson {
+        max-width: 100% !important;
+    }
+</style>
+
+
+@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.SettingsLogPerson)
+
+
+
+
+@*<div id="ModalFAQ" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static">
+    <div class="modal-dialog" style="width: 80%; height:90%; margin-left: 10%; margin-top: 5%;" role="document">*@
+
+    <div id="FullSearchLogPerson" class="modal fade" tabindex="-1" role="dialog" style="z-index:10001;" data-backdrop="static">
+        <div class="modal-dialog" style="width: 60%; top: 100px;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearchLogPerson", "", "");'>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title"> Расширенный поиск</h4>
+                </div>
+                    <div class="modal-body">
+                        <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                            <tbody id="">
+                                <tr>
+                                    <td>
+                                        <div id="UserLabel" class="dx-field-label">Пользователь</div>
+                                        <div class="dx-field-value">
+                                            @(Html.DevExtreme().SelectBox()
+                                                        .ID("UserValue")
+                                                        .DataSource(new JS(ViewBag.UsersValues))
+                                                        .DisplayExpr("description")
+                                                        .ValueExpr("id")
+                                                        .Value((int)ViewBag.RealUserId)
+                                                        .SearchEnabled(true)
+                                            )
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="dateStartLabel" class="dx-field-label">Дата начала</div>
+                                        <div class="dx-field-value">
+                                            @(Html.DevExtreme().DateBox()
+                                                                                .ID("dateStartValue")
+                                                                                .Min(new DateTime(2011, 12, 1, 0, 0, 0))
+                                                                                .Max(DateTime.Now.AddHours(1))
+                                                                                .Type(DateBoxType.DateTime)
+                                                                                .Value(DateTime.Now.AddDays(-1))
+                                            )
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div id="dateFinishLabel" class="dx-field-label">Дата окончания</div>
+                                        <div class="dx-field-value">
+                                            @(Html.DevExtreme().DateBox()
+                                                                                .ID("dateFinishValue")
+                                                                                .Min(new DateTime(2011, 12, 1, 0, 0, 0))
+                                                                                .Max(DateTime.Now.AddHours(1))
+                                                                                .Type(DateBoxType.DateTime)
+                                                                                .Value(DateTime.Now)
+                                            )
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick='saveSearch();'>
+                                <span class="dx-icon-floppy icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div id="logPerson" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+            <div class="modal-dialog" style="width: 80%;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">История последних действий</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        @(Html.DevExtreme().DataGrid<SYS_SELECT_LOGResult>()
+                                    .ID("GridLogPerson")
+                                    .ShowBorders(true)
+                                    .DataSource(d => d.Mvc()
+                                    .LoadAction("GetData")
+                                    .Controller("Common")
+                                    .LoadParams(new
+                                    {
+                                        additionalParams = new JS("function(){return ReturnDataLogPerson('" + control + "');}")
+                                    })
+                                    )
+                                    .Columns(columns =>
+                                    {
+                                        columns.AddFor(m => m.user_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_user_description_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_user_description_grid_settings_log_person"]).Width((int)ViewData["CK_UI_user_description_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_user_description_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.action_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_type_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_action_type_grid_settings_log_person"]).Width((int)ViewData["CK_UI_action_type_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_action_type_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_object_description_grid_settings_log_person"]).Width((int)ViewData["CK_UI_object_description_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.action_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_description_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_action_description_grid_settings_log_person"]).Width((int)ViewData["CK_UI_action_description_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_action_description_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.start_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_date_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_start_date_grid_settings_log_person"]).Width((int)ViewData["CK_UI_start_date_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_start_date_grid_settings_log_person_pos"]).EncodeHtml(false); columns.AddFor(m => m.finish_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_date_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_finish_date_grid_settings_log_person"]).Width((int)ViewData["CK_UI_finish_date_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_finish_date_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.file_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_file_date_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_file_date_grid_settings_log_person"]).Width((int)ViewData["CK_UI_file_date_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_file_date_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.file_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_file_description_grid_settings_log_person_ru"])).Visible((bool)ViewData["CK_UI_file_description_grid_settings_log_person"]).Width((int)ViewData["CK_UI_file_description_grid_settings_log_person_width"]).VisibleIndex((int)ViewData["CK_UI_file_description_grid_settings_log_person_pos"]).EncodeHtml(false);
+                                    })
+
+                                    .Paging(p => p.PageSize(30))
+                                            .Pager(pager =>
+                                            {
+                                                pager.ShowPageSizeSelector(true);
+                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                pager.ShowInfo(true);
+                                                pager.ShowNavigationButtons(true);
+                                                pager.Visible(true);
+                                            })
+                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                            .HeaderFilter(f => f.Visible(true))
+                                            .RemoteOperations(true)
+                                            .ShowRowLines(true)
+                                            .ColumnAutoWidth(true)
+                                            .FilterSyncEnabled(true)
+                                            .Height(new JS("function() { return window.innerHeight*0.7;}"))
+                                            .Width("100%")
+                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig2.gif").ShowIndicator(true).Height(200).Width(200))
+                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                            .AllowColumnResizing(true)
+                                            .AllowColumnReordering(true)
+                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                            .WordWrapEnabled(true)
+                                            .OnContentReady("contentReadyLogPerson")
+                                            .OnToolbarPreparing("onToolbarPreparingLogPerson")
+                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+            rebindlogPerson = true;
+
+            function onToolbarPreparingLogPerson(e) {
+                var dataGrid = e.component;
+                e.toolbarOptions.items.unshift({
+                    location: "after",
+                    template: $(
+                        "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='ReloadingGrid(\"GridLogPerson\");' id='ReloadGridLogPerson'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+                        "<button title='Очистить фильтры' onclick='ClearFiltersGrid(\"GridLogPerson\");' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFiltersGridLogPerson'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                        "<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='SaveFullSearchFilters(\"FullSearchLogPerson\", \"\", \"\"); $(\"#FullSearchLogPerson\").modal(\"show\");' id='FullSearchLogPersonShow' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
+                        "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExcelLogPerson();' id='ExcelLogPerson'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettingsLogPerson' id='UserSettingsLogPerson' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>"
+                    )
+                });
+            }
+
+
+
+            //при чтении контента положить данные в кэш
+            function contentReadyLogPerson() {
+                $("#loadPanelHelp").dxLoadPanel("instance").hide();
+                rebindlogPerson = false;
+            }
+
+
+
+            function ReturnDataLogPerson(controller) {
+                var obj = {
+                    showSelected: null,
+                    selectedRecord: '',
+                    id: null,
+                    rebind: rebindlogPerson,
+                    storedProcedure: "SYS_SELECT_LOG",
+                    controller: controller,
+                    real_user_id: $("#UserValue").dxSelectBox("instance").option("value"),
+                    start_time: $("#dateStartValue").dxDateBox("instance").option("value"),
+                    finish_time: $("#dateFinishValue").dxDateBox("instance").option("value")
+                };
+                return JSON.stringify(obj);;
+            }
+
+            $(function () {
+
+            });
+
+            function ExcelLogPerson() {
+                var dataGrid = $("#GridLogPerson").dxDataGrid("instance");
+                $.ajax({
+                    async: true,
+                    cache: false,
+                    url: '/Common/ExcelLogPerson',
+                    type: 'POST',
+                    data: {
+                        filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                        sort: $("#GridLogPerson").dxDataGrid("getDataSource").loadOptions().sort ? JSON.stringify($("#GridLogPerson").dxDataGrid("getDataSource").loadOptions().sort) : "",
+                        real_user_id: $("#UserValue").dxSelectBox("instance").option("value"),
+                        start_time: $("#dateStartValue").dxDateBox("instance").option("value"),
+                        finish_time: $("#dateFinishValue").dxDateBox("instance").option("value")
+                    },
+                    success: function (data) {
+                        window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("История последних действий");
+                    }
+                });
+            }
+
+            function saveSearch() {
+                if ($("#UserValue").dxSelectBox("instance").option("value") == "" | $("#UserValue").dxSelectBox("instance").option("value") == null | $("#UserValue").dxSelectBox("instance").option("value") == "una")
+                    return alert('не выбран пользователь');
+                if ($("#dateStartValue").dxDateBox("instance").option("value") == "" | $("#dateStartValue").dxDateBox("instance").option("value") == null)
+                    return alert('не выбрана дата начала');
+                if ($("#dateFinishValue").dxDateBox("instance").option("value") == "" | $("#dateStartValue").dxDateBox("instance").option("value") == null)
+                    return alert('не выбрана дата окончания');
+
+                //alert($("#dateStartValue").dxDateBox("instance").option("value"));
+                SaveFullSearchFilters("FullSearchLogPerson", "", "");
+                $("#FullSearchLogPerson").modal("hide");
+                Reloading("GridLogPerson");
+
+            }
+
+
+        </script>

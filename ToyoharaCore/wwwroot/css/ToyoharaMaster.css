@@ -1,4 +1,13 @@
-﻿
+﻿/*body {
+    -webkit-transform: scale(.7);
+    -webkit-transform-origin: 0 0;
+    width: 142.857143%;
+
+}*/
+
+.btn_color {
+    color: #337ab7 !important;
+}
 @keyframes deep_text {
     0%
 
@@ -353,6 +362,10 @@ nav {
 /*background-color: inherit !important;*/
 /*background: repeating-linear-gradient( 45deg, #ccc, #ccc 1px, 1px, transparent 40px) !important;*/
 /*}*/
+.dx-treelist-toolbar-button {
+    opacity: 1 !important;
+}
+
 .dx-datagrid-toolbar-button {
     opacity: 1 !important;
 }
@@ -431,7 +444,21 @@ div .panel {
     height: 200px;
 }
 
+.dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-dropdownlist-popup-wrapper.dx-selectbox-popup-wrapper {
+    z-index: 10000001 !important;
+}
 
+.dx-overlay-wrapper.dx-header-filter-menu.dx-popup-wrapper {
+    z-index: 10000001 !important;
+}
+
+.dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-datebox-wrapper.dx-datebox-wrapper-date.dx-datebox-wrapper-calendar {
+    z-index: 10000001 !important;
+}
+
+.dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-popup-cancel-visible.dx-popup-done-visible.dx-datebox-wrapper.dx-datebox-wrapper-datetime.dx-datebox-wrapper-calendar{
+    z-index: 10000001 !important;
+}
 /*/* applies to GIF and PNG images; avoids blurry edges */
 /*img[src$=".gif"], img[src$=".png"] {
     image-rendering: -moz-crisp-edges;
@@ -440,3 +467,49 @@ div .panel {
     image-rendering: crisp-edges;
     -ms-interpolation-mode:bicubic; 
 }*/
+
+
+
+.dx-overlay-content.dx-resizable.dx-loadpanel-content.dx-state-invisible {
+    z-index: 100001 !important;
+}
+
+.dx-loadpanel-content-wrapper {
+    z-index: 100002 !important;
+}
+
+.dx-loadpanel-indicator.dx-loadindicator.dx-widget {
+    z-index: 100003 !important;
+}
+
+.dx-loadindicator-wrapper.dx-loadindicator-image {
+    z-index: 100004 !important;
+}
+
+.dx-loadindicator-content {
+    z-index: 100005 !important;
+}
+
+
+.dx-overlay-content.dx-resizable.dx-loadpanel-content {
+    z-index: 100005 !important;
+}
+
+.dx-overlay-wrapper.dx-loadpanel-wrapper.dx-overlay-modal.dx-overlay-shader {
+    z-index: 100005 !important;
+}
+
+.dx-overlay.dx-widget.dx-visibility-change-handler.dx-loadpanel.dx-state-invisible {
+    z-index: 100000 !important;
+}
+
+
+#GridLogPerson {
+    max-width: 100% !important;
+}
+
+
+#GridLogObject {
+    max-width: 100% !important;
+}
+

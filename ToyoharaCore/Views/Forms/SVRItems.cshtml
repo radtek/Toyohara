@@ -9,117 +9,306 @@
 
 <input type="hidden" name="form_id" id="form_id" value=@ViewData["form_id"]>
 
+
+
 @Html.Partial("Settings", (Settings)ViewBag.Settings)
 
+@Html.Partial("FileUploader", (FileUploader)ViewBag.FileUploader)
 
+<div id="ObjectLog"></div>
 
-
-
-<div id="FullSearch" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;">
-        <div class="modal-dialog" style="width: 60%;" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearch", "", "");'>
-                        <span aria-hidden="true">&times;</span>
+<div id="FullSearch" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearch", "", "");'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Расширенный поиск</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="">
+                        <tr>
+                            <td style="">
+                                <label class='form-check-label btn_in_grid' for='show_only_for_pricing'> Показывать только позиции для расценки</label>
+                                <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='show_only_for_pricing' data_type="check" checked>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("hide"); ReloadingGrid("Grid");'>
+                        <span class="dx-icon-floppy icon"></span>
                     </button>
-                    <h4 class="modal-title"> Расширенный поиск</h4>
-                </div>
-                <div class="modal-body">
-                    <table class="table table-condensed" style="width:100%; table-layout:fixed;">
-                        <tbody id="">
-                            <tr>
-                                <td style="">
-                                    <label class='form-check-label btn_in_grid' for='show_only_for_pricing'> Показывать только позиции для расценки</label>
-                                    <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='show_only_for_pricing' data_type="check" checked>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("hide"); Reloading("Grid");'>
-                            <span class="dx-icon-floppy icon"></span>
-                        </button>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+
+<div id="GroupUpdate" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Групповое обновление</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody>
+                        <tr id="isDeclineCommentVisible">
+                            <td style="width:3%"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isDeclineComment' data_type="check" onclick="GroupUpdateAttribute(this.id.toString())"></td>
+                            <td style="width:10%;"><label for="isDeclineCommentLabel">Текст замечания (запроса на уточнение)</label></td>
+                            <td style="width:87%;"><textarea id="isDeclineCommentValue" class="FunctionHtmlText" rows="5" ; style="width:100%;  resize:both;" disabled="disabled"></textarea></td>
+                        </tr>
+                        <tr id="isAddInfoVisible">
+                            <td style="width:3%"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isAddInfo' data_type="check" onclick="GroupUpdateAttribute(this.id.toString())"></td>
+                            <td style="width:10%;"><label for="isAddInfoLabel">Доп. информация</label></td>
+                            <td style="width:87%;"><textarea id="isAddInfoValue" class="FunctionHtmlText" rows="5" ; style="width:100%;  resize:both;" disabled="disabled"></textarea></td>
+                        </tr>
+                        <tr id="isPriceManagerVisible">
+                            <td style="width:3%"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isPriceManager' data_type="check" onclick="GroupUpdateAttribute(this.id.toString())"></td>
+                            <td style="width:10%;"><label for="isPriceManagerLabel">Ответственный за расценку</label></td>
+                            <td style="width:87%;">
+                                <select id="isPriceManagerValue" style="width:100%;" disabled="disabled">
+                                    <option value=""></option>
+                                    @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)ViewBag.PriceManager, "id", "description"))
+                                    {
+                                        <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr id="isForPricingVisible">
+                            <td style="width:3%"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isForPricing' data_type="check" onclick="GroupUpdateAttribute(this.id.toString())"></td>
+                            <td style="width:10%;"><label for="isForPricingLabel">Направить на расценку</label></td>
+                            <td style="width:87%;"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isForPricingValue' data_type="check" disabled="disabled"></td>
+                        </tr>
+                        <tr id="isDeliveryTypeVisible">
+                            <td style="width:3%"><input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='isDeliveryType' data_type="check" onclick="GroupUpdateAttribute(this.id.toString())"></td>
+                            <td style="width:10%;"><label for="isDeliveryTypeLabel">Тип поставки</label></td>
+                            <td style="width:87%;">
+                                <select id="isDeliveryTypeValue" style="width:100%;" disabled="disabled">
+                                    <option value=""></option>
+                                    @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)ViewBag.DeliveryType, "id", "description"))
+                                    {
+                                        <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' GroupUpdate(); $("#GroupUpdate").modal("hide"); ReloadingGrid("Grid");'>
+                        <span class="dx-icon-floppy icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
 
 
 
 
 @(Html.DevExtreme().DataGrid<OMC_SELECT_FORM_SVR_ITEMSResult>
-                        ()
-                        .ID("Grid")
-                        .ShowBorders(true)
-                        .DataSource(d => d.Mvc()
-                        .LoadAction("GetData")
-                        .Controller("Common")
-                        .Key("id")
+                                                                    ()
+                                                                    .ID("Grid")
+                                                                    .ShowBorders(true)
+                                                                    .DataSource(d => d.Mvc()
+                                                                    .LoadAction("GetData")
+                                                                    .Controller("Common")
+                                                                    .Key("id")
 
-                        .LoadParams(new
-                        {
-                            additionalParams = new JS("function(){return ReturnData('" + control + "');}")
-                        })
-                        )
+                                                                    .LoadParams(new
+                                                                    {
+                                                                        additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                                    })
+                                                                    )
+                                                                    .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+                                                                    .Columns(columns =>
+                                                                    {
+                                                                        columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.form_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_form_id_ru"])).Visible((bool)ViewData["CK_UI_form_id"]).Width((int)ViewData["CK_UI_form_id_width"]).VisibleIndex((int)ViewData["CK_UI_form_id_pos"]).AllowEditing((bool)ViewData["CK_UI_form_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.local_estimate_number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_local_estimate_number_ru"])).Visible((bool)ViewData["CK_UI_local_estimate_number"]).Width((int)ViewData["CK_UI_local_estimate_number_width"]).VisibleIndex((int)ViewData["CK_UI_local_estimate_number_pos"]).AllowEditing((bool)ViewData["CK_UI_local_estimate_number_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code"]).Width((int)ViewData["CK_UI_project_documentation_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_number_ru"])).Visible((bool)ViewData["CK_UI_number"]).Width((int)ViewData["CK_UI_number_width"]).VisibleIndex((int)ViewData["CK_UI_number_pos"]).AllowEditing((bool)ViewData["CK_UI_number_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.resource_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_resource_code_ru"])).Visible((bool)ViewData["CK_UI_resource_code"]).Width((int)ViewData["CK_UI_resource_code_width"]).VisibleIndex((int)ViewData["CK_UI_resource_code_pos"]).AllowEditing((bool)ViewData["CK_UI_resource_code_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.ekk_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_ekk_code_ru"])).Visible((bool)ViewData["CK_UI_ekk_code"]).Width((int)ViewData["CK_UI_ekk_code_width"]).VisibleIndex((int)ViewData["CK_UI_ekk_code_pos"]).AllowEditing((bool)ViewData["CK_UI_ekk_code_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.price_manager_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_manager_id_ru"])).Visible((bool)ViewData["CK_UI_price_manager_id"]).Width((int)ViewData["CK_UI_price_manager_id_width"]).VisibleIndex((int)ViewData["CK_UI_price_manager_id_pos"]).AllowEditing((bool)ViewData["CK_UI_price_manager_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.price_manager_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_manager_description_ru"])).Visible((bool)ViewData["CK_UI_price_manager_description"]).Width((int)ViewData["CK_UI_price_manager_description_width"]).VisibleIndex((int)ViewData["CK_UI_price_manager_description_pos"]).AllowEditing((bool)ViewData["CK_UI_price_manager_description_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.unit_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_id_ru"])).Visible((bool)ViewData["CK_UI_unit_id"]).Width((int)ViewData["CK_UI_unit_id_width"]).VisibleIndex((int)ViewData["CK_UI_unit_id_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_description_ru"])).Visible((bool)ViewData["CK_UI_unit_description"]).Width((int)ViewData["CK_UI_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_description_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_ru"])).Visible((bool)ViewData["CK_UI_price"]).Width((int)ViewData["CK_UI_price_width"]).VisibleIndex((int)ViewData["CK_UI_price_pos"]).AllowEditing((bool)ViewData["CK_UI_price_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summa_ru"])).Visible((bool)ViewData["CK_UI_summa"]).Width((int)ViewData["CK_UI_summa_width"]).VisibleIndex((int)ViewData["CK_UI_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_summa_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_turnover_ru"])).Visible((bool)ViewData["CK_UI_turnover"]).Width((int)ViewData["CK_UI_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_turnover_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.phase).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_phase_ru"])).Visible((bool)ViewData["CK_UI_phase"]).Width((int)ViewData["CK_UI_phase_width"]).VisibleIndex((int)ViewData["CK_UI_phase_pos"]).AllowEditing((bool)ViewData["CK_UI_phase_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.svr_delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_svr_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_svr_delivery_type"]).Width((int)ViewData["CK_UI_svr_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_svr_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_svr_delivery_type_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.add_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_add_info_ru"])).Visible((bool)ViewData["CK_UI_add_info"]).Width((int)ViewData["CK_UI_add_info_width"]).VisibleIndex((int)ViewData["CK_UI_add_info_pos"]).AllowEditing((bool)ViewData["CK_UI_add_info_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.suggested_delivery_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_suggested_delivery_type_id_ru"])).Visible((bool)ViewData["CK_UI_suggested_delivery_type_id"]).Width((int)ViewData["CK_UI_suggested_delivery_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_suggested_delivery_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_suggested_delivery_type_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.suggested_delivery_type_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_suggested_delivery_type_description_ru"])).Visible((bool)ViewData["CK_UI_suggested_delivery_type_description"]).Width((int)ViewData["CK_UI_suggested_delivery_type_description_width"]).VisibleIndex((int)ViewData["CK_UI_suggested_delivery_type_description_pos"]).AllowEditing((bool)ViewData["CK_UI_suggested_delivery_type_description_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.delivery_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_id_ru"])).Visible((bool)ViewData["CK_UI_delivery_type_id"]).Width((int)ViewData["CK_UI_delivery_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_id_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.delivery_type_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_description_ru"])).Visible((bool)ViewData["CK_UI_delivery_type_description"]).Width((int)ViewData["CK_UI_delivery_type_description_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_description_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_description_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.unsi_comment).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unsi_comment_ru"])).Visible((bool)ViewData["CK_UI_unsi_comment"]).Width((int)ViewData["CK_UI_unsi_comment_width"]).VisibleIndex((int)ViewData["CK_UI_unsi_comment_pos"]).AllowEditing((bool)ViewData["CK_UI_unsi_comment_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.dmtos_comment).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_dmtos_comment_ru"])).Visible((bool)ViewData["CK_UI_dmtos_comment"]).Width((int)ViewData["CK_UI_dmtos_comment_width"]).VisibleIndex((int)ViewData["CK_UI_dmtos_comment_pos"]).AllowEditing((bool)ViewData["CK_UI_dmtos_comment_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.changes_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_changes_info_ru"])).Visible((bool)ViewData["CK_UI_changes_info"]).Width((int)ViewData["CK_UI_changes_info_width"]).VisibleIndex((int)ViewData["CK_UI_changes_info_pos"]).AllowEditing((bool)ViewData["CK_UI_changes_info_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.commit_changes_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_commit_changes_date_ru"])).Visible((bool)ViewData["CK_UI_commit_changes_date"]).Width((int)ViewData["CK_UI_commit_changes_date_width"]).VisibleIndex((int)ViewData["CK_UI_commit_changes_date_pos"]).AllowEditing((bool)ViewData["CK_UI_commit_changes_date_edit"]).EncodeHtml(false);
+                                                                        columns.AddFor(m => m.for_pricing).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_for_pricing_ru"])).Visible((bool)ViewData["CK_UI_for_pricing"]).Width((int)ViewData["CK_UI_for_pricing_width"]).VisibleIndex((int)ViewData["CK_UI_for_pricing_pos"]).AllowEditing((bool)ViewData["CK_UI_for_pricing_edit"]).EncodeHtml(false);
 
-                        .Columns(columns =>
-                        {
-                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
-                            columns.AddFor(m => m.form_id).HeaderCellTemplate(Convert.ToString(ViewData["form_id_ru"])).Visible((bool)ViewData["CK_UI_form_id"]).Width((int)ViewData["CK_UI_form_id_width"]).VisibleIndex((int)ViewData["CK_UI_form_id_pos"]).AllowEditing((bool)ViewData["CK_UI_form_id_edit"]);
-                            columns.AddFor(m => m.local_estimate_number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_local_estimate_number_ru"])).Visible((bool)ViewData["CK_UI_local_estimate_number"]).Width((int)ViewData["CK_UI_local_estimate_number_width"]).VisibleIndex((int)ViewData["CK_UI_local_estimate_number_pos"]).AllowEditing((bool)ViewData["CK_UI_local_estimate_number_edit"]);
-                            columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code"]).Width((int)ViewData["CK_UI_project_documentation_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_edit"]);
-                            columns.AddFor(m => m.number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_number_ru"])).Visible((bool)ViewData["CK_UI_number"]).Width((int)ViewData["CK_UI_number_width"]).VisibleIndex((int)ViewData["CK_UI_number_pos"]).AllowEditing((bool)ViewData["CK_UI_number_edit"]);
-                            columns.AddFor(m => m.resource_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_resource_code_ru"])).Visible((bool)ViewData["CK_UI_resource_code"]).Width((int)ViewData["CK_UI_resource_code_width"]).VisibleIndex((int)ViewData["CK_UI_resource_code_pos"]).AllowEditing((bool)ViewData["CK_UI_resource_code_edit"]);
-                            columns.AddFor(m => m.ekk_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_ekk_code_ru"])).Visible((bool)ViewData["CK_UI_ekk_code"]).Width((int)ViewData["CK_UI_ekk_code_width"]).VisibleIndex((int)ViewData["CK_UI_ekk_code_pos"]).AllowEditing((bool)ViewData["CK_UI_ekk_code_edit"]);
-                            columns.AddFor(m => m.price_manager_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_manager_id_ru"])).Visible((bool)ViewData["CK_UI_price_manager_id"]).Width((int)ViewData["CK_UI_price_manager_id_width"]).VisibleIndex((int)ViewData["CK_UI_price_manager_id_pos"]).AllowEditing((bool)ViewData["CK_UI_price_manager_id_edit"]);
-                            columns.AddFor(m => m.price_manager_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_manager_description_ru"])).Visible((bool)ViewData["CK_UI_price_manager_description"]).Width((int)ViewData["CK_UI_price_manager_description_width"]).VisibleIndex((int)ViewData["CK_UI_price_manager_description_pos"]).AllowEditing((bool)ViewData["CK_UI_price_manager_description_edit"]);
-                            columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]);
-                            columns.AddFor(m => m.unit_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_id_ru"])).Visible((bool)ViewData["CK_UI_unit_id"]).Width((int)ViewData["CK_UI_unit_id_width"]).VisibleIndex((int)ViewData["CK_UI_unit_id_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_id_edit"]);
-                            columns.AddFor(m => m.unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_description_ru"])).Visible((bool)ViewData["CK_UI_unit_description"]).Width((int)ViewData["CK_UI_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_description_edit"]);
-                            columns.AddFor(m => m.quantity).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]);
-                            columns.AddFor(m => m.price).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_ru"])).Visible((bool)ViewData["CK_UI_price"]).Width((int)ViewData["CK_UI_price_width"]).VisibleIndex((int)ViewData["CK_UI_price_pos"]).AllowEditing((bool)ViewData["CK_UI_price_edit"]);
-                            columns.AddFor(m => m.summa).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summa_ru"])).Visible((bool)ViewData["CK_UI_summa"]).Width((int)ViewData["CK_UI_summa_width"]).VisibleIndex((int)ViewData["CK_UI_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_summa_edit"]);
-                            columns.AddFor(m => m.turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_turnover_ru"])).Visible((bool)ViewData["CK_UI_turnover"]).Width((int)ViewData["CK_UI_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_turnover_edit"]);
-                            columns.AddFor(m => m.svr_delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_svr_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_svr_delivery_type"]).Width((int)ViewData["CK_UI_svr_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_svr_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_svr_delivery_type_edit"]);
-                            columns.AddFor(m => m.add_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_add_info_ru"])).Visible((bool)ViewData["CK_UI_add_info"]).Width((int)ViewData["CK_UI_add_info_width"]).VisibleIndex((int)ViewData["CK_UI_add_info_pos"]).AllowEditing((bool)ViewData["CK_UI_add_info_edit"]);
-                            columns.AddFor(m => m.suggested_delivery_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_suggested_delivery_type_id_ru"])).Visible((bool)ViewData["CK_UI_suggested_delivery_type_id"]).Width((int)ViewData["CK_UI_suggested_delivery_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_suggested_delivery_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_suggested_delivery_type_id_edit"]);
-                            columns.AddFor(m => m.suggested_delivery_type_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_suggested_delivery_type_description_ru"])).Visible((bool)ViewData["CK_UI_suggested_delivery_type_description"]).Width((int)ViewData["CK_UI_suggested_delivery_type_description_width"]).VisibleIndex((int)ViewData["CK_UI_suggested_delivery_type_description_pos"]).AllowEditing((bool)ViewData["CK_UI_suggested_delivery_type_description_edit"]);
-                            columns.AddFor(m => m.delivery_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_id_ru"])).Visible((bool)ViewData["CK_UI_delivery_type_id"]).Width((int)ViewData["CK_UI_delivery_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_id_edit"]);
-                            columns.AddFor(m => m.delivery_type_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_description_ru"])).Visible((bool)ViewData["CK_UI_delivery_type_description"]).Width((int)ViewData["CK_UI_delivery_type_description_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_description_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_description_edit"]);
-                            columns.AddFor(m => m.unsi_comment).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unsi_comment_ru"])).Visible((bool)ViewData["CK_UI_unsi_comment"]).Width((int)ViewData["CK_UI_unsi_comment_width"]).VisibleIndex((int)ViewData["CK_UI_unsi_comment_pos"]).AllowEditing((bool)ViewData["CK_UI_unsi_comment_edit"]);
-                            columns.AddFor(m => m.dmtos_comment).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_dmtos_comment_ru"])).Visible((bool)ViewData["CK_UI_dmtos_comment"]).Width((int)ViewData["CK_UI_dmtos_comment_width"]).VisibleIndex((int)ViewData["CK_UI_dmtos_comment_pos"]).AllowEditing((bool)ViewData["CK_UI_dmtos_comment_edit"]);
-                            columns.AddFor(m => m.changes_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_changes_info_ru"])).Visible((bool)ViewData["CK_UI_changes_info"]).Width((int)ViewData["CK_UI_changes_info_width"]).VisibleIndex((int)ViewData["CK_UI_changes_info_pos"]).AllowEditing((bool)ViewData["CK_UI_changes_info_edit"]);
-                            columns.AddFor(m => m.commit_changes_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_commit_changes_date_ru"])).Visible((bool)ViewData["CK_UI_commit_changes_date"]).Width((int)ViewData["CK_UI_commit_changes_date_width"]).VisibleIndex((int)ViewData["CK_UI_commit_changes_date_pos"]).AllowEditing((bool)ViewData["CK_UI_commit_changes_date_edit"]);
-                            columns.AddFor(m => m.for_pricing).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_for_pricing_ru"])).Visible((bool)ViewData["CK_UI_for_pricing"]).Width((int)ViewData["CK_UI_for_pricing_width"]).VisibleIndex((int)ViewData["CK_UI_for_pricing_pos"]).AllowEditing((bool)ViewData["CK_UI_for_pricing_edit"]);
+                                                                    })
+                                                                                            .Paging(p => p.PageSize(30))
+                                                                                            .Pager(pager =>
+                                                                                            {
+                                                                                                pager.ShowPageSizeSelector(true);
+                                                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                pager.ShowInfo(true);
+                                                                                                pager.ShowNavigationButtons(true);
+                                                                                                pager.Visible(true);
+                                                                                            })
 
-                        })
-                                                .Paging(p => p.PageSize(30))
-                                                .Pager(pager =>
-                                                {
-                                                    pager.ShowPageSizeSelector(true);
-                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                    pager.ShowInfo(true);
-                                                    pager.ShowNavigationButtons(true);
-                                                    pager.Visible(true);
-                                                })
+                                                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                            .HeaderFilter(f => f.Visible(true))
+                                                                                            .RemoteOperations(true)
+                                                                                            .ShowRowLines(true)
+                                                                                            .ColumnAutoWidth(true)
+                                                                                            .FilterSyncEnabled(true)
+                                                                                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                                            .Width("100%")
+                                                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                            .AllowColumnResizing(true)
+                                                                                            .AllowColumnReordering(true)
+                                                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                            .WordWrapEnabled(true)
+                                                                                            .OnContentReady("contentReady")
+                                                                                            .OnToolbarPreparing("onToolbarPreparing")
+                                                                                            .OnSelectionChanged("selection_changed")
+                                                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
 
-                                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                .HeaderFilter(f => f.Visible(true))
-                                                .RemoteOperations(true)
-                                                .ShowRowLines(true)
-                                                .ColumnAutoWidth(true)
-                                                .FilterSyncEnabled(true)
-                                                .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
-                                                .Width("100%")
-                                                .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
-                                                .Sorting(s => s.Mode(GridSortingMode.Multiple))
-                                                .AllowColumnResizing(true)
-                                                .AllowColumnReordering(true)
-                                                .Option("columnResizingMode", ColumnResizingMode.Widget)
-                                                .WordWrapEnabled(true)
-                                                .OnContentReady("contentReady")
-                                                .OnToolbarPreparing("onToolbarPreparing")
-                                                .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
 
+
+<script>
+    $(function () {
+        if ('@ViewBag.VisibleDeclineComment'.toLowerCase()=="false") $('#isDeclineCommentVisible').hide();
+        if ('@ViewBag.VisibleAddInfo'.toLowerCase()=="false" ) $('#isAddInfoVisible').hide();
+        if ('@ViewBag.VisiblePriceManager'.toLowerCase()=="false") $('#isPriceManagerVisible').hide();
+        if ('@ViewBag.VisibleForPricing'.toLowerCase()=="false" ) $('#isForPricingVisible').hide();
+        if ('@ViewBag.VisibleDeclineComment'.toLowerCase() == "false") $('#isDeliveryTypeVisible').hide();
+        if ('@ViewBag.GroupUpdate'.toLowerCase() == "false") $('#GroupUpdate').hide();
+
+        if ('@ViewBag.InsertArchive'.toLowerCase() == "false")  $('#InsertArchive').hide();  else $('#InsertArchive').show(); 
+        if ('@ViewBag.ReportDeliveryTypeDifference'.toLowerCase() == "false") { $('#SVRDeliveryTypeTemplate').hide(); $('#ReportDeliveryTypeDifference').hide(); $('#SVRDeliveryTypeInsert').hide(); } else { $('#SVRDeliveryTypeTemplate').show();  $('#ReportDeliveryTypeDifference').show(); $('#SVRDeliveryTypeInsert').show(); }
+        if ('@ViewBag.ManualCommitChanges'.toLowerCase() == "false") $('#ManualCommitChanges').hide(); else $('#ManualCommitChanges').show(); 
+        if ('@ViewBag.ReportSubcontractorItems'.toLowerCase() == "false") $('#ReportSubcontractorItems').hide(); else $('#ReportSubcontractorItems').show(); 
+        
+        
+
+
+
+    });
+
+    function ObjectLog() {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        var keys = dataGrid.getSelectedRowKeys();
+        if (keys.length == 0) {
+            showLogObj('tender', document.getElementById("form_id").value);
+        }
+        if (keys.length > 1) { alert('Вы выбрали больше одной строки. Для просмотра истории позиции нужно выбрать только одну строку. Для просмотра истории всей формы - ни одной строки'); }
+        if (keys.length == 1) {
+            showLogObj('form_svr_item', dataGrid.cellValue(dataGrid.getRowIndexByKey(keys[0]), "id"));
+        }
+
+    }
+
+
+    function ObjectLog() {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        var keys = dataGrid.getSelectedRowKeys();
+        if (keys.length > 1) { alert('Вы выбрали больше одной строки. Для просмотра истории позиции нужно выбрать только одну строку. Для просмотра истории всей формы - ни одной строки'); }
+        if (keys.length == 0) {
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/ObjectLog",
+                type: "Get",
+                data: {
+                    object_type: 'tender',
+                    object_id: document.getElementById("form_id").value
+                },
+                success: function (partialViewResult) {
+                    $("#ObjectLog").html(partialViewResult);
+                    $('#ObjLog').modal('show');
+                }
+            });
+        }
+        if (keys.length == 1) {
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/ObjectLog",
+                type: "Get",
+                data: {
+                    object_type: 'form_svr_item',
+                    object_id: dataGrid.cellValue(dataGrid.getRowIndexByKey(keys[0]), "id")
+                },
+                success: function (partialViewResult) {
+                    $("#ObjectLog").html(partialViewResult);
+                    $('#ObjLog').modal('show');
+                }
+            });
+        }
+    }
+
+
+
+
+    //перечень кнопок для грида
+    function onToolbarPreparing(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift(
+            {
+                location: "before",                
+                template: function (e) {
+                    return $(
+                        "<button title='Назад' class='btn btn_in_grid dx-button btn_pad_grid' onclick='Back();'><img src='/../../img/GridBtn/1-14.png' style='height:18px; width:auto;' alt='Назад'></img></button>" +
+                        "<button title='Протокол расхождений' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7' onClick='SVRitemsDiff();'>Протокол расхождений</button>" +
+                        "<button id='InsertArchive'  title='Сохранить текущую версию как архив' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='InsertArchive();'>Сохранить текущую версию как архив</button>" +
+                        "<button id = 'ReportSubcontractorItems' title='Форма субподрядчика' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7' onClick='ExcelReportSVRitemsSubcontractorForm();'>Форма субподрядчика</button>" +
+                        "<button id='ReportDeliveryTypeDifference' title='Отчет о несоответствии типов поставки' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='ReportDeliveryTypeDifference();'>Отчет о несоответствии типов поставки</button>" +
+                        "<button id='SVRDeliveryTypeTemplate' title='Выгрузить типы поставки' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='SVRDeliveryTypeTemplate();'>Выгрузить типы поставки</button>" +
+                        "<button id='SVRDeliveryTypeInsert' title='Загрузить типы поставки' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='SVRDeliveryTypeInsert();'>Загрузить типы поставки</button>" +
+                        "<button id='ManualCommitChanges' title='Ручное сопоставление позиций' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='ManualCommitChanges();'>Ручное сопоставление позиций</button>"                                                
+                    )
+                }
+            },
+            {
+                location: "after",
+                template: function (e) {
+                    return $(
+                        "<button title='Групповое обновление' class='btn btn_in_grid dx-button btn_pad_grid' onclick='BeforeGroupUpdate();' id='GroupUpdate'><img src='/../../img/GridBtn/1-11.png' style='height:18px; width:auto;' alt='Групповое обновление'></img></button>" +
+                        "<button class= 'btn btn_in_grid dx-button btn_pad_grid' title = 'Обновить' onclick = 'Reloading(\"Grid\")' id = 'Reloading' > <img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button > " +
+                        "<button title='Очистить фильтры' onclick='ClearFilters();' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFilters'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                        "<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='SaveFullSearchFilters(\"FullSearch\", \"\", \"\"); $(\"#FullSearch\").modal(\"show\");' id='FullSearch' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
+                        "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExportExcel();' id='ExportExcel'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettings' id='UserSettings' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
+                        "<button title='История изменения' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ObjectLog()' id='ObjectLog'><img src='/../../img/GridBtn/1-12.png' style='height:18px; width:auto;' alt='Групповое обновление'></img></button>"                         
+                    )
+                }
+            });
+    }
+
+</script>

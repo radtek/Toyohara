@@ -64,3 +64,9 @@ C:\PORTAL\ToyoharaCore\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.Assembl
 C:\PORTAL\ToyoharaCore\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.AssemblyInfo.cs
 C:\PORTAL\ToyoharaCore\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.dll
 C:\PORTAL\ToyoharaCore\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.pdb
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.csprojAssemblyReference.cache
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.csproj.CoreCompileInputs.cache
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.AssemblyInfoInputs.cache
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.AssemblyInfo.cs
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.dll
+E:\GitRepos\ToyoharaCore\obj\Debug\netcoreapp2.0\ToyoharaCore.pdb

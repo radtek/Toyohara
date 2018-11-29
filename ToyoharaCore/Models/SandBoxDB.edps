@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <EntityDeveloper Version="6.3.569.0">
   <ModelSettings xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ConnectionStringInAppConfig="False" TargetFramework="NetCore" DetectManyToManyAssociations="False" DetectTPTInheritance="False" DetectFunctionBasedColumnDefault="True">
-    <Connection ConnectionString="Data Source=sql061;Initial Catalog=PortalDMTOS;Integrated Security=False;Persist Security Info=True;User ID=sendbox;Password=Sendbox01" Provider="System.Data.SqlClient" />
+    <Connection ConnectionString="Data Source=sql061;Initial Catalog=PortalDMTOS;Integrated Security=False;Persist Security Info=True;User ID=sendbox;Password=Sendbox01;Connect Timeout=5000" Provider="System.Data.SqlClient" />
     <Generation>
       <GeneratedFiles>
         <File Name="SandBoxDB.PortalDMTOSModel.cs" />

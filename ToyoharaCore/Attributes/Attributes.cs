@@ -36,7 +36,7 @@ namespace ToyoharaCore.Attributes
                 }
                 else
                 {
-
+                    //portalDMTOS.Database.
                     string Hosts = System.Net.Dns.GetHostName();
                     au = portalDMTOS.SYS_AUTHORIZE_USER(filterContext.HttpContext.User.Identity.Name, Hosts, Convert.ToString(filterContext.HttpContext.Request.Headers["User-Agent"])).FirstOrDefault();
 //||||||| .r426
@@ -78,6 +78,11 @@ namespace ToyoharaCore.Attributes
                             filterContext.HttpContext.Session.SetString("SYS_AUTHORIZE_USER2_R", JsonConvert.SerializeObject(au)) ;
                             filterContext.HttpContext.Session.SetString("SYS_SELECT_DELEGATING_USERS_R",JsonConvert.SerializeObject(sduc));
                             filterContext.HttpContext.Session.SetString("deleagting_user", JsonConvert.SerializeObject(sduc.Where(x => x.id == au.id).FirstOrDefault()));
+
+                            List<UI_SELECT_GRID_SETTINGSResult> settingsGridLogPerson = portalDMTOS.UI_SELECT_GRID_SETTINGS(au.id, "SYS_SELECT_LOG", null, 1).ToList();
+                            filterContext.HttpContext.Session.SetString("settingsGridLogPerson", JsonConvert.SerializeObject(settingsGridLogPerson));
+
+
                             List<UI_SELECT_SITE_MENUResult> site_map = portalDMTOS.UI_SELECT_SITE_MENU(au.id).ToList();
                             filterContext.HttpContext.Session.SetString("site_map", JsonConvert.SerializeObject(site_map));
                             bool admin = portalDMTOS.SYS_SELECT_ROLES_BY_USER(sduc.Where(x => x.id == au.id).FirstOrDefault().id).ToList().Any(x => x.role_id == 1);

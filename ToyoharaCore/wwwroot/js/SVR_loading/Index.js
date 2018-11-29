@@ -4,15 +4,16 @@ var records;
  rebind = false;
 
 
-
-
-
-
-//функция для перезагрзуки страницы при обновлении Грида
-function GetLink() {
-    var link = '/SVR_loading/Index';
-    return link;
+//функция, выполняющая при успешном выполнении загрузки
+function OnCommitSuccess() {
+    $('#UploaderFlowWindow').modal('hide');
+    rebind = true;
+    Reloading("Grid");
 }
+
+
+
+
 
 //при чтении контента положить данные в кэш
 function contentReady() {
@@ -36,29 +37,32 @@ function ReturnData(controller) {
 
 
 //маппинг кнопок и действия
-function FiltersBeforeGridString(reloading, clearFilters, excel, settings, add, otherFilters) {
-    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+function FiltersBeforeGridString(add, reloading, clearFilters, excel, settings,  otherFilters) {
+    return $(
+        "<button title='Добавить' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' id='" + add.id + "'  onclick='Add();' ><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
+        "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button>" +
         "<button title='Очистить фильтры' onclick='" + clearFilters.name + "();' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
         "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
         "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
-        "<button title='Добавить' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + add.name + "' id='" + add.id + "'  onclick='Add();' ><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
-        otherFilters);
+         otherFilters);
 }
 
 //перечень кнопок для грида
 function onToolbarPreparing(e) {
     var dataGrid = e.component;
-    e.toolbarOptions.items.unshift({
+    e.toolbarOptions.items.unshift(
+        {
         location: "after",
         template: FiltersBeforeGridString(
-            { function: 'Reloading("Grid")', id: 'Reloading', grid: 'Grid' },
+            { name: 'Add', id: 'Add' },
+            { function: 'ReloadingGrid("Grid")', id: 'Reloading', grid: 'Grid' },
             { name: 'ClearFilters', id: 'ClearFilters' },
             { name: 'ExportExcel', id: 'ExportExcel' },
             { name: 'UserSettings', id: 'UserSettings' },
-            { name: 'Add', id: 'Add' },
             ''
         )
     });
+
 }
 
 
@@ -75,7 +79,7 @@ function onRowClick(e) {
         prevClickTime = component.lastClickTime;
     component.lastClickTime = new Date();
     if (prevClickTime && (component.lastClickTime - prevClickTime < 300)) {
-        window.location = '/SVR_loading/SVR_items/?svr_id=' + e.data.id.toString();
+        window.location = '/SVR_loading/SVR_items/?svr_id=' + e.data.id.toString() + "&link_information_param=" + e.data.id.toString();
     }
 }
 
@@ -103,7 +107,9 @@ function ExportExcel() {
 
 //добавление новой загрузки СВР
 function Add() {
+    //$('#UploaderFlowWindow').modal('show');    
     $('#ChooseProject').modal("show");
+    //$('#GroupUpdate').modal('show');
     
 }
 
@@ -119,8 +125,9 @@ function OnChangeChooseProject() {
             project_description: $('#notcloseproject option:selected').html()
         },
         success: function (partialViewResult) {
+            document.getElementById("notcloseproject").value = null;
             $("#part").html(partialViewResult);
-            $('#ChooseProject').modal('hide');
+            $('#ChooseProject').modal('hide');            
             $('#UploaderFlowWindow').modal('show');
         }
     });

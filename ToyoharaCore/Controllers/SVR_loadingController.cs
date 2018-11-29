@@ -79,7 +79,13 @@ namespace ToyoharaCore.Controllers
                     "{Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "}," +
                     "{ Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]",
                "[{Name:\"loading_id\", Value:\"\"}, {Name:\"loading_id\", Value:null}, {Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "}," +
-               "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]", "OMC_INSERT_SVR_LOADING_ITEM", "OMC_SELECT_SVR_LOADING_ITEM", "ExcelInsert", "PRC_SELECT_ORDER_ITEMS_GKI", 31, "ReportGk", "", 1, 5, 1, 5, 0
+               "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]", "OMC_INSERT_SVR_LOADING_ITEM", 
+               "OMC_SELECT_SVR_LOADING_ITEM", 
+               "OMC_SELECT_SVR_TEMPLATE", 
+               "Шаблон загрузки СВР",
+               //"PRC_SELECT_ORDER_ITEMS_GKI", 
+               31, "ReportGk", "", //1, 5, 1, 5, 
+               0
                 , "");
             ViewBag.FileUploader = fileUploader;
             return View();
@@ -115,17 +121,19 @@ namespace ToyoharaCore.Controllers
             string j = JsonConvert.SerializeObject(loadrResults.data);
             List<OMC_SELECT_SVRResult> list = JsonConvert.DeserializeObject<List<OMC_SELECT_SVRResult>>(j);
 
-            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", "PRC_SELECT_ORDER_ITEMS_GKI" + ".xlsx");
+            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExcelTemplates", "EMPTY" + ".xlsx");
             Guid guid = Guid.NewGuid();
-            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", guid + ".xlsx");
+            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExportFiles", guid + ".xlsx");
             System.IO.File.Copy(templatePath, physicalPath);
+
+
 
             ExcelReports<OMC_SELECT_SVRResult> excel =
             new ExcelReports<OMC_SELECT_SVRResult>(list, 1, 1, delegated_user.id, physicalPath, "OMC_SELECT_SVR", 0, null);
             excel.ExcelReport();
             if (event_id != null)
                 portalDMTOS.SYS_FINISH_EVENT(event_id, physicalPath);
-            return Convert.ToString(guid);
+            return Convert.ToString("ExportFiles\\" + guid + ".xlsx");
         }
 
 
@@ -149,7 +157,12 @@ namespace ToyoharaCore.Controllers
                    "{Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "}," +
                    "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]",
               "[{Name:\"loading_id\", Value:\"\"}, {Name:\"loading_id\", Value:null}, {Name:\"user_id\", Value:" + Convert.ToString(delegated_user.id) + "}," +
-              "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]", "OMC_INSERT_SVR_LOADING_ITEM", "OMC_SELECT_SVR_LOADING_ITEM", "ExcelInsert", "PRC_SELECT_ORDER_ITEMS_GKI", 31, "ReportGk", "", 1, 4, 1, 5, 0
+              "{Name:\"real_user_id\", Value:" + Convert.ToString(au.id) + "}]", "OMC_INSERT_SVR_LOADING_ITEM", "OMC_SELECT_SVR_LOADING_ITEM",
+              "OMC_SELECT_SVR_TEMPLATE",
+               "Шаблон загрузки СВР",
+              //"PRC_SELECT_ORDER_ITEMS_GKI", 
+              31, "ReportGk","", //1, 4, 1, 5, 
+              0
                , project_description);
 
             return PartialView("FileUploader", fileUploader);
@@ -158,7 +171,7 @@ namespace ToyoharaCore.Controllers
 
         [AppAuthorizeAttribute]
         [FAQAttribute]
-        public async Task<IActionResult> SVR_items(int svr_id, bool? showSelected)
+        public async Task<IActionResult> SVR_items(int svr_id, bool? showSelected, string link_information_param)
         {
             var webRoot = _env.WebRootPath;
             PortalDMTOSModel portalDMTOS = new PortalDMTOSModel();
@@ -232,9 +245,9 @@ namespace ToyoharaCore.Controllers
             string j = JsonConvert.SerializeObject(loadrResults.data);
             List<OMC_SELECT_SVR_ITEMSResult> list = JsonConvert.DeserializeObject<List<OMC_SELECT_SVR_ITEMSResult>>(j);
 
-            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", "PRC_SELECT_ORDER_ITEMS_GKI" + ".xlsx");
+            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExcelTemplates", "EMPTY" + ".xlsx");
             Guid guid = Guid.NewGuid();
-            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", guid + ".xlsx");
+            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExportFiles", guid + ".xlsx");
             System.IO.File.Copy(templatePath, physicalPath);
 
             ExcelReports<OMC_SELECT_SVR_ITEMSResult> excel =
@@ -242,7 +255,7 @@ namespace ToyoharaCore.Controllers
             excel.ExcelReport();
             if (event_id != null)
                 portalDMTOS.SYS_FINISH_EVENT(event_id, physicalPath);
-            return Convert.ToString(guid);
+            return Convert.ToString("ExportFiles\\" + guid + ".xlsx");
         }
 
 

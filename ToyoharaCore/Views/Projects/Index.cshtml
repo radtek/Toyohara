@@ -12,15 +12,32 @@
     #GridPrjLogNet {
         max-width: 100% !important;
     }
+    /*.dx-list-item {
+        z-index: 100001;
+    }*/
+
+    /*.dx-dropdowneditor-overlay {
+    z-index:1000001;}*/
+
+    .dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-dropdownlist-popup-wrapper.dx-selectbox-popup-wrapper {
+        z-index: 10000001 !important;
+    }
+    .dx-overlay-wrapper.dx-header-filter-menu.dx-popup-wrapper {
+        z-index: 10000001 !important;
+    }
 </style>
 @Html.Partial("Settings", (Settings)ViewBag.Settings)
-<div id="part">
-@Html.Partial("UpdateGridCard", (UpdateGridCardModel)ViewBag.GridCard)
-</div>
+<div id="ObjectLog"></div>
 
-<div id="partPrjLogNet">    
+<div id="part"></div>
+
+@*<div id="part">
+    @Html.Partial("UpdateGridCard", (UpdateGridCardModel)ViewBag.GridCard)
+</div>*@
+
+<div id="partPrjLogNet">
 </div>
-<div id="FullSearch" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;">
+<div id="FullSearch" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
     <div class="modal-dialog" style="width: 60%;" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,7 +48,7 @@
             </div>
             <div class="modal-body">
                 <table class="table table-condensed" style="width:100%; table-layout:fixed;">
-                    <tbody >
+                    <tbody>
                         <tr>
                             <td>
                                 <label class='form-check-label btn_in_grid' for='hide_closed'>Скрыть завершенные проекты</label>
@@ -56,226 +73,126 @@
     </div>
 </div>
 
+<div id="roads_partial"></div>
 
-<div id="roads" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;">
-    <div class="modal-dialog" style="width: 60%;" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" >
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title"> Расширенный поиск</h4>
-            </div>
-            <div class="modal-body">
-                @(Html.DevExtreme().DataGrid<APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTSResult>()
-                                                                                                                                        .ID("GridPrjLogNet")
-                                                                                                                                        .ShowBorders(true)
-                                                                                                                                        .DataSource(d => d.Mvc()
-                                                                                                                                        .InsertAction("PostData").OnBeforeSend("onBeforeSendPrjLogNet")
-                                                                                                                                        .LoadAction("GetData")
-                                                                                                                                        .Controller("Common")
-                                                                                                                                        .Key("id")
-
-                                                                                                                                        .LoadParams(new
-                                                                                                                                        {
-                                                                                                                                            additionalParams = new JS("function(){return ReturnDataPrjLogNet('" + control + "');}")
-                                                                                                                                            //showSelected = new JS("function(){return showSelected;}"),
-                                                                                                                                            //selectedRecord = new JS("function(){return selectedRecord;}"),
-                                                                                                                                            //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
-                                                                                                                                            //rebind = new JS("function(){return rebind;}"),
-                                                                                                                                            //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
-                                                                                                                                        })
-                                                                                                                                        .UpdateAction("PutData").OnBeforeSend("onBeforeSendPrjLogNet"))
-                                                                                                                                        .Editing(editing =>
-                                                                                                                                        {
-                                                                                                                                            editing.Mode(GridEditMode.Batch);
-                                                                                                                                            editing.AllowUpdating(true);
-                                                                                                                                            editing.AllowAdding(true).UseIcons(true);
-
-                                                                                                                                        })
-
-
-                                                        //.Editing(editing =>
-                                                        //{
-                                                        //    editing.Mode(GridEditMode.Batch);
-                                                        //    editing.AllowUpdating(true);
-                                                        //})
-                                                        //  .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
-                                                        .Selection(s => s.Mode(SelectionMode.Single))
-
-                                                        .Columns(columns =>
-                                                        {
-                                                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_id_grid_settings2"]).Width((int)ViewData["CK_UI_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_id_grid_settings2_edit"]).ValidationRules(validation=>validation.AddCustom().ValidationCallback("validFunc"));
-                                                            columns.AddFor(m => m.lno_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_lno_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_lno_id_grid_settings2"]).Width((int)ViewData["CK_UI_lno_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_lno_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_lno_id_grid_settings2_edit"]).ValidationRules(validation => validation.AddCustom().ValidationCallback("validFunc"));
-                                                            columns.AddFor(m => m.lno_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_lno_description_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_lno_description_grid_settings2"]).Width((int)ViewData["CK_UI_lno_description_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_lno_description_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_lno_description_grid_settings2_edit"]);
-                                                            columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_start_grid_settings2"]).Width((int)ViewData["CK_UI_start_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_grid_settings2_edit"]);
-                                                            columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_finish_grid_settings2"]).Width((int)ViewData["CK_UI_finish_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_finish_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_grid_settings2_edit"]);
-                                                        })
-                                                                                                                            //.Paging(p => p.PageSize(30))
-                                                                                                                            //.Pager(pager =>
-                                                                                                                            //{
-                                                                                                                            //    pager.ShowPageSizeSelector(true);
-                                                                                                                            //    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                                            //    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                                            //    pager.ShowInfo(true);
-                                                                                                                            //    pager.ShowNavigationButtons(true);
-                                                                                                                            //    pager.Visible(true);
-                                                                                                                            //})
-
-                                                                                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                                                                                            .HeaderFilter(f => f.Visible(true))
-                                                                                                                            .RemoteOperations(true)
-                                                                                                                            .ShowRowLines(true)
-                                                                                                                            .ColumnAutoWidth(true)
-                                                                                                                            .FilterSyncEnabled(true)
-                                                                                                                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
-                                                                                                                            .Width("100%")
-                                                                                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
-                                                                                                                            //.Summary(s => s
-                                                                                                                            //    .TotalItems(totalItems =>
-                                                                                                                            //    {
-                                                                                                                            //        totalItems.AddFor(m => m.id).SummaryType(SummaryType.Count);
-                                                                                                                            //    })
-                                                                                                                            //    .GroupItems(groupItems =>
-                                                                                                                            //    {
-                                                                                                                            //        groupItems.Add().SummaryType(SummaryType.Count);
-                                                                                                                            //    })
-                                                                                                                            //)
-                                                                                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
-                                                                                                                            .AllowColumnResizing(true)
-                                                                                                                            .AllowColumnReordering(true)
-                                                                                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
-                                                                                                                            .WordWrapEnabled(true)
-                                                                                                                            .OnToolbarPreparing("onToolbarPreparingPrjLogNet")
-                                                                                                                            .OnContentReady("contentReadyPrjLogNet")
-                                                                                                                            //.OnRowClick("onRowClick")
-                                                                                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
-                @*<div class="modal-footer">
-        <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' SaveFullSearchFilters("FullSearch", "",""); $("#FullSearch").modal("hide"); Reloading("Grid");'>
-            <span class="dx-icon-floppy icon"></span>@*</i>*@
-                @*</button>*@
-                @*</div>*@
-            </div>
-        </div>
-    </div>
-</div>
 
 @(Html.DevExtreme().DataGrid<APL_SELECT_PROJECT_LIST_INFO2Result>()
-                                                                                                            .ID("Grid")
-                                                                                                            .ShowBorders(true)
-                                                                                                            .DataSource(d => d.Mvc()
-                                                                                                            .LoadAction("GetData")
-                                                                                                            .Controller("Common")
-                                                                                                            .Key("id")
+                                                                                                                                .ID("Grid")
+                                                                                                                                .ShowBorders(true)
+                                                                                                                                .DataSource(d => d.Mvc()
+                                                                                                                                .LoadAction("GetData")
+                                                                                                                                .Controller("Common")
+                                                                                                                                .Key("id")
 
-                                                                                                            .LoadParams(new
-                                                                                                            {
-                                                                                                                additionalParams = new JS("function(){return ReturnData('" + control + "');}")
-                                                                                                                //showSelected = new JS("function(){return showSelected;}"),
-                                                                                                                //selectedRecord = new JS("function(){return selectedRecord;}"),
-                                                                                                                //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
-                                                                                                                //rebind = new JS("function(){return rebind;}"),
-                                                                                                                //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
-                                                                                                            }))
+                                                                                                                                .LoadParams(new
+                                                                                                                                {
+                                                                                                                                    additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                                                                                        //showSelected = new JS("function(){return showSelected;}"),
+                                                                                                                        //selectedRecord = new JS("function(){return selectedRecord;}"),
+                                                                                                                        //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
+                                                                                                                        //rebind = new JS("function(){return rebind;}"),
+                                                                                                                        //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
+                                                                                                                    }))
 
-                            .Selection(s => s.Mode(SelectionMode.Single))
-                            .Columns(columns =>
-                            {
-                                columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
-                                columns.AddFor(m => m.code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]);
-                                columns.AddFor(m => m.project_short_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_short_description_ru"])).Visible((bool)ViewData["CK_UI_project_short_description"]).Width((int)ViewData["CK_UI_project_short_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_short_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_short_description_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_type_ru"])).Visible((bool)ViewData["CK_UI_project_type"]).Width((int)ViewData["CK_UI_project_type_width"]).VisibleIndex((int)ViewData["CK_UI_project_type_pos"]).AllowEditing((bool)ViewData["CK_UI_project_type_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_build_curator_list_id"]).Width((int)ViewData["CK_UI_build_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_list_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_list_ru"])).Visible((bool)ViewData["CK_UI_build_curator_list"]).Width((int)ViewData["CK_UI_build_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_list_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.package_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_package_curator_ru"])).Visible((bool)ViewData["CK_UI_package_curator"]).Width((int)ViewData["CK_UI_package_curator_width"]).VisibleIndex((int)ViewData["CK_UI_package_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_package_curator_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.supply_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_ru"])).Visible((bool)ViewData["CK_UI_supply_curator"]).Width((int)ViewData["CK_UI_supply_curator_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.supply_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_list_id"]).Width((int)ViewData["CK_UI_supply_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_list_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.supply_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_list_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_list"]).Width((int)ViewData["CK_UI_supply_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_list_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.deliveryplan_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_deliveryplan_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_deliveryplan_curator_list_id"]).Width((int)ViewData["CK_UI_deliveryplan_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_deliveryplan_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_deliveryplan_curator_list_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.deliveryplan_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_deliveryplan_curator_list_ru"])).Visible((bool)ViewData["CK_UI_deliveryplan_curator_list"]).Width((int)ViewData["CK_UI_deliveryplan_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_deliveryplan_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_deliveryplan_curator_list_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_curator_ru"])).Visible((bool)ViewData["CK_UI_project_curator"]).Width((int)ViewData["CK_UI_project_curator_width"]).VisibleIndex((int)ViewData["CK_UI_project_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_project_curator_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.stocks_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stocks_curator_ru"])).Visible((bool)ViewData["CK_UI_stocks_curator"]).Width((int)ViewData["CK_UI_stocks_curator_width"]).VisibleIndex((int)ViewData["CK_UI_stocks_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_stocks_curator_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.normative_delivery_time).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_normative_delivery_time_ru"])).Visible((bool)ViewData["CK_UI_normative_delivery_time"]).Width((int)ViewData["CK_UI_normative_delivery_time_width"]).VisibleIndex((int)ViewData["CK_UI_normative_delivery_time_pos"]).AllowEditing((bool)ViewData["CK_UI_normative_delivery_time_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.storage_contract).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_storage_contract_ru"])).Visible((bool)ViewData["CK_UI_storage_contract"]).Width((int)ViewData["CK_UI_storage_contract_width"]).VisibleIndex((int)ViewData["CK_UI_storage_contract_pos"]).AllowEditing((bool)ViewData["CK_UI_storage_contract_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.storage_contract_finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_storage_contract_finish_date_ru"])).Visible((bool)ViewData["CK_UI_storage_contract_finish_date"]).Width((int)ViewData["CK_UI_storage_contract_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_storage_contract_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_storage_contract_finish_date_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_start_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_start_date_ru"])).Visible((bool)ViewData["CK_UI_build_start_date"]).Width((int)ViewData["CK_UI_build_start_date_width"]).VisibleIndex((int)ViewData["CK_UI_build_start_date_pos"]).AllowEditing((bool)ViewData["CK_UI_build_start_date_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_finish_date_ru"])).Visible((bool)ViewData["CK_UI_build_finish_date"]).Width((int)ViewData["CK_UI_build_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_build_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_build_finish_date_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.non_project_supplier_approve_required).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_non_project_supplier_approve_required_ru"])).Visible((bool)ViewData["CK_UI_non_project_supplier_approve_required"]).Width((int)ViewData["CK_UI_non_project_supplier_approve_required_width"]).VisibleIndex((int)ViewData["CK_UI_non_project_supplier_approve_required_pos"]).AllowEditing((bool)ViewData["CK_UI_non_project_supplier_approve_required_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.rss_match_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_rss_match_type_ru"])).Visible((bool)ViewData["CK_UI_rss_match_type"]).Width((int)ViewData["CK_UI_rss_match_type_width"]).VisibleIndex((int)ViewData["CK_UI_rss_match_type_pos"]).AllowEditing((bool)ViewData["CK_UI_rss_match_type_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_state_ru"])).Visible((bool)ViewData["CK_UI_project_state"]).Width((int)ViewData["CK_UI_project_state_width"]).VisibleIndex((int)ViewData["CK_UI_project_state_pos"]).AllowEditing((bool)ViewData["CK_UI_project_state_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.tpsu_division).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tpsu_division_ru"])).Visible((bool)ViewData["CK_UI_tpsu_division"]).Width((int)ViewData["CK_UI_tpsu_division_width"]).VisibleIndex((int)ViewData["CK_UI_tpsu_division_pos"]).AllowEditing((bool)ViewData["CK_UI_tpsu_division_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.tpsu_division_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tpsu_division_id_ru"])).Visible((bool)ViewData["CK_UI_tpsu_division_id"]).Width((int)ViewData["CK_UI_tpsu_division_id_width"]).VisibleIndex((int)ViewData["CK_UI_tpsu_division_id_pos"]).AllowEditing((bool)ViewData["CK_UI_tpsu_division_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.subcontractor_info_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_info_list_id_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_info_list_id"]).Width((int)ViewData["CK_UI_subcontractor_info_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_info_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_info_list_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.subcontractor_info_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_info_list_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_info_list"]).Width((int)ViewData["CK_UI_subcontractor_info_list_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_info_list_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_info_list_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.is_documentation_percent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_documentation_percent_ru"])).Visible((bool)ViewData["CK_UI_is_documentation_percent"]).Width((int)ViewData["CK_UI_is_documentation_percent_width"]).VisibleIndex((int)ViewData["CK_UI_is_documentation_percent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_documentation_percent_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.is_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_documentation_ru"])).Visible((bool)ViewData["CK_UI_is_documentation"]).Width((int)ViewData["CK_UI_is_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_is_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_is_documentation_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.is_change_documentation_percent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_change_documentation_percent_ru"])).Visible((bool)ViewData["CK_UI_is_change_documentation_percent"]).Width((int)ViewData["CK_UI_is_change_documentation_percent_width"]).VisibleIndex((int)ViewData["CK_UI_is_change_documentation_percent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_change_documentation_percent_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.is_change_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_change_documentation_ru"])).Visible((bool)ViewData["CK_UI_is_change_documentation"]).Width((int)ViewData["CK_UI_is_change_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_is_change_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_is_change_documentation_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.total_sum_gk).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_sum_gk_ru"])).Visible((bool)ViewData["CK_UI_total_sum_gk"]).Width((int)ViewData["CK_UI_total_sum_gk_width"]).VisibleIndex((int)ViewData["CK_UI_total_sum_gk_pos"]).AllowEditing((bool)ViewData["CK_UI_total_sum_gk_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.total_sum_direct).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_sum_direct_ru"])).Visible((bool)ViewData["CK_UI_total_sum_direct"]).Width((int)ViewData["CK_UI_total_sum_direct_width"]).VisibleIndex((int)ViewData["CK_UI_total_sum_direct_pos"]).AllowEditing((bool)ViewData["CK_UI_total_sum_direct_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.advance_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_advance_info_ru"])).Visible((bool)ViewData["CK_UI_advance_info"]).Width((int)ViewData["CK_UI_advance_info_width"]).VisibleIndex((int)ViewData["CK_UI_advance_info_pos"]).AllowEditing((bool)ViewData["CK_UI_advance_info_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.logistical_network_objects).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_logistical_network_objects_ru"])).Visible((bool)ViewData["CK_UI_logistical_network_objects"]).Width((int)ViewData["CK_UI_logistical_network_objects_width"]).VisibleIndex((int)ViewData["CK_UI_logistical_network_objects_pos"]).AllowEditing((bool)ViewData["CK_UI_logistical_network_objects_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.subcontractors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractors_ru"])).Visible((bool)ViewData["CK_UI_subcontractors"]).Width((int)ViewData["CK_UI_subcontractors_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractors_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractors_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_type_id_ru"])).Visible((bool)ViewData["CK_UI_project_type_id"]).Width((int)ViewData["CK_UI_project_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_project_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_project_type_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_state_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_state_id_ru"])).Visible((bool)ViewData["CK_UI_project_state_id"]).Width((int)ViewData["CK_UI_project_state_id_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.package_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_package_curator_id_ru"])).Visible((bool)ViewData["CK_UI_package_curator_id"]).Width((int)ViewData["CK_UI_package_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_package_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_package_curator_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.supply_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_id_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_id"]).Width((int)ViewData["CK_UI_supply_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.project_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_curator_id_ru"])).Visible((bool)ViewData["CK_UI_project_curator_id"]).Width((int)ViewData["CK_UI_project_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_project_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_project_curator_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.stocks_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stocks_curator_id_ru"])).Visible((bool)ViewData["CK_UI_stocks_curator_id"]).Width((int)ViewData["CK_UI_stocks_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_stocks_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_stocks_curator_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.rss_match_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_rss_match_type_id_ru"])).Visible((bool)ViewData["CK_UI_rss_match_type_id"]).Width((int)ViewData["CK_UI_rss_match_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_rss_match_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_rss_match_type_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.customer_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_customer_id_ru"])).Visible((bool)ViewData["CK_UI_customer_id"]).Width((int)ViewData["CK_UI_customer_id_width"]).VisibleIndex((int)ViewData["CK_UI_customer_id_pos"]).AllowEditing((bool)ViewData["CK_UI_customer_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.customer).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_customer_ru"])).Visible((bool)ViewData["CK_UI_customer"]).Width((int)ViewData["CK_UI_customer_width"]).VisibleIndex((int)ViewData["CK_UI_customer_pos"]).AllowEditing((bool)ViewData["CK_UI_customer_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.designer_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_designer_id_ru"])).Visible((bool)ViewData["CK_UI_designer_id"]).Width((int)ViewData["CK_UI_designer_id_width"]).VisibleIndex((int)ViewData["CK_UI_designer_id_pos"]).AllowEditing((bool)ViewData["CK_UI_designer_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.designer).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_designer_ru"])).Visible((bool)ViewData["CK_UI_designer"]).Width((int)ViewData["CK_UI_designer_width"]).VisibleIndex((int)ViewData["CK_UI_designer_pos"]).AllowEditing((bool)ViewData["CK_UI_designer_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_ru"])).Visible((bool)ViewData["CK_UI_start"]).Width((int)ViewData["CK_UI_start_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_ru"])).Visible((bool)ViewData["CK_UI_finish"]).Width((int)ViewData["CK_UI_finish_width"]).VisibleIndex((int)ViewData["CK_UI_finish_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.year1).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_year1_ru"])).Visible((bool)ViewData["CK_UI_year1"]).Width((int)ViewData["CK_UI_year1_width"]).VisibleIndex((int)ViewData["CK_UI_year1_pos"]).AllowEditing((bool)ViewData["CK_UI_year1_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.year2).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_year2_ru"])).Visible((bool)ViewData["CK_UI_year2"]).Width((int)ViewData["CK_UI_year2_width"]).VisibleIndex((int)ViewData["CK_UI_year2_pos"]).AllowEditing((bool)ViewData["CK_UI_year2_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_date_ru"])).Visible((bool)ViewData["CK_UI_finish_date"]).Width((int)ViewData["CK_UI_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_date_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_id_ru"])).Visible((bool)ViewData["CK_UI_build_curator_id"]).Width((int)ViewData["CK_UI_build_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_id_edit"]).EncodeHtml(false);
-                                columns.AddFor(m => m.build_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_ru"])).Visible((bool)ViewData["CK_UI_build_curator"]).Width((int)ViewData["CK_UI_build_curator_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_edit"]).EncodeHtml(false);
+                                                .Selection(s => s.Mode(SelectionMode.Single))
+                                                .Columns(columns =>
+                                                {
+                                                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
+                                                    columns.AddFor(m => m.code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]);
+                                                    columns.AddFor(m => m.project_short_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_short_description_ru"])).Visible((bool)ViewData["CK_UI_project_short_description"]).Width((int)ViewData["CK_UI_project_short_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_short_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_short_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_type_ru"])).Visible((bool)ViewData["CK_UI_project_type"]).Width((int)ViewData["CK_UI_project_type_width"]).VisibleIndex((int)ViewData["CK_UI_project_type_pos"]).AllowEditing((bool)ViewData["CK_UI_project_type_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_build_curator_list_id"]).Width((int)ViewData["CK_UI_build_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_list_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_list_ru"])).Visible((bool)ViewData["CK_UI_build_curator_list"]).Width((int)ViewData["CK_UI_build_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_list_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.package_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_package_curator_ru"])).Visible((bool)ViewData["CK_UI_package_curator"]).Width((int)ViewData["CK_UI_package_curator_width"]).VisibleIndex((int)ViewData["CK_UI_package_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_package_curator_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.supply_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_ru"])).Visible((bool)ViewData["CK_UI_supply_curator"]).Width((int)ViewData["CK_UI_supply_curator_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.supply_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_list_id"]).Width((int)ViewData["CK_UI_supply_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_list_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.supply_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_list_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_list"]).Width((int)ViewData["CK_UI_supply_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_list_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.deliveryplan_curator_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_deliveryplan_curator_list_id_ru"])).Visible((bool)ViewData["CK_UI_deliveryplan_curator_list_id"]).Width((int)ViewData["CK_UI_deliveryplan_curator_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_deliveryplan_curator_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_deliveryplan_curator_list_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.deliveryplan_curator_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_deliveryplan_curator_list_ru"])).Visible((bool)ViewData["CK_UI_deliveryplan_curator_list"]).Width((int)ViewData["CK_UI_deliveryplan_curator_list_width"]).VisibleIndex((int)ViewData["CK_UI_deliveryplan_curator_list_pos"]).AllowEditing((bool)ViewData["CK_UI_deliveryplan_curator_list_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_curator_ru"])).Visible((bool)ViewData["CK_UI_project_curator"]).Width((int)ViewData["CK_UI_project_curator_width"]).VisibleIndex((int)ViewData["CK_UI_project_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_project_curator_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.stocks_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stocks_curator_ru"])).Visible((bool)ViewData["CK_UI_stocks_curator"]).Width((int)ViewData["CK_UI_stocks_curator_width"]).VisibleIndex((int)ViewData["CK_UI_stocks_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_stocks_curator_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.normative_delivery_time).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_normative_delivery_time_ru"])).Visible((bool)ViewData["CK_UI_normative_delivery_time"]).Width((int)ViewData["CK_UI_normative_delivery_time_width"]).VisibleIndex((int)ViewData["CK_UI_normative_delivery_time_pos"]).AllowEditing((bool)ViewData["CK_UI_normative_delivery_time_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.storage_contract).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_storage_contract_ru"])).Visible((bool)ViewData["CK_UI_storage_contract"]).Width((int)ViewData["CK_UI_storage_contract_width"]).VisibleIndex((int)ViewData["CK_UI_storage_contract_pos"]).AllowEditing((bool)ViewData["CK_UI_storage_contract_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.storage_contract_finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_storage_contract_finish_date_ru"])).Visible((bool)ViewData["CK_UI_storage_contract_finish_date"]).Width((int)ViewData["CK_UI_storage_contract_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_storage_contract_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_storage_contract_finish_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_start_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_start_date_ru"])).Visible((bool)ViewData["CK_UI_build_start_date"]).Width((int)ViewData["CK_UI_build_start_date_width"]).VisibleIndex((int)ViewData["CK_UI_build_start_date_pos"]).AllowEditing((bool)ViewData["CK_UI_build_start_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_finish_date_ru"])).Visible((bool)ViewData["CK_UI_build_finish_date"]).Width((int)ViewData["CK_UI_build_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_build_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_build_finish_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.non_project_supplier_approve_required).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_non_project_supplier_approve_required_ru"])).Visible((bool)ViewData["CK_UI_non_project_supplier_approve_required"]).Width((int)ViewData["CK_UI_non_project_supplier_approve_required_width"]).VisibleIndex((int)ViewData["CK_UI_non_project_supplier_approve_required_pos"]).AllowEditing((bool)ViewData["CK_UI_non_project_supplier_approve_required_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.rss_match_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_rss_match_type_ru"])).Visible((bool)ViewData["CK_UI_rss_match_type"]).Width((int)ViewData["CK_UI_rss_match_type_width"]).VisibleIndex((int)ViewData["CK_UI_rss_match_type_pos"]).AllowEditing((bool)ViewData["CK_UI_rss_match_type_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_state_ru"])).Visible((bool)ViewData["CK_UI_project_state"]).Width((int)ViewData["CK_UI_project_state_width"]).VisibleIndex((int)ViewData["CK_UI_project_state_pos"]).AllowEditing((bool)ViewData["CK_UI_project_state_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.tpsu_division).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tpsu_division_ru"])).Visible((bool)ViewData["CK_UI_tpsu_division"]).Width((int)ViewData["CK_UI_tpsu_division_width"]).VisibleIndex((int)ViewData["CK_UI_tpsu_division_pos"]).AllowEditing((bool)ViewData["CK_UI_tpsu_division_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.tpsu_division_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tpsu_division_id_ru"])).Visible((bool)ViewData["CK_UI_tpsu_division_id"]).Width((int)ViewData["CK_UI_tpsu_division_id_width"]).VisibleIndex((int)ViewData["CK_UI_tpsu_division_id_pos"]).AllowEditing((bool)ViewData["CK_UI_tpsu_division_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.subcontractor_info_list_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_info_list_id_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_info_list_id"]).Width((int)ViewData["CK_UI_subcontractor_info_list_id_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_info_list_id_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_info_list_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.subcontractor_info_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_info_list_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_info_list"]).Width((int)ViewData["CK_UI_subcontractor_info_list_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_info_list_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_info_list_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.is_documentation_percent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_documentation_percent_ru"])).Visible((bool)ViewData["CK_UI_is_documentation_percent"]).Width((int)ViewData["CK_UI_is_documentation_percent_width"]).VisibleIndex((int)ViewData["CK_UI_is_documentation_percent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_documentation_percent_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.is_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_documentation_ru"])).Visible((bool)ViewData["CK_UI_is_documentation"]).Width((int)ViewData["CK_UI_is_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_is_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_is_documentation_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.is_change_documentation_percent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_change_documentation_percent_ru"])).Visible((bool)ViewData["CK_UI_is_change_documentation_percent"]).Width((int)ViewData["CK_UI_is_change_documentation_percent_width"]).VisibleIndex((int)ViewData["CK_UI_is_change_documentation_percent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_change_documentation_percent_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.is_change_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_change_documentation_ru"])).Visible((bool)ViewData["CK_UI_is_change_documentation"]).Width((int)ViewData["CK_UI_is_change_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_is_change_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_is_change_documentation_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.total_sum_gk).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_sum_gk_ru"])).Visible((bool)ViewData["CK_UI_total_sum_gk"]).Width((int)ViewData["CK_UI_total_sum_gk_width"]).VisibleIndex((int)ViewData["CK_UI_total_sum_gk_pos"]).AllowEditing((bool)ViewData["CK_UI_total_sum_gk_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.total_sum_direct).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_total_sum_direct_ru"])).Visible((bool)ViewData["CK_UI_total_sum_direct"]).Width((int)ViewData["CK_UI_total_sum_direct_width"]).VisibleIndex((int)ViewData["CK_UI_total_sum_direct_pos"]).AllowEditing((bool)ViewData["CK_UI_total_sum_direct_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.advance_info).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_advance_info_ru"])).Visible((bool)ViewData["CK_UI_advance_info"]).Width((int)ViewData["CK_UI_advance_info_width"]).VisibleIndex((int)ViewData["CK_UI_advance_info_pos"]).AllowEditing((bool)ViewData["CK_UI_advance_info_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.logistical_network_objects).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_logistical_network_objects_ru"])).Visible((bool)ViewData["CK_UI_logistical_network_objects"]).Width((int)ViewData["CK_UI_logistical_network_objects_width"]).VisibleIndex((int)ViewData["CK_UI_logistical_network_objects_pos"]).AllowEditing((bool)ViewData["CK_UI_logistical_network_objects_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.subcontractors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractors_ru"])).Visible((bool)ViewData["CK_UI_subcontractors"]).Width((int)ViewData["CK_UI_subcontractors_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractors_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractors_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_type_id_ru"])).Visible((bool)ViewData["CK_UI_project_type_id"]).Width((int)ViewData["CK_UI_project_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_project_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_project_type_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_state_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_state_id_ru"])).Visible((bool)ViewData["CK_UI_project_state_id"]).Width((int)ViewData["CK_UI_project_state_id_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.package_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_package_curator_id_ru"])).Visible((bool)ViewData["CK_UI_package_curator_id"]).Width((int)ViewData["CK_UI_package_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_package_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_package_curator_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.supply_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_supply_curator_id_ru"])).Visible((bool)ViewData["CK_UI_supply_curator_id"]).Width((int)ViewData["CK_UI_supply_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_supply_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_supply_curator_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_curator_id_ru"])).Visible((bool)ViewData["CK_UI_project_curator_id"]).Width((int)ViewData["CK_UI_project_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_project_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_project_curator_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.stocks_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stocks_curator_id_ru"])).Visible((bool)ViewData["CK_UI_stocks_curator_id"]).Width((int)ViewData["CK_UI_stocks_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_stocks_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_stocks_curator_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.rss_match_type_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_rss_match_type_id_ru"])).Visible((bool)ViewData["CK_UI_rss_match_type_id"]).Width((int)ViewData["CK_UI_rss_match_type_id_width"]).VisibleIndex((int)ViewData["CK_UI_rss_match_type_id_pos"]).AllowEditing((bool)ViewData["CK_UI_rss_match_type_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.customer_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_customer_id_ru"])).Visible((bool)ViewData["CK_UI_customer_id"]).Width((int)ViewData["CK_UI_customer_id_width"]).VisibleIndex((int)ViewData["CK_UI_customer_id_pos"]).AllowEditing((bool)ViewData["CK_UI_customer_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.customer).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_customer_ru"])).Visible((bool)ViewData["CK_UI_customer"]).Width((int)ViewData["CK_UI_customer_width"]).VisibleIndex((int)ViewData["CK_UI_customer_pos"]).AllowEditing((bool)ViewData["CK_UI_customer_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.designer_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_designer_id_ru"])).Visible((bool)ViewData["CK_UI_designer_id"]).Width((int)ViewData["CK_UI_designer_id_width"]).VisibleIndex((int)ViewData["CK_UI_designer_id_pos"]).AllowEditing((bool)ViewData["CK_UI_designer_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.designer).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_designer_ru"])).Visible((bool)ViewData["CK_UI_designer"]).Width((int)ViewData["CK_UI_designer_width"]).VisibleIndex((int)ViewData["CK_UI_designer_pos"]).AllowEditing((bool)ViewData["CK_UI_designer_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_ru"])).Visible((bool)ViewData["CK_UI_start"]).Width((int)ViewData["CK_UI_start_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_ru"])).Visible((bool)ViewData["CK_UI_finish"]).Width((int)ViewData["CK_UI_finish_width"]).VisibleIndex((int)ViewData["CK_UI_finish_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.year1).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_year1_ru"])).Visible((bool)ViewData["CK_UI_year1"]).Width((int)ViewData["CK_UI_year1_width"]).VisibleIndex((int)ViewData["CK_UI_year1_pos"]).AllowEditing((bool)ViewData["CK_UI_year1_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.year2).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_year2_ru"])).Visible((bool)ViewData["CK_UI_year2"]).Width((int)ViewData["CK_UI_year2_width"]).VisibleIndex((int)ViewData["CK_UI_year2_pos"]).AllowEditing((bool)ViewData["CK_UI_year2_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.finish_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_date_ru"])).Visible((bool)ViewData["CK_UI_finish_date"]).Width((int)ViewData["CK_UI_finish_date_width"]).VisibleIndex((int)ViewData["CK_UI_finish_date_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_curator_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_id_ru"])).Visible((bool)ViewData["CK_UI_build_curator_id"]).Width((int)ViewData["CK_UI_build_curator_id_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_id_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.build_curator).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_build_curator_ru"])).Visible((bool)ViewData["CK_UI_build_curator"]).Width((int)ViewData["CK_UI_build_curator_width"]).VisibleIndex((int)ViewData["CK_UI_build_curator_pos"]).AllowEditing((bool)ViewData["CK_UI_build_curator_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.tree_errors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tree_errors_ru"])).Visible((bool)ViewData["CK_UI_tree_errors"]).Width((int)ViewData["CK_UI_tree_errors_width"]).VisibleIndex((int)ViewData["CK_UI_tree_errors_pos"]).AllowEditing((bool)ViewData["CK_UI_tree_errors_edit"]).EncodeHtml(false);
 
-                            })
-                                                                                                .Paging(p => p.PageSize(30))
-                                                                                                .Pager(pager =>
-                                                                                                {
-                                                                                                    pager.ShowPageSizeSelector(true);
-                                                                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                    pager.ShowInfo(true);
-                                                                                                    pager.ShowNavigationButtons(true);
-                                                                                                    pager.Visible(true);
-                                                                                                })
+                                                })
+                                                                                                                    .Paging(p => p.PageSize(30))
+                                                                                                                    .Pager(pager =>
+                                                                                                                    {
+                                                                                                                        pager.ShowPageSizeSelector(true);
+                                                                                                                        pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                        pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                        pager.ShowInfo(true);
+                                                                                                                        pager.ShowNavigationButtons(true);
+                                                                                                                        pager.Visible(true);
+                                                                                                                    })
 
-                                                                                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                                                                .HeaderFilter(f => f.Visible(true))
-                                                                                                .RemoteOperations(true)
-                                                                                                .ShowRowLines(true)
-                                                                                                .ColumnAutoWidth(true)
-                                                                                                .FilterSyncEnabled(true)
-                                                                                                .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
-                                                                                                .Width("100%")
-                                                                                                .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
-                                                                                                //.Summary(s => s
-                                                                                                //    .TotalItems(totalItems =>
-                                                                                                //    {
-                                                                                                //        totalItems.AddFor(m => m.id).SummaryType(SummaryType.Count);
-                                                                                                //    })
-                                                                                                //    .GroupItems(groupItems =>
-                                                                                                //    {
-                                                                                                //        groupItems.Add().SummaryType(SummaryType.Count);
-                                                                                                //    })
-                                                                                                //)                                                                                                
-                                                                                                .Sorting(s => s.Mode(GridSortingMode.Multiple))
-                                                                                                .AllowColumnResizing(true)
-                                                                                                .AllowColumnReordering(true)
-                                                                                                .Option("columnResizingMode", ColumnResizingMode.Widget)
-                                                                                                .WordWrapEnabled(true)
-                                                                                                .OnToolbarPreparing("onToolbarPreparing")
-                                                                                                .OnContentReady("contentReady")
-                                                                                                .OnRowClick("onRowClick")
-                                                                                                .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+                                                                                                                    .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                    .HeaderFilter(f => f.Visible(true))
+                                                                                                                    .RemoteOperations(true)
+                                                                                                                    .ShowRowLines(true)
+                                                                                                                    .ColumnAutoWidth(true)
+                                                                                                                    .FilterSyncEnabled(true)
+                                                                                                                    .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                                                                    .Width("100%")
+                                                                                                                    .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                                                    //.Summary(s => s
+                                                                                                                    //    .TotalItems(totalItems =>
+                                                                                                                    //    {
+                                                                                                                    //        totalItems.AddFor(m => m.id).SummaryType(SummaryType.Count);
+                                                                                                                    //    })
+                                                                                                                    //    .GroupItems(groupItems =>
+                                                                                                                    //    {
+                                                                                                                    //        groupItems.Add().SummaryType(SummaryType.Count);
+                                                                                                                    //    })
+                                                                                                                    //)
+                                                                                                                    .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                    .AllowColumnResizing(true)
+                                                                                                                    .AllowColumnReordering(true)
+                                                                                                                    .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                    .WordWrapEnabled(true)
+                                                                                                                    .OnToolbarPreparing("onToolbarPreparing")
+                                                                                                                    .OnContentReady("contentReady")
+                                                                                                                    .OnRowClick("onRowClick")
+                                                                                                                    .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
 <script>
     rebind_obj.rebindPrjLogNet = true;
 
@@ -283,7 +200,33 @@
         return true;
     }
 
-    //partPrjLogNet
+
+
+    function ObjectLog() {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0) { alert('Вы не выбрали ни одной строки'); }
+        if (selectedKeys.length > 1) { alert('Вы выбрали больше одной строки. Для просмотра истории нужно выбрать только одну строку'); }
+        if (selectedKeys.length == 1) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/ObjectLog",
+                type: "Get",
+                data: {
+                    object_type: 'project',
+                    object_id: dataGrid.cellValue(dataGrid.getRowIndexByKey(selectedKeys[0]), "id")
+                },
+                success: function (partialViewResult) {
+                    $("#ObjectLog").html(partialViewResult);
+                    //$('#ObjLog').on('shown.bs.modal', function () {$("#loadPanelHelp").dxLoadPanel("instance").show();})
+                    $('#ObjLog').modal('show');
+                }
+            });
+        }
+    }
+
 
 
     //function AddPrjLogNet() {
@@ -308,8 +251,8 @@
     //            close_Window: false,
     //            updateProc: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
     //            id_func: "without_id",
-    //            additionalParams: null              
-                
+    //            additionalParams: null
+
     //        },
     //        success: function (partialViewResult) {
     //            $("#partPrjLogNet").html(partialViewResult);
@@ -342,7 +285,7 @@
     //            close_Window: true,
     //            updateProc: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
     //            id_func: "find_row_idPrjLogNet",
-    //            additionalParams: null  
+    //            additionalParams: null
     //        },
     //        success: function (partialViewResult) {
     //            $("#partPrjLogNet").html(partialViewResult);
@@ -350,19 +293,93 @@
     //        }
     //    });
     //}
-    function onBeforeSendPrjLogNet(method, ajaxOptions) {
-        if (method === "update" || method==="add") {
-            rebind_obj.rebindPrjLogNet = true;
-            var obj = {
-                showSelected: null,
-                selectedRecord: null,
-                rebind: rebind_obj.rebindPrjLogNet,
-                storedProcedureSelect: "APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS",
-                storedProcedureInsert: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
-                controller: controller
-            };           
-            ajaxOptions.data.additionalParams = JSON.stringify(obj);
+    function onInitNewRow(e) {
+       // console.log(JSON.stringify(e));
+        e.data["id"] = 0;
+        //e.data["lno_id"] = 0;
+        //e.data["start"] = "";
+        //e.data["finish"] = "";
+
+    }
+    function AdditionalSelectParams() {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var id = null;
+        if (selectedKeys.length != 0) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            id = selectedData[0]["id"];
         }
+        var obj = {
+            id: id
+        };
+        return obj;
+    }
+
+    function AdditionalInsertParams(method,ajaxOptions) {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var project_id = null;
+        var id = null;
+        if (method === "update")
+            id = ajaxOptions.data.key;
+        if (selectedKeys.length != 0) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            project_id = selectedData[0]["id"];
+        }
+        var obj = {
+            id: id,
+            project_id: project_id
+        };
+        return obj;
+    }
+
+    function AdditionalSupportParams() {
+        //var dataGrid = $("#Grid").dxDataGrid("instance");
+        //var selectedKeys = dataGrid.getSelectedRowKeys();
+        //var id = null;
+        //if (selectedKeys.length != 0) {
+        //    var selectedData = dataGrid.getSelectedRowsData();
+        //    id = selectedData[0]["id"];
+        //}
+        var obj = {
+            //storedProcedureSelect: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
+            showSelected: null,
+            selectedRecord: null,
+            rebind: rebind_obj.rebindPrjLogNet,
+            storedProcedureInsert: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
+            storedProcedureSelect: "APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS",
+            controller: controller
+        };
+        return obj;
+    }
+
+    function onBeforeSendPrjLogNet(method, ajaxOptions) {
+        if (method === "update" || method === "insert") {
+            var dataGrid = $("#Grid").dxDataGrid("instance");
+            var selectedKeys = dataGrid.getSelectedRowKeys();
+
+            var project_id = null;
+            if (selectedKeys.length != 0) {
+                var selectedData = dataGrid.getSelectedRowsData();
+                project_id = selectedData[0]["id"];
+            }
+            
+            //var obj = {
+            //    //storedProcedureSelect: "APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS",
+            //    //storedProcedureInsert: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
+            //    //controller: controller,
+            //    //project_id: project_id,
+            //    additionalSelectParams: AdditionalSelectParams(),
+            //    additionalInsertParams: AdditionalInsertParams(ajaxOptions),
+            //    additionalSupportParams: AdditionalSupportParams()
+            //};
+            //ajaxOptions.data.additionalParams = JSON.stringify(obj);
+            ajaxOptions.data.additionalSelectParams = JSON.stringify(AdditionalSelectParams());
+            ajaxOptions.data.additionalInsertParams = JSON.stringify(AdditionalInsertParams(method, ajaxOptions));
+            ajaxOptions.data.additionalSupportParams = JSON.stringify(AdditionalSupportParams());
+
+        }
+        rebind_obj.rebindPrjLogNet = true;
     }
 
     function ShowRoads() {
@@ -371,33 +388,70 @@
         if (selectedKeys.length == 0)
             return alert("Выберите строку!");
         var selectedData = dataGrid.getSelectedRowsData();
-        rebind_obj.rebindPrjLogNet = true;
-        Reloading("GridPrjLogNet");
-        rebind_obj.rebindPrjLogNet = false;
-        $('#roads').modal('show');
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Projects/RoadGridUpdate",
+            type: "Get",
+            data: {
+                param: selectedData[0]["id"],
+                //selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                //flowWindowName: "GridCard",
+                //flowWindowRussianName: "Просмотр/Редактирование",
+                //gridId: "ObjectsTree",
+                //binding: true,
+                //close_Window: true,
+                //updateProc: "APL_UPDATE_SUBOBJECT2",
+                //id_func: "find_row_id",
+                //additionalParams: JSON.stringify(additionalParams)
+                /*selectedData[0]['id']*/
+            },
+            success: function (partialViewResult) {
+                $("#roads_partial").html(partialViewResult);
+                rebind_obj.rebindPrjLogNet = true;
+                //Reloading("GridPrjLogNet");
+                //PrjLogNetReloadGrid();
+                //rebind_obj.rebindPrjLogNet = false;
+                $('#roads').modal('show');
+            }
+        });
+
+
+      
     }
     $(function () {
         var str = '@ViewBag.RoleAddUpdate'.toLowerCase();
         if (str === 'true') {
             //$('#AddItem').show();
             $('#AddItem').show(); }
-        else { 
+        else {
             //$('#AddItem').hide();
             $('#AddItem').hide();
         }
+
+        @*var str2 = '@ViewBag.grid2EditAdd';
+        if (str2 === 'true') {
+           // $('#UpdatePrjLogNet').show();
+            $('#AddPrjLogNet').show();
+        }
+        else {
+           // $('#UpdatePrjLogNet').hide();
+            $('#AddPrjLogNet').hide();
+        }*@
+
     });
 
     function contentReadyPrjLogNet(e) {
         rebind_obj.rebindPrjLogNet = false;
     }
-    function AddPrjLogNet() { 
+    function AddPrjLogNet() {
         var dataGrid = $("#GridPrjLogNet").dxDataGrid("instance");
         dataGrid.addRow();
-        var selectedData = dataGrid.getRowElement(0); 
-        selectedData.values["id"] = 0;
-        selectedData.values["lno_id"] = 0;
-        selectedData.values["lno_description"] = "бред";
-        
+        var selectedData = dataGrid.getRowElement(0);
+        //selectedData.values["id"] = 0;
+        //selectedData.values["lno_id"] = 0;
+        //selectedData.values["lno_description"] = "бред";
+
         //selectedData[0]["id"] = 0;
 
 
@@ -410,11 +464,11 @@
         if (selectedKeys.length != 0) {
             var selectedData = dataGrid.getSelectedRowsData();
             id = selectedData[0]["id"];
-        }        
+        }
         var obj = {
             showSelected: null,
             selectedRecord: null,
-            rebind: rebind_obj.rebind,
+            rebind: rebind_obj.rebindPrjLogNet,
             storedProcedure: "APL_SELECT_PROJECT_LOGISTICAL_NETWORK_OBJECTS",
             controller: controller,
             hide_closed: $('#hide_closed').prop("checked"),
@@ -423,30 +477,55 @@
         return JSON.stringify(obj);
     }
 
+
+
     function PrjLogNetReloadGrid() {
-        var dataGrid = $("#GridPrjLogNet").dxDataGrid("instance");
+        //var dataGrid = $("#GridPrjLogNet").dxDataGrid("instance");
+        var dataGrid = $("#GridPrjLogNet").dxDataGrid("getDataSource"); 
         rebind_obj.rebindPrjLogNet = true;
-        Reloading("GridPrjLogNet");
+        dataGrid.reload();
         rebind_obj.rebindPrjLogNet = false;
     }
 
-    function onToolbarPreparingPrjLogNet(e) {
-        var dataGrid = e.component;
-        e.toolbarOptions.items.unshift({
-            location: "after",
-            template: $(
-                //    "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + showSelected.function + "' id='" + showSelected.id + "'><img src='/../../img/GridBtn/1-7.png' style='height:18px; width:auto;' alt='Показать выбранные'></img></button>" +
-                //"<button title='Редактировать' class='btn btn_in_grid dx-button btn_pad_grid' onclick='UpdatePrjLogNet();' id='UpdatePrjLogNet'><img src='/../../img/GridBtn/1-2.png' style='height:18px; width:auto;' alt='Редактировать'></img></button>" +
-                "<button title='Добавить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='AddPrjLogNet();' id='AddPrjLogNet'><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
-                "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='PrjLogNetReloadGrid();' id='PrjLogNetReloadGrid'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
-                "<button title='Очистить фильтры' onclick='ClearFilters(\"GridPrjLogNet\");' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFilters'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>"
-                //"<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='" + fullSearch.function + "' id='" + fullSearch.id + "' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
-                //"<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
-                //"<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>"
-                )
-        });
-    }
+
     var rebind_obj = new Object();
     rebind_obj.rebind = true;
+
+
+
+
+    
+    function DeleteProjectLNO() {
+        if (confirm("Вы действительно хотите удалить записи?")) {
+            var dataGrid = $("#GridPrjLogNet").dxDataGrid("instance");
+            var keys = dataGrid.getSelectedRowKeys();
+            if (keys[0] == ',')
+                keys[0] = '';
+            var Records = [];
+            for (var i = 0; i < keys.length; i++) {
+                var row_index = dataGrid.getRowIndexByKey(keys[i]);
+                row_id = dataGrid.cellValue(row_index, "id");
+                Records.push(row_id);
+            }
+
+            if (keys.length == 0) return alert("Вы не выбрали ни одной строки");
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: '/Projects/DeleteProjectLNO',
+                type: 'POST',
+                data: {
+                    Records: Records.toString()
+                },
+                success: function (data) {
+                    if (data != "" && data != null)
+                        alert(data.replace(/__/gi, '\n'));
+                    PrjLogNetReloadGrid();
+                    dataGrid.deselectAll();
+                }
+            });
+        }
+    }
 
 </script>

@@ -1,0 +1,246 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<link href="~/css/ProjectRequirementChange/Index.css" rel="stylesheet" />
+<script src="~/js/ProjectRequirementChange/Index.js"></script>
+
+@*body {
+    background: url('/img/backgrounds_blue_background_with_highlights_035592_.jpg') no-repeat;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-attachment: fixed;
+}*@
+
+@Html.Partial("Settings", (Settings)ViewBag.UserSettings)
+
+
+<div id="FullSearchForApprove" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearchForApprove", "", "");'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Расширенный поиск</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="">
+                        <tr>
+                            <td style="">
+                                <label class='form-check-label btn_in_grid' for='show_only_active_for_approve'> Показывать только неотработанные запросы</label>
+                                <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='show_only_active_for_approve' data_type="check" checked>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' SaveFullSearchFilters("FullSearchForApprove", "", ""); $("#FullSearchForApprove").modal("hide"); Reloading("GridForApprove");'>
+                        <span class="dx-icon-floppy icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div id="FullSearchNotForApprove" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick='RemoveFullSearchFilters("FullSearchNotForApprove", "", "");'>
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title"> Расширенный поиск</h4>
+            </div>
+            <div class="modal-body">
+                <table class="table table-condensed" style="width:100%; table-layout:fixed;">
+                    <tbody id="">
+                        <tr>
+                            <td style="">
+                                <label class='form-check-label btn_in_grid' for='show_only_active_not_for_approve'> Показывать только неотработанные запросы</label>
+                                <input type='checkbox' class='form-check-input btn_in_grid full_search_check' id='show_only_active_not_for_approve' data_type="check" checked>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn_icon" style="margin-left:auto; margin-right:0; " onclick=' SaveFullSearchFilters("FullSearchNotForApprove", "", ""); $("#FullSearchNotForApprove").modal("hide"); Reloading("GridNotForApprove");'>
+                        <span class="dx-icon-floppy icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#tab1">Запросы для согласования изменений</a></li>
+    <li><a data-toggle="tab" href="#tab2">Запросы для анализа образования запасов</a></li>
+</ul>
+<div class="tab-content">
+
+    <div id="tab1" class="tab-pane fade in active">
+        <div class="page1">
+            @(Html.DevExtreme().DataGrid<APL_SELECT_PROJECT_REQUIREMENT_CHANGE_REQUESTS2Result>()
+                                                    .ID("GridForApprove")
+                                                    .ShowBorders(true)
+                                                    .DataSource(d => d.Mvc()
+                                                    .LoadAction("GetData")
+                                                    .Controller("Common")
+                                                    .Key("id")
+
+                                                    .LoadParams(new
+                                                    {
+                                                        additionalParams = new JS("function(){return ReturnDataForApprove('" + control + "');}")
+                                                    })
+                                                    )
+                                                .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+                                                .Columns(columns =>
+                                                {
+                                                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ru"])).Visible((bool)ViewData["CK_UI_object_description"]).Width((int)ViewData["CK_UI_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.subobject_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subobject_description_ru"])).Visible((bool)ViewData["CK_UI_subobject_description"]).Width((int)ViewData["CK_UI_subobject_description_width"]).VisibleIndex((int)ViewData["CK_UI_subobject_description_pos"]).AllowEditing((bool)ViewData["CK_UI_subobject_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.project_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_ru"])).Visible((bool)ViewData["CK_UI_project_documentation"]).Width((int)ViewData["CK_UI_project_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.inventory_object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_description_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_description"]).Width((int)ViewData["CK_UI_inventory_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.inventory_object_package_contents).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_package_contents_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_package_contents"]).Width((int)ViewData["CK_UI_inventory_object_package_contents_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_package_contents_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_package_contents_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.inventory_object_additional_properties).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_additional_properties_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_additional_properties"]).Width((int)ViewData["CK_UI_inventory_object_additional_properties_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_additional_properties_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_additional_properties_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.inventory_object_manufacturer_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_manufacturer_description_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_manufacturer_description"]).Width((int)ViewData["CK_UI_inventory_object_manufacturer_description_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_manufacturer_description_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_manufacturer_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.unit).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_ru"])).Visible((bool)ViewData["CK_UI_unit"]).Width((int)ViewData["CK_UI_unit_width"]).VisibleIndex((int)ViewData["CK_UI_unit_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.quantity).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_state_ru"])).Visible((bool)ViewData["CK_UI_state"]).Width((int)ViewData["CK_UI_state_width"]).VisibleIndex((int)ViewData["CK_UI_state_pos"]).AllowEditing((bool)ViewData["CK_UI_state_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.station).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_station_ru"])).Visible((bool)ViewData["CK_UI_station"]).Width((int)ViewData["CK_UI_station_width"]).VisibleIndex((int)ViewData["CK_UI_station_pos"]).AllowEditing((bool)ViewData["CK_UI_station_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.request_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_request_date_ru"])).Visible((bool)ViewData["CK_UI_request_date"]).Width((int)ViewData["CK_UI_request_date_width"]).VisibleIndex((int)ViewData["CK_UI_request_date_pos"]).AllowEditing((bool)ViewData["CK_UI_request_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.request_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_request_user_ru"])).Visible((bool)ViewData["CK_UI_request_user"]).Width((int)ViewData["CK_UI_request_user_width"]).VisibleIndex((int)ViewData["CK_UI_request_user_pos"]).AllowEditing((bool)ViewData["CK_UI_request_user_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.approve_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_date_ru"])).Visible((bool)ViewData["CK_UI_approve_date"]).Width((int)ViewData["CK_UI_approve_date_width"]).VisibleIndex((int)ViewData["CK_UI_approve_date_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_date_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.approve_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_user_ru"])).Visible((bool)ViewData["CK_UI_approve_user"]).Width((int)ViewData["CK_UI_approve_user_width"]).VisibleIndex((int)ViewData["CK_UI_approve_user_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_user_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.approve_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_state_ru"])).Visible((bool)ViewData["CK_UI_approve_state"]).Width((int)ViewData["CK_UI_approve_state_width"]).VisibleIndex((int)ViewData["CK_UI_approve_state_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_state_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.approve_note).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_note_ru"])).Visible((bool)ViewData["CK_UI_approve_note"]).Width((int)ViewData["CK_UI_approve_note_width"]).VisibleIndex((int)ViewData["CK_UI_approve_note_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_note_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.order_information).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_order_information_ru"])).Visible((bool)ViewData["CK_UI_order_information"]).Width((int)ViewData["CK_UI_order_information_width"]).VisibleIndex((int)ViewData["CK_UI_order_information_pos"]).AllowEditing((bool)ViewData["CK_UI_order_information_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.specification_information).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_specification_information_ru"])).Visible((bool)ViewData["CK_UI_specification_information"]).Width((int)ViewData["CK_UI_specification_information_width"]).VisibleIndex((int)ViewData["CK_UI_specification_information_pos"]).AllowEditing((bool)ViewData["CK_UI_specification_information_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.summary).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary_ru"])).Visible((bool)ViewData["CK_UI_summary"]).Width((int)ViewData["CK_UI_summary_width"]).VisibleIndex((int)ViewData["CK_UI_summary_pos"]).AllowEditing((bool)ViewData["CK_UI_summary_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.summary2).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary2_ru"])).Visible((bool)ViewData["CK_UI_summary2"]).Width((int)ViewData["CK_UI_summary2_width"]).VisibleIndex((int)ViewData["CK_UI_summary2_pos"]).AllowEditing((bool)ViewData["CK_UI_summary2_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.is_not_for_approve).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_not_for_approve_ru"])).Visible((bool)ViewData["CK_UI_is_not_for_approve"]).Width((int)ViewData["CK_UI_is_not_for_approve_width"]).VisibleIndex((int)ViewData["CK_UI_is_not_for_approve_pos"]).AllowEditing((bool)ViewData["CK_UI_is_not_for_approve_edit"]).EncodeHtml(false);
+                                                })
+
+                                                    .Paging(p => p.PageSize(30))
+                                                            .Pager(pager =>
+                                                            {
+                                                                pager.ShowPageSizeSelector(true);
+                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                pager.ShowInfo(true);
+                                                                pager.ShowNavigationButtons(true);
+                                                                pager.Visible(true);
+                                                            })
+                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                            .HeaderFilter(f => f.Visible(true))
+                                                            .RemoteOperations(true)
+                                                            .ShowRowLines(true)
+                                                            .ColumnAutoWidth(true)
+                                                            .FilterSyncEnabled(true)
+                                                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                            .Width("100%")
+                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                            .AllowColumnResizing(true)
+                                                            .AllowColumnReordering(true)
+                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                            .WordWrapEnabled(true)
+                                                            .OnContentReady("contentReady")
+                                                            .OnToolbarPreparing("onToolbarPreparingForApprove")
+                                                            .OnSelectionChanged("selection_changedForApprove")
+                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+        </div>
+    </div>
+    <div id="tab2" class="tab-pane fade">
+
+        @(Html.DevExtreme().DataGrid<APL_SELECT_PROJECT_REQUIREMENT_CHANGE_REQUESTS2Result>()
+                                        .ID("GridNotForApprove")
+                                        .ShowBorders(true)
+                                        .DataSource(d => d.Mvc()
+                                        .LoadAction("GetData")
+                                        .Controller("Common")
+                                        .Key("id")
+
+                                        .LoadParams(new
+                                        {
+                                            additionalParams = new JS("function(){return ReturnDataNotForApprove('" + control + "');}")
+                                        })
+                                        )
+                                    .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+                                    .Columns(columns =>
+                                    {
+                                        columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_code_ru"])).Visible((bool)ViewData["CK_UI_code"]).Width((int)ViewData["CK_UI_code_width"]).VisibleIndex((int)ViewData["CK_UI_code_pos"]).AllowEditing((bool)ViewData["CK_UI_code_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ru"])).Visible((bool)ViewData["CK_UI_object_description"]).Width((int)ViewData["CK_UI_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.subobject_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subobject_description_ru"])).Visible((bool)ViewData["CK_UI_subobject_description"]).Width((int)ViewData["CK_UI_subobject_description_width"]).VisibleIndex((int)ViewData["CK_UI_subobject_description_pos"]).AllowEditing((bool)ViewData["CK_UI_subobject_description_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.project_documentation).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_ru"])).Visible((bool)ViewData["CK_UI_project_documentation"]).Width((int)ViewData["CK_UI_project_documentation_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.inventory_object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_description_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_description"]).Width((int)ViewData["CK_UI_inventory_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_description_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.inventory_object_package_contents).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_package_contents_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_package_contents"]).Width((int)ViewData["CK_UI_inventory_object_package_contents_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_package_contents_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_package_contents_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.inventory_object_additional_properties).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_additional_properties_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_additional_properties"]).Width((int)ViewData["CK_UI_inventory_object_additional_properties_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_additional_properties_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_additional_properties_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.inventory_object_manufacturer_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inventory_object_manufacturer_description_ru"])).Visible((bool)ViewData["CK_UI_inventory_object_manufacturer_description"]).Width((int)ViewData["CK_UI_inventory_object_manufacturer_description_width"]).VisibleIndex((int)ViewData["CK_UI_inventory_object_manufacturer_description_pos"]).AllowEditing((bool)ViewData["CK_UI_inventory_object_manufacturer_description_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.unit).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_ru"])).Visible((bool)ViewData["CK_UI_unit"]).Width((int)ViewData["CK_UI_unit_width"]).VisibleIndex((int)ViewData["CK_UI_unit_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.quantity).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_state_ru"])).Visible((bool)ViewData["CK_UI_state"]).Width((int)ViewData["CK_UI_state_width"]).VisibleIndex((int)ViewData["CK_UI_state_pos"]).AllowEditing((bool)ViewData["CK_UI_state_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.station).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_station_ru"])).Visible((bool)ViewData["CK_UI_station"]).Width((int)ViewData["CK_UI_station_width"]).VisibleIndex((int)ViewData["CK_UI_station_pos"]).AllowEditing((bool)ViewData["CK_UI_station_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.request_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_request_date_ru"])).Visible((bool)ViewData["CK_UI_request_date"]).Width((int)ViewData["CK_UI_request_date_width"]).VisibleIndex((int)ViewData["CK_UI_request_date_pos"]).AllowEditing((bool)ViewData["CK_UI_request_date_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.request_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_request_user_ru"])).Visible((bool)ViewData["CK_UI_request_user"]).Width((int)ViewData["CK_UI_request_user_width"]).VisibleIndex((int)ViewData["CK_UI_request_user_pos"]).AllowEditing((bool)ViewData["CK_UI_request_user_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.approve_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_date_ru"])).Visible((bool)ViewData["CK_UI_approve_date"]).Width((int)ViewData["CK_UI_approve_date_width"]).VisibleIndex((int)ViewData["CK_UI_approve_date_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_date_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.approve_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_user_ru"])).Visible((bool)ViewData["CK_UI_approve_user"]).Width((int)ViewData["CK_UI_approve_user_width"]).VisibleIndex((int)ViewData["CK_UI_approve_user_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_user_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.approve_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_state_ru"])).Visible((bool)ViewData["CK_UI_approve_state"]).Width((int)ViewData["CK_UI_approve_state_width"]).VisibleIndex((int)ViewData["CK_UI_approve_state_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_state_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.approve_note).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_approve_note_ru"])).Visible((bool)ViewData["CK_UI_approve_note"]).Width((int)ViewData["CK_UI_approve_note_width"]).VisibleIndex((int)ViewData["CK_UI_approve_note_pos"]).AllowEditing((bool)ViewData["CK_UI_approve_note_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.order_information).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_order_information_ru"])).Visible((bool)ViewData["CK_UI_order_information"]).Width((int)ViewData["CK_UI_order_information_width"]).VisibleIndex((int)ViewData["CK_UI_order_information_pos"]).AllowEditing((bool)ViewData["CK_UI_order_information_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.specification_information).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_specification_information_ru"])).Visible((bool)ViewData["CK_UI_specification_information"]).Width((int)ViewData["CK_UI_specification_information_width"]).VisibleIndex((int)ViewData["CK_UI_specification_information_pos"]).AllowEditing((bool)ViewData["CK_UI_specification_information_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.summary).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary_ru"])).Visible((bool)ViewData["CK_UI_summary"]).Width((int)ViewData["CK_UI_summary_width"]).VisibleIndex((int)ViewData["CK_UI_summary_pos"]).AllowEditing((bool)ViewData["CK_UI_summary_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.summary2).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary2_ru"])).Visible((bool)ViewData["CK_UI_summary2"]).Width((int)ViewData["CK_UI_summary2_width"]).VisibleIndex((int)ViewData["CK_UI_summary2_pos"]).AllowEditing((bool)ViewData["CK_UI_summary2_edit"]).EncodeHtml(false);
+                                        columns.AddFor(m => m.is_not_for_approve).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_not_for_approve_ru"])).Visible((bool)ViewData["CK_UI_is_not_for_approve"]).Width((int)ViewData["CK_UI_is_not_for_approve_width"]).VisibleIndex((int)ViewData["CK_UI_is_not_for_approve_pos"]).AllowEditing((bool)ViewData["CK_UI_is_not_for_approve_edit"]).EncodeHtml(false);
+                                    })
+
+                                        .Paging(p => p.PageSize(30))
+                                                .Pager(pager =>
+                                                {
+                                                    pager.ShowPageSizeSelector(true);
+                                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                    pager.ShowInfo(true);
+                                                    pager.ShowNavigationButtons(true);
+                                                    pager.Visible(true);
+                                                })
+                                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                .HeaderFilter(f => f.Visible(true))
+                                                .RemoteOperations(true)
+                                                .ShowRowLines(true)
+                                                .ColumnAutoWidth(true)
+                                                .FilterSyncEnabled(true)
+                                                .Height(new JS("function() { return $('div.page1').height();}"))
+                                                .Width("100%")
+                                                .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                .AllowColumnResizing(true)
+                                                .AllowColumnReordering(true)
+                                                .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                .WordWrapEnabled(true)
+                                                .OnContentReady("contentReady")
+                                                .OnToolbarPreparing("onToolbarPreparingNotForApprove")
+                                                .OnSelectionChanged("selection_changedNotForApprove")
+                                                .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+    </div>
+</div>
+
+
+
+

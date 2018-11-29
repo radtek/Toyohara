@@ -2,33 +2,19 @@
 @using Newtonsoft.Json
 @using ToyoharaCore.Models.CustomModel
 
-<div id="@(Model.flowWindowName)" class="modal fade" tabindex="-1" role="dialog">
+<div id="@(Model.flowWindowName)" class="modal fade" tabindex="-1" role="dialog" style="z-index:100000;" data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">Настройки</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    @*<h5>Выберите настройки таблицы</h5>*@
-                    @*<div class="text-right">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" style="display:inline-block; text-align:right;">Закрыть</button>
-                        <button type="button" class="btn btn-primary" onclick='DefaultSettingsOfGrid("@Model.storedProcedure", GetLink());'>Вернуть настройки по умолчанию</button>
-                        <button type="button" class="btn btn-primary" style="margin-left:auto; margin-right:0; " onclick='UpdateSettingsOfGrid("@Model.controllerName", "@Model.actionName","@Model.storedProcedure",GetLink(), "@Model.checkBoxClass", "@Model.widthClass", "@Model.positionClass");'>Сохранить</button>
-                    </div>*@
+                        <button type="button" class="close"  onclick="$('#@(Model.flowWindowName)').modal('hide');">
+                            <span aria-hidden="true">×</span>
+                        </button>
                 </div>
                 <div class="modal-body">
                     <div class="table-responsive">
                         <table class="table table-condensed">
-                            @*<div class="container">
-                                    <div class="row">
-                                        <div class="col-sm-4">Название столбца</div>
-                                        <div class="col-sm-4">Показывать столбец</div>
-                                        <div class="col-sm-4">Ширина столбца</div>
-                                        <div class="col-sm-4">Положение</div>
-                                    </div>
-                                </div>*@
                             <thead>
                                 <tr>
                                     <th>Название столбца</th>
@@ -49,22 +35,16 @@
                                             <td><input type='number' class='@Model.positionClass' id='@("UI_" + setting.number + "_pos")' name='@("UI_" + setting.number + "_pos")' onblur='javascript:checkFloat(this.value);' value='@setting.number' /></td>
                                         </tr>
                                     }
-                                    @*<div class="row">
-                                            <div class="col-sm-4">@(setting.columnRussianName+":")</div>
-                                            <div class="col-sm-4"><input type='checkbox' class='@Model.checkBoxClass' id='@("CK_UI_"+setting.columnName)' name='@("CK_UI_"+setting.columnName)' value='@setting.columnName' @((setting.columnVisible==true)?  " checked=\"checked\"" : "")></div>
-                                            <div class="col-sm-4"><input type='number' class='@Model.widthClass' id='@("UI_"+setting.columnName)' name='@("UI_"+setting.columnName)' onblur='javascript:checkFloat(this.value);' value='@setting.columnWidth'/></div>
-                                            <div class="col-sm-4"><input type='number' class= '@Model.positionClass' id='@("UI_"+setting.columnPosition+"_pos")' name='@("UI_"+setting.columnPosition+"_pos")' onblur='javascript:checkFloat(this.value);' value='@setting.columnPosition'/></div>
-                                        </div>*@
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer" style="padding-bottom:15px;">
-                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>*@
-                    <button type="button" class="btn btn-primary" onclick='DefaultSettingsOfGrid("@Model.storedProcedure", GetLink());'>Вернуть настройки по умолчанию</button>
-                    <button type="button" class="btn btn_icon" onclick='UpdateSettingsOfGrid("@Model.controllerName", "@Model.actionName","@Model.storedProcedure",GetLink(), 
-                            "@Model.checkBoxClass", "@Model.widthClass", "@Model.positionClass",JSON.stringify(@(Html.Raw(JsonConvert.SerializeObject(Model.gridSettings)))));'>
+                    <button type="button" class="btn btn-primary" onclick='DefaultSettingsOfGrid("@Model.storedProcedure","@(Model.flowWindowName)",  "@(Model.parsialDivName)",  "@(Model.openParsialDivFunction)");'>Вернуть настройки по умолчанию</button>
+                    <button type="button" class="btn btn_icon" onclick='UpdateSettingsOfGrid("@Model.controllerName", "@Model.actionName","@Model.storedProcedure", 
+                            "@Model.checkBoxClass", "@Model.widthClass", "@Model.positionClass",JSON.stringify(@(Html.Raw(JsonConvert.SerializeObject(Model.gridSettings)))),
+                            "@(Model.flowWindowName)",  "@(Model.parsialDivName)",  "@(Model.openParsialDivFunction)");'>
                         <span class="dx-icon-floppy icon"></span>@*</i>*@
                     </button>
                 </div>

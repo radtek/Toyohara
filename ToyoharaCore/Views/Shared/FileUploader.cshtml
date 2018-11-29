@@ -1,7 +1,7 @@
 ﻿@model ToyoharaCore.Models.CustomModel.FileUploader
 @using Newtonsoft.Json
 
-<div id="@(Model.FlowWindowName)" class="modal fade" tabindex="-1" role="dialog">
+<div id="@(Model.FlowWindowName)" class="modal fade"  tabindex="-1" role="dialog"  data-backdrop="static">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-content">
@@ -16,48 +16,60 @@
                         <table class="table table-condensed">
                             <thead>
                                 <tr>
-                                    <th>Выберите файл</th>
+                                    <th>Загрузка файла</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>
+                                        <div id="LoadingGif" style="z-index:90000; display:none;"><img src="~/img/orig3.gif" width="300" height="300" /></div>
                                         <div id="@Model.Id"></div>
+
                                     </td>
                                 </tr>
                             </tbody>
                             <tr>
                                 <td>
-                            <div class="description_tr">
-                                <div class="description_td"></div>
-                            </div>
-                            <div class="loading_state_description_tr">
-                                <div class="loading_state_description_td"></div>
-                            </div>
-                            <div class="total_cnt_tr">
-                                <div class="total_cnt_td"></div>
-                            </div>
-                            <div class="error_cnt_tr">
-                                <div class="error_cnt_td"></div>
-                            </div>
-                            <div class="warning_cnt_tr">
-                                <div class="warning_cnt_td"></div>
-                            </div>
-                            <div class="info_html_tr">
-                                <div class="info_html_td"></div>
-                            </div>
-                            </td>
+
+                                    <div class="loading_id_tr">
+                                        <div class="loading_id_td"></div>
+                                    </div>
+                                    <div class="description_tr">
+                                        <div class="description_td"></div>
+                                    </div>
+                                    <div class="loading_state_description_tr">
+                                        <div class="loading_state_description_td"></div>
+                                    </div>
+                                    <div class="total_cnt_tr">
+                                        <div class="total_cnt_td"></div>
+                                    </div>
+                                    <div class="error_cnt_tr">
+                                        <div class="error_cnt_td"></div>
+                                    </div>
+                                    <div class="warning_cnt_tr">
+                                        <div class="warning_cnt_td"></div>
+                                    </div>
+                                    <div class="info_html_tr">
+                                        <div class="info_html_td"></div>
+                                    </div>
+                                </td>
                             </tr>
                         </table>
                     </div>
                 </div>
                 <div class="modal-footer" style="padding-bottom:15px;">
-                    @*<button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>*@
-                    @*<button type="button" class="btn btn-primary" onclick='DefaultSettingsOfGrid("@Model.storedProcedure", GetLink());'>Вернуть настройки по умолчанию</button>*@
-                    <button type="button" class="btn btn_icon @Model.UploadFileAccept get_excel" style="display:none;" onclick="GetExcel(this);" value="" fileDownloadName=""><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'/></button>
-                    <button type="button" class="btn btn_icon @Model.UploadFileAccept file_accept" onclick='UploadFileAccept(this,"@Model.OnCommitSuccessFunction");' style="display:none;">
-                        <span class="dx-icon-floppy icon"></span>@*</i>*@
-                    </button>
+
+                    <div>
+                        <button class='btn btn_in_grid dx-button btn_pad_grid' style="margin-left:1.3%;" title='Выгрузить шаблон' onclick='window.location = "/Common/ReturnFile?physicalPath="+ "ExcelTemplates\\"+"@Model.TeplateName"+".xlsx"+ "&fileDownloadName=" + encodeURIComponent("@Model.TeplateNameRu");' id='ExportTemplate'>Скачать шаблон</button>
+                    </div>
+                    <br />
+                    <div class="@Model.UploadFileAccept get_excel_label" style="display:none;">Для выгрузки обработанного файла нажмите <button type="button" class="btn btn_icon @Model.UploadFileAccept get_excel" style="display:none;" onclick="GetExcel(this);" value="" fileDownloadName=""><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel' /></button></div>
+                    <br />
+                    <div class="@Model.UploadFileAccept file_accept_label" style="display:none;">
+                        Для завершения загрузки нажмите  <button type="button" class="btn btn_icon @Model.UploadFileAccept file_accept" onclick='UploadFileAccept(this,"@Model.OnCommitSuccessFunction");' style="display:none;">
+                            <span class="dx-icon-floppy icon"></span>@*</i>*@
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -71,10 +83,10 @@
         window.location = "/Common/ReturnFile?physicalPath=" + btn.value + "&fileDownloadName=" + btn.getAttribute("fileDownloadName");
     }
 
-
-
-
     function UploadFileAccept(btn, OnCommitSuccess) {
+        $('#LoadingGif').show();
+        $("#" + "@Model.FlowWindowName " + "." + "@Model.UploadFileAccept" + ".file_accept").hide();
+        $("#" + "@Model.FlowWindowName " + ".file_accept_label").html("<font color =red> Файл загружается </font>");
         $.ajax({
             async: true,
             cache: false,
@@ -83,6 +95,7 @@
             type: 'POST',
             data: { loading_id: btn.value },
             success: function (data) {
+                $('#LoadingGif').hide();
                 window[OnCommitSuccess]();
             }
         });
@@ -90,11 +103,16 @@
     }
 
     $(function () {
+        
         $("#"+"@Model.Id").dxFileUploader({
             name: "@Model.Name",
             uploadMode: "instantly", // or "useButtons"
             uploadUrl: "/Common/UploadFile",
+            //onOptionChanged: function (e) { alert('onOptionChanged'); },
+            //onProgress: function (e) { alert('onProgress'); },
             onValueChanged: function (e) {
+                $('#LoadingGif').show();
+                $("#" + "@Model.FlowWindowName " + "." + "@Model.UploadFileAccept").hide();
                 var url = e.component.option("uploadUrl");
                 try {
                     $("." + "@Model.UploadUrlClass").each(function () {
@@ -110,17 +128,16 @@
                 url = updateQueryStringParameter(url, 'insertProc', '@Model.InsertProc'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'selectProc', '@Model.SelectProc'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'insertTemplate', '@Model.InsertTemplate'.replace(/(&quot\;)/g, "\""));
-                url = updateQueryStringParameter(url, 'selectTemplate', '@Model.SelectTemplate'.replace(/(&quot\;)/g, "\""));
+                @*url = updateQueryStringParameter(url, 'selectTemplate', '@Model.SelectTemplate'.replace(/(&quot\;)/g, "\""));*@
                 url = updateQueryStringParameter(url, 'loading_type_id', '@Model.LoadingTypeId'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'descripton', '@Model.Description'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'summary', '@Model.Summary'.replace(/(&quot\;)/g, "\""));
-                url = updateQueryStringParameter(url, 'columnCountSelect', '@Model.ColumnCountSelect'.replace(/(&quot\;)/g, "\""));
+                @*url = updateQueryStringParameter(url, 'columnCountSelect', '@Model.ColumnCountSelect'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'rowCountSelect', '@Model.RowCountSelect'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'columnCount', '@Model.ColumnCount'.replace(/(&quot\;)/g, "\""));
-                url = updateQueryStringParameter(url, 'rowCount', '@Model.RowCount'.replace(/(&quot\;)/g, "\""));
+                url = updateQueryStringParameter(url, 'rowCount', '@Model.RowCount'.replace(/(&quot\;)/g, "\""));*@
                 url = updateQueryStringParameter(url, 'workSheetNumber', '@Model.WorkSheetNumber'.replace(/(&quot\;)/g, "\""));
                 url = updateQueryStringParameter(url, 'fileName', '@System.Web.HttpUtility.UrlPathEncode(Model.Name)'.replace(/(&quot\;)/g, "\""));
-
                 e.component.option("uploadUrl", url);
             },
             onUploaded: function (e) {
@@ -141,12 +158,14 @@
                 if (xhttp.error != "" && xhttp.error != null)
                     return alert(xhttp.error.replace(/__/gi, '\n'));
                 if (xhttp.allow_commit != 1 && (xhttp.error == "" || xhttp.error == null))
-                    $("#" +"@Model.FlowWindowName "+"." + "@Model.UploadFileAccept" + ".get_excel").show();
+                    $("#" + "@Model.FlowWindowName " + "." + "@Model.UploadFileAccept" + ".get_excel").show();
+                    $("#" +"@Model.FlowWindowName "+"." + "@Model.UploadFileAccept" + ".get_excel_label").show();
                 if (xhttp.allow_commit==1)
-                    $("#" + "@Model.FlowWindowName " + "." + "@Model.UploadFileAccept").show();
+                    $("#" + "@Model.FlowWindowName " + "." + "@Model.UploadFileAccept").show();                    
 
                 $("#" + "@Model.FlowWindowName " + ".description_td").html("Загруженный файл: "+ xhttp.description);
-                $("#" + "@Model.FlowWindowName " + ".loading_state_description_td").html("Статус проверки: "+xhttp.loading_state_description)
+                $("#" + "@Model.FlowWindowName " + ".loading_state_description_td").html("Статус проверки: " + xhttp.loading_state_description)
+                $("#" + "@Model.FlowWindowName " + ".loading_id_td").html("Идентификатор загрузки: " + xhttp.loading_id)
                 $("#" + "@Model.FlowWindowName " + ".total_cnt_td").html("Всего строк: "+xhttp.total_cnt);
                 $("#" + "@Model.FlowWindowName " + ".error_cnt_td").html("Из них с ошибками: "+xhttp.error_cnt);
                 $("#" + "@Model.FlowWindowName " + ".warning_cnt_td").html("Из них с предупреждениями: " +xhttp.warning_cnt);
@@ -158,7 +177,7 @@
                 $("#" + "@Model.FlowWindowName " + ".error_cnt_tr").show();
                 $("#" + "@Model.FlowWindowName " + ".warning_cnt_tr").show();
                 $("#" + "@Model.FlowWindowName " + ".info_html_tr").show();
-
+                $('#LoadingGif').hide();
             }
         });
 
@@ -174,52 +193,7 @@
         }
     });
     
-        function UpdateSettingsOfGrid(controller, action, procedure_name, link, checkboxClass, widthClass, positionClass) {
 
-            var columns_names = [];
-            var columns_is_visible = [];
-            var columns_width = [];
-            var columns_position = [];
-
-            var width=$('input.' + widthClass);
-            //var position = $('.' + positionClass);
-            //for (var i = 0; i < width.length; i++) {
-            //    if (!checkFloat($(width[i]).val())) return;
-            //    if (!checkFloat($(width[i])).closest('tr').find('.' + positionClass).val()) return;
-            //    columns_names.push($(width[i]).closest('tr').find('.' + checkboxClass).val());
-            //    columns_is_visible.push($(width[i]).closest('tr').find('.' + checkboxClass).prop("checked").toString());
-            //    columns_width.push($(width[i]).val());
-            //    columns_position.push($(width[i]).closest('tr').find('.' + positionClass).val());
-            //}
-
-            //var leng = $('.' + widthClass).length;
-            $('.' + widthClass).each(function () {
-                if (!checkFloat($(this).val())) return;
-                if (!checkFloat($(this).closest('tr').find('.' + positionClass).val())) return;
-                columns_names.push($(this).closest('tr').find('.' + checkboxClass).val());
-                columns_is_visible.push($(this).closest('tr').find('.' + checkboxClass).prop("checked").toString());
-                columns_width.push($(this).val());
-                columns_position.push($(this).closest('tr').find('.' + positionClass).val());
-
-            });
-            uniqueArray = columns_position.filter(function (item, pos) {
-                return columns_position.indexOf(item) == pos;
-            });
-            if (uniqueArray.length != columns_width.length)
-                return alert("Номера позиций в таблице не могут повторяться!");
-            //$('#LoadingGif').show();
-            $.ajax({
-                async: true,
-                cache: false,
-                //traditional: true,
-                url: '/' + controller + '/' + action,
-                type: 'POST',
-                //data: { column_names: columns_names.toString(), columns_is_visible: columns_is_visible.toString(), columns_width: columns_width.toString(), procedure_name: procedure_name, columns_position: columns_position, defaultSettings: JSON.stringify(('@*(JsonConvert.SerializeObject(Model.gridSettings))')) },*@
-                //data: { column_names: columns_names.toString(), columns_is_visible: columns_is_visible.toString(), columns_width: columns_width.toString(), procedure_name: procedure_name, columns_position: columns_position.toString(), defaultSettings: JSON.stringify(JSON.parse('JsonConvert.SerializeObject(Model.gridSettings)'.replace(/(&quot\;)/g, "\""))) },
-                success: function (data) { window.location = link; }
-            });
-            // $('#LoadingGif').hide();
-        }
 
         function DefaultSettingsOfGrid(procedure_name, link) {
 

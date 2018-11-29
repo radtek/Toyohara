@@ -44,6 +44,12 @@ namespace ToyoharaCore.Controllers
                     HttpContext.Session.SetString("SYS_SELECT_DELEGATING_USERS_R", JsonConvert.SerializeObject(sduc));
                     List<UI_SELECT_SITE_MENUResult> site_map = portalDMTOS.UI_SELECT_SITE_MENU(id).ToList();
                     HttpContext.Session.SetString("site_map", JsonConvert.SerializeObject(site_map));
+
+                    APL_SELECT_PROJECT_STATES_FOR_DDResult delegated_user = JsonConvert.DeserializeObject<APL_SELECT_PROJECT_STATES_FOR_DDResult>(HttpContext.Session.GetString("deleagting_user"));    
+                    List<UI_SELECT_GRID_SETTINGSResult> settingsGridLogPerson = portalDMTOS.UI_SELECT_GRID_SETTINGS(delegated_user.id, "SYS_SELECT_LOG", null, 1).ToList();
+                    HttpContext.Session.SetString("settingsGridLogPerson", JsonConvert.SerializeObject(settingsGridLogPerson));
+                    
+
                     bool admin = portalDMTOS.SYS_SELECT_ROLES_BY_USER(sduc.Where(x => x.id == id).FirstOrDefault().id).ToList().Any(x => x.role_id == 1);
                     HttpContext.Session.SetString("admin_role", JsonConvert.SerializeObject(admin));
                     link_info = JsonConvert.DeserializeObject<UI_SELECT_LINKResult>(HttpContext.Session.GetString("link_info"));
@@ -77,6 +83,12 @@ namespace ToyoharaCore.Controllers
                 HttpContext.Session.SetString("SYS_SELECT_DELEGATING_USERS_R", JsonConvert.SerializeObject(sduc));
                 List<UI_SELECT_SITE_MENUResult> site_map = portalDMTOS.UI_SELECT_SITE_MENU(au.id).ToList();
                 HttpContext.Session.SetString("site_map", JsonConvert.SerializeObject(site_map));
+
+
+                APL_SELECT_PROJECT_STATES_FOR_DDResult delegated_user = JsonConvert.DeserializeObject<APL_SELECT_PROJECT_STATES_FOR_DDResult>(HttpContext.Session.GetString("deleagting_user"));
+                List<UI_SELECT_GRID_SETTINGSResult> settingsGridLogPerson = portalDMTOS.UI_SELECT_GRID_SETTINGS(delegated_user.id, "SYS_SELECT_LOG", null, 1).ToList();
+                HttpContext.Session.SetString("settingsGridLogPerson", JsonConvert.SerializeObject(settingsGridLogPerson));
+
                 bool admin = portalDMTOS.SYS_SELECT_ROLES_BY_USER(sduc.Where(x => x.id == au.id).FirstOrDefault().id).ToList().Any(x => x.role_id == 1);
                 HttpContext.Session.SetString("admin_role", JsonConvert.SerializeObject(admin));
                 HttpContext.Session.SetString("FAQ", JsonConvert.SerializeObject(portalDMTOS.UI_SELECT_LINK_PAGE_NOTE2(link_info.id, au.id, au.id).FirstOrDefault().http_text));

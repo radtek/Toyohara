@@ -1,0 +1,124 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<script src="~/js/MailNotifications/Index.js"></script>
+
+<div id="part"></div>
+
+
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+
+
+@(Html.DevExtreme().DataGrid<UI_SELECT_MAIL_NOTIFICATIONSResult>()
+                                                    .ID("Grid")
+                                                    .ShowBorders(true)
+                                                    .DataSource(d => d.Mvc()
+                                                    .LoadAction("GetData")
+                                                    .Controller("Common")
+                                                    .Key("id")
+
+                                                    .LoadParams(new
+                                                    {
+                                                        additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                    })
+                                                    )
+                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                .Columns(columns =>
+                                                {
+                                                    //columns.AddFor(m => m.id);
+                                                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.section_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_section_id_ru"])).Visible((bool)ViewData["CK_UI_section_id"]).Width((int)ViewData["CK_UI_section_id_width"]).VisibleIndex((int)ViewData["CK_UI_section_id_pos"]).AllowEditing((bool)ViewData["CK_UI_section_id_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.section).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_section_ru"])).Visible((bool)ViewData["CK_UI_section"]).Width((int)ViewData["CK_UI_section_width"]).VisibleIndex((int)ViewData["CK_UI_section_pos"]).AllowEditing((bool)ViewData["CK_UI_section_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.mail_subject).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_mail_subject_ru"])).Visible((bool)ViewData["CK_UI_mail_subject"]).Width((int)ViewData["CK_UI_mail_subject_width"]).VisibleIndex((int)ViewData["CK_UI_mail_subject_pos"]).AllowEditing((bool)ViewData["CK_UI_mail_subject_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.summary).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary_ru"])).Visible((bool)ViewData["CK_UI_summary"]).Width((int)ViewData["CK_UI_summary_width"]).VisibleIndex((int)ViewData["CK_UI_summary_pos"]).AllowEditing((bool)ViewData["CK_UI_summary_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.schedule_period).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_schedule_period_ru"])).Visible((bool)ViewData["CK_UI_schedule_period"]).Width((int)ViewData["CK_UI_schedule_period_width"]).VisibleIndex((int)ViewData["CK_UI_schedule_period_pos"]).AllowEditing((bool)ViewData["CK_UI_schedule_period_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.schedule_time).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_schedule_time_ru"])).Visible((bool)ViewData["CK_UI_schedule_time"]).Width((int)ViewData["CK_UI_schedule_time_width"]).VisibleIndex((int)ViewData["CK_UI_schedule_time_pos"]).AllowEditing((bool)ViewData["CK_UI_schedule_time_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.mail_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_mail_list_ru"])).Visible((bool)ViewData["CK_UI_mail_list"]).Width((int)ViewData["CK_UI_mail_list_width"]).VisibleIndex((int)ViewData["CK_UI_mail_list_pos"]).AllowEditing((bool)ViewData["CK_UI_mail_list_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.stored_procedure).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stored_procedure_ru"])).Visible((bool)ViewData["CK_UI_stored_procedure"]).Width((int)ViewData["CK_UI_stored_procedure_width"]).VisibleIndex((int)ViewData["CK_UI_stored_procedure_pos"]).AllowEditing((bool)ViewData["CK_UI_stored_procedure_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.template_file).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_template_file_ru"])).Visible((bool)ViewData["CK_UI_template_file"]).Width((int)ViewData["CK_UI_template_file_width"]).VisibleIndex((int)ViewData["CK_UI_template_file_pos"]).AllowEditing((bool)ViewData["CK_UI_template_file_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.modification_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_modification_user_ru"])).Visible((bool)ViewData["CK_UI_modification_user"]).Width((int)ViewData["CK_UI_modification_user_width"]).VisibleIndex((int)ViewData["CK_UI_modification_user_pos"]).AllowEditing((bool)ViewData["CK_UI_modification_user_edit"]).EncodeHtml(false);
+                                                    columns.AddFor(m => m.modification_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_modification_date_ru"])).Visible((bool)ViewData["CK_UI_modification_date"]).Width((int)ViewData["CK_UI_modification_date_width"]).VisibleIndex((int)ViewData["CK_UI_modification_date_pos"]).AllowEditing((bool)ViewData["CK_UI_modification_date_edit"]).EncodeHtml(false);
+                                                })
+
+                                                    .Paging(p => p.PageSize(30))
+                                                            .Pager(pager =>
+                                                            {
+                                                                pager.ShowPageSizeSelector(true);
+                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                pager.ShowInfo(true);
+                                                                pager.ShowNavigationButtons(true);
+                                                                pager.Visible(true);
+                                                            })
+                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                            .HeaderFilter(f => f.Visible(true))
+                                                            .RemoteOperations(true)
+                                                            .ShowRowLines(true)
+                                                            .ColumnAutoWidth(true)
+                                                            .FilterSyncEnabled(true)
+                                                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                            .Width("100%")
+                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                            .AllowColumnResizing(true)
+                                                            .AllowColumnReordering(true)
+                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                            .WordWrapEnabled(true)
+                                                            .OnContentReady("contentReady")
+                                                            .OnToolbarPreparing("onToolbarPreparing")
+                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+<script>
+
+      $(function () {
+        var AddMailNotification = '@ViewBag.AddMailNotification'.toLowerCase();
+        if (AddMailNotification === 'true') {
+            //$('#AddItem').show();
+            $('#AddMailNotificationBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+           // $('#SendRSSToDMTOSBtn').hide();
+        }
+
+         var EditMailNotification = '@ViewBag.EditMailNotification'.toLowerCase();
+        if (EditMailNotification === 'true') {
+            //$('#AddItem').show();
+            $('#EditMailNotificationBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#EditMailNotificationBtn').hide();
+        }
+
+        var DeleteMailNotification = '@ViewBag.DeleteMailNotification'.toLowerCase();
+        if (DeleteMailNotification === 'true') {
+            //$('#AddItem').show();
+            $('#DeleteMailNotificationBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#CancelState9').hide();
+        }
+
+        @*var SetColorBtn = '@ViewBag.SetColorBtn'.toLowerCase();
+        if (SetColorBtn === 'true') {
+            //$('#AddItem').show();
+            $('#SetColorBtn').show();
+        }
+        else {
+            //$('#AddItem').hide();
+            $('#SetColorBtn').hide();
+        }*@
+
+        //$('[data-toggle=confirmation]').confirmation({
+        //    rootSelector: '[data-toggle=confirmation]',
+        //    // other options
+        //});     
+
+    });
+
+</script>

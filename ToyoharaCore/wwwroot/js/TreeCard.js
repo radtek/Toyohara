@@ -88,7 +88,7 @@
         if (index == -1)
             parameters.push({ Name: propt, Value: selectedData[propt] });
     }
-    
+
     if (additionalParams != null && additionalParams != "" && additionalParams != "undefined") {
         for (var i = 0; i < additionalParams.length; i++) {
             parameters = parameters.filter(function (elem, j) {
@@ -283,7 +283,7 @@ function OpenTreeCard(AddUpdateFlag, CardId, GridId, ParamStr) {
                     //$('#' + CardId + ' .dropdown_list_description').();
                     //if (selectedData[0][grid_settings[a].field_description] != "" && selectedData[0][grid_settings[a].field_description] != null && selectedData[0][grid_settings[a].field_description] != "undefined")
                     //    $('#card' + grid_settings[a].field_description).val(selectedData[0][grid_settings[a].field_description]);
-                  
+
                 }
                 else {
                     try { $('#card' + json_data[a].Key).selectator('destroy'); } catch (e) { }

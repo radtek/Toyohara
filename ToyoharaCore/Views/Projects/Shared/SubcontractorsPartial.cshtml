@@ -1,0 +1,111 @@
+﻿<style>
+    #TechRoadGrid {
+        max-width: 100% !important;
+    }
+</style>
+@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.SettingsSubcontractors)
+
+
+
+
+
+<div id="subcontractors" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="Reloading('ObjectsTree');">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Субподрядчики</h4>
+            </div>
+            <div class="modal-body">
+                @(Html.DevExtreme().DataGrid<APL_SELECT_OBJECT_SUBCONTRACTORSResult>()
+                                        .ID("SubcontractorsGrid")
+                                        .DataSource(ds => ds.Mvc()
+                                        .Controller("Common")
+                                        .LoadAction("GetData")
+                                        .Key("id").LoadParams(new
+                                        {
+                                            additionalParams = new JS("function(){return ReturnDataSubcontractor('projects');}")
+                                        })
+                                        .UpdateAction("PutData")
+                                        .InsertAction("PostData")
+                                        .OnBeforeSend("onBeforeSendSubcontractor")                                        
+                                        )
+                                        .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                        //.Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+                                        .Selection(s => s.Mode(SelectionMode.Multiple).AllowSelectAll(true))
+                                        .Editing(editing =>
+                                        {
+                                            editing.Mode(GridEditMode.Batch); 
+                                            editing.AllowUpdating((bool)ViewBag.saveBtnVisible);
+                                        })
+                                        .WordWrapEnabled(true)
+                                        .ShowBorders(true)
+                                        .OnInitNewRow("onInitNewRow")
+                                        .Columns(columns =>
+                                        {
+                                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_grid_settings_subcontractor_ru"])).Visible((bool)ViewData["CK_UI_id_grid_settings_subcontractor"]).Width((int)ViewData["CK_UI_id_grid_settings_subcontractor_width"]).VisibleIndex((int)ViewData["CK_UI_id_grid_settings_subcontractor_pos"]).AllowEditing((bool)ViewData["CK_UI_id_grid_settings_subcontractor_edit"]);
+                                            columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_grid_settings_subcontractor_ru"])).Visible((bool)ViewData["CK_UI_start_grid_settings_subcontractor"]).Width((int)ViewData["CK_UI_start_grid_settings_subcontractor_width"]).VisibleIndex((int)ViewData["CK_UI_start_grid_settings_subcontractor_pos"]).AllowEditing((bool)ViewData["CK_UI_start_grid_settings_subcontractor_edit"]);
+                                            columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_grid_settings_subcontractor_ru"])).Visible((bool)ViewData["CK_UI_finish_grid_settings_subcontractor"]).Width((int)ViewData["CK_UI_finish_grid_settings_subcontractor_width"]).VisibleIndex((int)ViewData["CK_UI_finish_grid_settings_subcontractor_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_grid_settings_subcontractor_edit"]);
+                                            columns.AddFor(m => m.subcontractor_id).Lookup(lookup => lookup
+                                                        .DataSource(new JS(ViewBag.SubDropdown))
+                                                        .DisplayExpr("description")
+                                                        .ValueExpr("id")).CssClass("zindex")
+                                                        .HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_id_grid_settings_subcontractor_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_id_grid_settings_subcontractor"]).Width((int)ViewData["CK_UI_subcontractor_id_grid_settings_subcontractor_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_id_grid_settings_subcontractor_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_id_grid_settings_subcontractor_edit"]).CssClass("zindex");
+                                            columns.AddFor(m => m.subcontractor_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_description_grid_settings_subcontractor_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_description_grid_settings_subcontractor"]).Width((int)ViewData["CK_UI_subcontractor_description_grid_settings_subcontractor_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_description_grid_settings_subcontractor_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_description_grid_settings_subcontractor_edit"]);
+                                        }
+                                        ).Scrolling(scrolling => scrolling.Mode(GridScrollingMode.Standard).UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)).Paging(p => p.PageSize(30).Enabled(true))
+                                        .Pager(pager =>
+                                        {
+                                            pager.ShowPageSizeSelector(true);
+                                            pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                            pager.ShowInfo(true);
+                                            pager.ShowNavigationButtons(true);
+                                            pager.Visible(true);
+                                        })
+                                        .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                        .HeaderFilter(f => f.Visible(true))
+                                        .ShowRowLines(true)
+                                        .ColumnAutoWidth(true)
+                                        .FilterSyncEnabled(true)
+                                        .OnEditingStart("OnEditingStart")                                        
+                                        .Width("100%")
+                                        .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                        .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                        .AllowColumnResizing(true)
+                                        .AllowColumnReordering(true)
+                                        .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                        .WordWrapEnabled(true)
+                                        .OnToolbarPreparing("onToolbarPreparingSubcontractor")
+                                        //.OnContentReady("contentReadySubcontractor")
+                )
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+     $(function () {
+         if ('@ViewBag.saveBtnVisible'.toLowerCase() === 'true') $('#AddSubcontractor').show(); else $('#AddSubcontractor').hide();
+         if ('@ViewBag.DeleteObjectSubcontractors'.toLowerCase() === 'true') $('#DeleteObjectSubcontractors').show(); else $('#DeleteObjectSubcontractors').hide();
+         
+    });
+
+    function onToolbarPreparingSubcontractor(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            template: $(
+                "<button title='Добавить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='AddSubcontractor();' style='display: none;' id='AddSubcontractor'><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
+                "<button title='Удалить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='DeleteObjectSubcontractors();' id='DeleteObjectSubcontractors'><img src='/../../img/GridBtn/1-3.png' width='18 height='18' alt='Удалить' /></button>" +
+                "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='Reloading2(\"SubcontractorsGrid\")' id='ReloadingSubcontractorsGrid'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+                "<button title='Очистить фильтры' onclick='ClearFilters(\"SubcontractorsGrid\")' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFiltersSubcontractor'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExcelSubcontractors();' id='ExcelSubcontractors'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettingsSubcontractors' id='UserSettingsSubcontractors' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>"
+            )
+        });
+    }
+</script>

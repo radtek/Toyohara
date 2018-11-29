@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+@{
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+<div id="ChangeStateWindow" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Изменить статус</h4>
+                    <button type="button" class="close" onclick="$('#ChangeStateWindow').modal('hide');">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed">
+                            <tbody>
+                                <tr>
+                                    <td>Выберите статус:</td>
+                                    <td>
+                                        <select id="changeStatesDD" style="width:100%;">
+                                            @foreach (var a in new SelectList((IEnumerable<ToyoharaCore.APL_SELECT_PROJECT_STATES_FOR_DDResult>)Model, "id", "description"))
+                                            {
+                                                <option value="@a.Value.ToString()">@a.Text.ToString()</option>
+                                            }
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Обоснование для закупки:</td>
+                                    <td>
+                                        <input type="text" id="resaon" style="width:100%;" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer" style="padding-bottom:15px;">
+                    <button type="button" class="btn btn_icon" onclick="SaveState();"><span class="dx-icon-floppy icon"></span>@*</i>*@</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function SaveState() {
+        var changeStatesDD = $('#changeStatesDD').val();
+        if (changeStatesDD == "" | changeStatesDD == null | changeStatesDD == "undefined")
+            alert("Выберите статус!");
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        //var selectedData = dataGrid.getSelectedRowsData();
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку!");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Requirements/StateUpdate",
+            type: "POST",
+            data: {
+                id_list: selectedKeys.toString(),
+                state_id: $('#changeStatesDD').val(),
+                reason_change_state: $('#resaon').val()
+            },
+            success: function (s) {
+                if (s != "" && s != "undefined" && s != null)
+                    alert(s);
+                $('#ChangeStateWindow').modal('hide');
+
+                //$("#ObjectLogRoads").html(partialViewResult);
+                //$('#ObjLog').modal('show');
+            }
+        });
+    }
+
+
+</script>

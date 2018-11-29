@@ -12,63 +12,64 @@
 @Html.Partial("Settings", (Settings)ViewBag.Settings)
 
 
+
 @(Html.DevExtreme().DataGrid<OMC_SELECT_SVR_ITEMSResult>
-                ()
-                .ID("Grid")
-                .ShowBorders(true)
-                .DataSource(d => d.Mvc()
-                .LoadAction("GetData")
-                .Controller("Common")
-                .Key("id")
+    ()
+    .ID("Grid")
+    .ShowBorders(true)
+    .DataSource(d => d.Mvc()
+    .LoadAction("GetData")
+    .Controller("Common")
+    .Key("id")
 
-                .LoadParams(new
-                {
-                    additionalParams = new JS("function(){return ReturnData('" + control + "');}")
-                })
-                )
+    .LoadParams(new
+    {
+        additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+    })
+    )
 
-                .Columns(columns =>
-                {
-                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
-                    columns.AddFor(m => m.local_estimate_number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_local_estimate_number_ru"])).Visible((bool)ViewData["CK_UI_local_estimate_number"]).Width((int)ViewData["CK_UI_local_estimate_number_width"]).VisibleIndex((int)ViewData["CK_UI_local_estimate_number_pos"]).AllowEditing((bool)ViewData["CK_UI_local_estimate_number_edit"]);
-                    columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code"]).Width((int)ViewData["CK_UI_project_documentation_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_edit"]);
-                    columns.AddFor(m => m.number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_number_ru"])).Visible((bool)ViewData["CK_UI_number"]).Width((int)ViewData["CK_UI_number_width"]).VisibleIndex((int)ViewData["CK_UI_number_pos"]).AllowEditing((bool)ViewData["CK_UI_number_edit"]);
-                    columns.AddFor(m => m.resource_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_resource_code_ru"])).Visible((bool)ViewData["CK_UI_resource_code"]).Width((int)ViewData["CK_UI_resource_code_width"]).VisibleIndex((int)ViewData["CK_UI_resource_code_pos"]).AllowEditing((bool)ViewData["CK_UI_resource_code_edit"]);
-                    columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]);
-                    columns.AddFor(m => m.unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_description_ru"])).Visible((bool)ViewData["CK_UI_unit_description"]).Width((int)ViewData["CK_UI_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_description_edit"]);
-                    columns.AddFor(m => m.quantity).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]);
-                    columns.AddFor(m => m.price).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_ru"])).Visible((bool)ViewData["CK_UI_price"]).Width((int)ViewData["CK_UI_price_width"]).VisibleIndex((int)ViewData["CK_UI_price_pos"]).AllowEditing((bool)ViewData["CK_UI_price_edit"]);
-                    columns.AddFor(m => m.summa).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summa_ru"])).Visible((bool)ViewData["CK_UI_summa"]).Width((int)ViewData["CK_UI_summa_width"]).VisibleIndex((int)ViewData["CK_UI_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_summa_edit"]);
-                    columns.AddFor(m => m.turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_turnover_ru"])).Visible((bool)ViewData["CK_UI_turnover"]).Width((int)ViewData["CK_UI_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_turnover_edit"]);
-                    columns.AddFor(m => m.delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_delivery_type"]).Width((int)ViewData["CK_UI_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_edit"]);
-                    columns.AddFor(m => m.error_dmtos).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_error_dmtos_ru"])).Visible((bool)ViewData["CK_UI_error_dmtos"]).Width((int)ViewData["CK_UI_error_dmtos_width"]).VisibleIndex((int)ViewData["CK_UI_error_dmtos_pos"]).AllowEditing((bool)ViewData["CK_UI_error_dmtos_edit"]);
-                })
-                                        .Paging(p => p.PageSize(30))
-                                        .Pager(pager =>
-                                        {
-                                            pager.ShowPageSizeSelector(true);
-                                            pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                            pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                            pager.ShowInfo(true);
-                                            pager.ShowNavigationButtons(true);
-                                            pager.Visible(true);
-                                        })
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.local_estimate_number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_local_estimate_number_ru"])).Visible((bool)ViewData["CK_UI_local_estimate_number"]).Width((int)ViewData["CK_UI_local_estimate_number_width"]).VisibleIndex((int)ViewData["CK_UI_local_estimate_number_pos"]).AllowEditing((bool)ViewData["CK_UI_local_estimate_number_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code"]).Width((int)ViewData["CK_UI_project_documentation_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_number_ru"])).Visible((bool)ViewData["CK_UI_number"]).Width((int)ViewData["CK_UI_number_width"]).VisibleIndex((int)ViewData["CK_UI_number_pos"]).AllowEditing((bool)ViewData["CK_UI_number_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.resource_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_resource_code_ru"])).Visible((bool)ViewData["CK_UI_resource_code"]).Width((int)ViewData["CK_UI_resource_code_width"]).VisibleIndex((int)ViewData["CK_UI_resource_code_pos"]).AllowEditing((bool)ViewData["CK_UI_resource_code_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_unit_description_ru"])).Visible((bool)ViewData["CK_UI_unit_description"]).Width((int)ViewData["CK_UI_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_unit_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_ru"])).Visible((bool)ViewData["CK_UI_quantity"]).Width((int)ViewData["CK_UI_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_price_ru"])).Visible((bool)ViewData["CK_UI_price"]).Width((int)ViewData["CK_UI_price_width"]).VisibleIndex((int)ViewData["CK_UI_price_pos"]).AllowEditing((bool)ViewData["CK_UI_price_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summa_ru"])).Visible((bool)ViewData["CK_UI_summa"]).Width((int)ViewData["CK_UI_summa_width"]).VisibleIndex((int)ViewData["CK_UI_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_summa_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_turnover_ru"])).Visible((bool)ViewData["CK_UI_turnover"]).Width((int)ViewData["CK_UI_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_turnover_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.phase).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_phase_ru"])).Visible((bool)ViewData["CK_UI_phase"]).Width((int)ViewData["CK_UI_phase_width"]).VisibleIndex((int)ViewData["CK_UI_phase_pos"]).AllowEditing((bool)ViewData["CK_UI_phase_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_delivery_type"]).Width((int)ViewData["CK_UI_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_delivery_type_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.error_dmtos).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_error_dmtos_ru"])).Visible((bool)ViewData["CK_UI_error_dmtos"]).Width((int)ViewData["CK_UI_error_dmtos_width"]).VisibleIndex((int)ViewData["CK_UI_error_dmtos_pos"]).AllowEditing((bool)ViewData["CK_UI_error_dmtos_edit"]).EncodeHtml(false);
+    })
+                            .Paging(p => p.PageSize(30))
+                            .Pager(pager =>
+                            {
+                                pager.ShowPageSizeSelector(true);
+                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                pager.ShowInfo(true);
+                                pager.ShowNavigationButtons(true);
+                                pager.Visible(true);
+                            })
 
-                                        .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                        .HeaderFilter(f => f.Visible(true))
-                                        .RemoteOperations(true)
-                                        .ShowRowLines(true)
-                                        .ColumnAutoWidth(true)
-                                        .FilterSyncEnabled(true)
-                                        .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
-                                        .Width("100%")
-                                        .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
-                                        .Sorting(s => s.Mode(GridSortingMode.Multiple))
-                                        .AllowColumnResizing(true)
-                                        .AllowColumnReordering(true)
-                                        .Option("columnResizingMode", ColumnResizingMode.Widget)
-                                        .WordWrapEnabled(true)
-                                        .OnContentReady("contentReady")
-                                        .OnToolbarPreparing("onToolbarPreparing")
-                                        .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
-
+                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                            .HeaderFilter(f => f.Visible(true))
+                            .RemoteOperations(true)
+                            .ShowRowLines(true)
+                            .ColumnAutoWidth(true)
+                            .FilterSyncEnabled(true)
+                            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                            .Width("100%")
+                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                            .AllowColumnResizing(true)
+                            .AllowColumnReordering(true)
+                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                            .WordWrapEnabled(true)
+                            .OnContentReady("contentReady")
+                            .OnToolbarPreparing("onToolbarPreparing")
+                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))

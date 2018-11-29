@@ -20,22 +20,22 @@ namespace ToyoharaCore.Models.CustomModel
         int columnCount { get; set; }
         Action<ExcelWorksheet, List<UI_SELECT_GRID_SETTINGSResult>> headerAction { get; set; }
         public int workSheetNumber { get; set; }
-        private ExcelPackage ep { get; set; }
-        private ExcelWorksheet workSheet { get; set; }
+        public ExcelPackage ep { get; set; }
+        public ExcelWorksheet workSheet { get; set; }
         public int? user_id { get; set; }
         //public delegate IEnumerable<T> GetData();
         //public GetData getDataAction { get; set; }
         //public string @params { get; set; }
         //int? user_id { get; set; }
         private PortalDMTOSModel portalDMTOS { get; set; }
-        public ExcelReports( IEnumerable<T> data, int rowCount, int columnCount, int? user_id, string physicalPath, 
+        public ExcelReports(IEnumerable<T> data, int rowCount, int columnCount, int? user_id, string physicalPath,
             string procedureName, int workSheetNumber, Action<ExcelWorksheet, List<UI_SELECT_GRID_SETTINGSResult>> headerAction)
-            //, GetData getDataAction, string @params, int? user_id)
+        //, GetData getDataAction, string @params, int? user_id)
         {
             //gridSettings.OrderBy(x => x.number).ToList();
             this.stored_procedure = procedureName;
             this.portalDMTOS = new PortalDMTOSModel();
-            this.gridSettings = portalDMTOS.UI_SELECT_GRID_SETTINGS(user_id, stored_procedure,null,1);
+            this.gridSettings = portalDMTOS.UI_SELECT_GRID_SETTINGS(user_id, stored_procedure, null, 1);
             this.data = data;
             this.physicalPath = physicalPath;
             this.rowCount = rowCount;
@@ -77,7 +77,7 @@ namespace ToyoharaCore.Models.CustomModel
             columnCount = 1;
             rowCount = rowCount + 2;
         }
-        public void ExcelReport()
+        public void ExcelReport(bool? is_date_time = false, int? searchRowCount = null)
         {
             //int? event_id = null;
             //PortalDMTOSModel portalDMTOS = new PortalDMTOSModel();
@@ -87,12 +87,45 @@ namespace ToyoharaCore.Models.CustomModel
             //    getDataAction();
             //}
 
-            HeaderCreation(workSheet, gridSettings);
+            if (searchRowCount == null) { HeaderCreation(workSheet, gridSettings); }
+            else
+            {
+                bool start = false;
+                for (int row = workSheet.Dimension.Start.Row; row <= workSheet.Dimension.End.Row & start == false; row++)
+                {
+                    if (!start)
+                    {
+                        for (int col = 1; col <= searchRowCount; col++)
+                        {
+                            if (Convert.ToString(workSheet.Cells[row, col].Value) != Convert.ToString(col))
+                            {
+                                start = false;
+                                break;
+                            }
+                            else
+                            {
+                                start = true;
+                                rowCount = row + 1;
+                            }
+                        }
+                    }
+                }
+                if (start == false)
+                {
+                    rowCount = 1;
+                }
+            }
+
+            int startRowCount = rowCount;
             PropertyInfo[] fieldNames = typeof(T).GetProperties();
+            bool outline_flag = fieldNames.Any(x => x.Name == "outline_level");
+            int finishColumnCount = 0;
             foreach (var a in data)
             {
                 foreach (UI_SELECT_GRID_SETTINGSResult settings in gridSettings)
                 {
+
+
                     var color = fieldNames.Where(x => x.Name == "color").FirstOrDefault();
                     if (color != null)
                     {
@@ -103,20 +136,117 @@ namespace ToyoharaCore.Models.CustomModel
                             workSheet.Cells[rowCount, columnCount].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(Convert.ToInt32(color_val.ToString().Substring(0, 2), 16), Convert.ToInt32(color_val.ToString().Substring(2, 2), 16), Convert.ToInt32(color_val.ToString().Substring(4, 2), 16)));
                         }
                     }
-                    var field = fieldNames.Where(x => x.Name == settings.field_description).FirstOrDefault().GetValue(a);
-                    SetValueInCellExport(workSheet, field, settings);
+
+                    try
+                    {
+                        finishColumnCount = columnCount > finishColumnCount ? columnCount : finishColumnCount;
+                        var field = fieldNames.Where(x => x.Name == settings.field_description).FirstOrDefault().GetValue(a);
+                        SetValueInCellExport(workSheet, field, settings, is_date_time);
+                    }
+                    catch { }
                 }
+
+                //if (gridSettings.Where(x=>).field_description == "OutlineLevel")
+                if (outline_flag)
+                    workSheet.Row(rowCount).OutlineLevel = Convert.ToInt32(fieldNames.Where(x => x.Name == "outline_level").FirstOrDefault().GetValue(a));
                 rowCount++;
                 columnCount = 1;
             }
+
+
+            for(int i= startRowCount; i<=rowCount; i++)
+            {
+                for (int j = 1; j <= finishColumnCount; j++)
+                {
+                    workSheet.Cells[i, j].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                    workSheet.Cells[i, j].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    workSheet.Cells[i, j].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                    workSheet.Cells[i, j].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    workSheet.Cells[i, j].Style.WrapText = true;
+                    workSheet.Cells[i, j].Style.Font.Name = "Calibri";
+                    workSheet.Cells[i, j].Style.Font.Size = 8;
+                }
+            }
+
+
             ep.Save();
             ep = null;
             workSheet = null;
             //portalDMTOS.SYS_FINISH_EVENT(event_id, physicalPath);
         }
-        public void SetValueInCellExport(ExcelWorksheet ew1, object value, UI_SELECT_GRID_SETTINGSResult setting)
+        public void SetValueInCellExport(ExcelWorksheet ew1, object value, UI_SELECT_GRID_SETTINGSResult setting, bool? is_date_time)
         {
-            if ((bool)setting.global_visible && (bool)setting.is_visible)
+            bool is_write = false;
+            if (setting == null) is_write = true;
+            else if ((bool)setting.global_visible && (bool)setting.is_visible) is_write = true;
+
+            if (is_write)
+            {
+                if (value != null && value is string | value is DateTime)
+                {
+                    if (value is DateTime)
+                        if (is_date_time == true)
+                            value = DateTime.Parse(Convert.ToString(value));
+                        else
+                            value = DateTime.Parse(Convert.ToString(value)).ToShortDateString();
+
+                    string[] arrayHTMLValue = Convert.ToString(value).Split(new string[] { "<br>" }, StringSplitOptions.None);
+                    if (arrayHTMLValue != null && arrayHTMLValue.Length != 0)
+                    {
+                        ExcelRichTextCollection rtfCollection = ew1.Cells[rowCount, columnCount].RichText;
+                        ExcelRichText ert = rtfCollection.Add(CommonMethods.HtmlToText(arrayHTMLValue[0]));
+                        if (arrayHTMLValue[0].IndexOf("orange") > 0) ert.Color = System.Drawing.Color.Orange;
+                        if (arrayHTMLValue.Length > 1)
+                        {
+                            for (int f = 1; f < arrayHTMLValue.Length; f++)
+                            {
+                                rtfCollection.Add(CommonMethods.HtmlToText("\n"));
+                                ExcelRichText ert1 = rtfCollection.Add(CommonMethods.HtmlToText(arrayHTMLValue[f]));
+                                if (arrayHTMLValue[f].IndexOf("orange") > 0) ert1.Color = System.Drawing.Color.Orange;
+                            }
+                        }
+                    }
+                    else
+                    ew1.Cells[rowCount, columnCount].Value = CommonMethods.HtmlToText(Convert.ToString(value));
+
+
+                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                }
+
+                if (value != null && value is double | value is int | value is float | value is decimal)
+                {
+                    ew1.Cells[rowCount, columnCount].Value = double.Parse(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
+                    ew1.Cells[rowCount, columnCount].Style.Numberformat.Format = CommaFind(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
+                }
+                //ew1.Cells[rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.WrapText = true;
+                //ew1.Cells[rowCount, columnCount].Style.Font.Name = "Calibri";
+                //ew1.Cells[rowCount, columnCount].Style.Font.Size = 8;
+
+                if (value is string)
+                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                if (value is double | value is int | value is float)
+                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+                ew1.Cells[rowCount, columnCount].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                columnCount++;
+            }
+
+           
+
+
+        }
+        //static
+        public void SetValueInCellExport(ExcelWorksheet ew1, ref int rowCount, ref int columnCount, object value, UI_SELECT_GRID_SETTINGSResult setting)
+        {
+
+            bool is_write = false;
+            if (setting == null) is_write = true;
+            else if ((bool)setting.global_visible && (bool)setting.is_visible) is_write = true;
+
+            if (is_write)
             {
                 if (value != null && value is string | value is DateTime)
                 {
@@ -126,18 +256,18 @@ namespace ToyoharaCore.Models.CustomModel
                     ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 }
 
-                if (value != null && value is double | value is int | value is float)
+                if (value != null && value is double | value is int | value is float | value is decimal)
                 {
                     ew1.Cells[rowCount, columnCount].Value = double.Parse(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
                     ew1.Cells[rowCount, columnCount].Style.Numberformat.Format = CommaFind(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
                 }
-                ew1.Cells[rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.WrapText = true;
-                ew1.Cells[rowCount, columnCount].Style.Font.Name = "Calibri";
-                ew1.Cells[rowCount, columnCount].Style.Font.Size = 8;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                //ew1.Cells[rowCount, columnCount].Style.WrapText = true;
+                //ew1.Cells[rowCount, columnCount].Style.Font.Name = "Calibri";
+                //ew1.Cells[rowCount, columnCount].Style.Font.Size = 8;
 
                 if (value is string)
                     ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
@@ -147,41 +277,45 @@ namespace ToyoharaCore.Models.CustomModel
                 columnCount++;
             }
         }
-        public static void SetValueInCellExport(ExcelWorksheet ew1, ref int rowCount, ref int columnCount, object value, UI_SELECT_GRID_SETTINGSResult setting)
+        public void SetValueInCellExport(ExcelWorksheet ew1, int rowCount, int columnCount, object value, string color)
         {
-            if ((bool)setting.global_visible && (bool)setting.is_visible)
+
+
+            if (color != null && Convert.ToString(color) != "")
             {
-                if (value != null && value is string | value is DateTime)
-                {
-                    if (value is DateTime)
-                        value = DateTime.Parse(Convert.ToString(value)).ToShortDateString();
-                    ew1.Cells[rowCount, columnCount].Value = CommonMethods.HtmlToText(Convert.ToString(value));
-                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                }
-
-                if (value != null && value is double | value is int | value is float)
-                {
-                    ew1.Cells[rowCount, columnCount].Value = double.Parse(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
-                    ew1.Cells[rowCount, columnCount].Style.Numberformat.Format = CommaFind(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
-                }
-                ew1.Cells[rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                ew1.Cells[rowCount, columnCount].Style.WrapText = true;
-                ew1.Cells[rowCount, columnCount].Style.Font.Name = "Calibri";
-                ew1.Cells[rowCount, columnCount].Style.Font.Size = 8;
-
-                if (value is string)
-                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                if (value is double | value is int | value is float)
-                    ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
-                ew1.Cells[rowCount, columnCount].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
-                columnCount++;
+                workSheet.Cells[rowCount, columnCount].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                workSheet.Cells[rowCount, columnCount].Style.Fill.BackgroundColor.SetColor(Color.FromArgb(Convert.ToInt32(color.ToString().Substring(0, 2), 16), Convert.ToInt32(color.ToString().Substring(2, 2), 16), Convert.ToInt32(color.ToString().Substring(4, 2), 16)));
             }
-        }
 
-        public void ProcData() {
+            if (value != null && value is string | value is DateTime)
+            {
+                if (value is DateTime)
+                    value = DateTime.Parse(Convert.ToString(value)).ToShortDateString();
+                ew1.Cells[rowCount, columnCount].Value = CommonMethods.HtmlToText(Convert.ToString(value));
+                ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            }
+
+            if (value != null && value is double | value is int | value is float | value is decimal)
+            {
+                ew1.Cells[rowCount, columnCount].Value = double.Parse(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
+                ew1.Cells[rowCount, columnCount].Style.Numberformat.Format = CommaFind(CommonMethods.HtmlToText(CommonMethods.ObjectToString(value)).Replace(".", ","));
+            }
+            //ew1.Cells[rowCount, columnCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            //ew1.Cells[rowCount, columnCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            //ew1.Cells[rowCount, columnCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            //ew1.Cells[rowCount, columnCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            //ew1.Cells[rowCount, columnCount].Style.WrapText = true;
+            //ew1.Cells[rowCount, columnCount].Style.Font.Name = "Calibri";
+            //ew1.Cells[rowCount, columnCount].Style.Font.Size = 8;
+
+            if (value is string)
+                ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            if (value is double | value is int | value is float)
+                ew1.Cells[rowCount, columnCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+            ew1.Cells[rowCount, columnCount].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+        }
+        public void ProcData()
+        {
         }
         public static void HeaderCreation(ExcelWorksheet workSheet, ref int rowCount, ref int columnCount, List<UI_SELECT_GRID_SETTINGSResult> settings)
         {

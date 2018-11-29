@@ -6,133 +6,374 @@
     string control = ViewContext.RouteData.Values["Controller"].ToString();
 
 }
-@*<script src="~/js/TreeCard.js"></script>*@
+@using ToyoharaCore.Models.CustomModel
+@*<script src="~/js/bootbox.js"></script>*@
+
+@*<script src="~/lib/alertify.js-0.3.11/lib/alertify.js"></script>
+    <script src="~/lib/alertify.js-0.3.11/lib/alertify.min.js"></script>
+    <script src="~/lib/alertify.js-0.3.11/src/alertify.js"></script>
+
+    <link rel="stylesheet" href="~/lib/alertify.js-0.3.11/themes/alertify.bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/alertify.js-0.3.11/themes/alertify.default.css" />
+    <link rel="stylesheet" href="~/lib/alertify.js-0.3.11/themes/alertify.core.css" />*@
+
+
+@*<script src="//rawgit.com/saribe/eModal/master/dist/eModal.min.js"></script>*@
+<script src="~/lib/EModal.js"></script>
+<script src="~/js/GridCard.js"></script>
+
+
+
 <div id="part"></div>
-@*@Html.Partial("UpdateTreeGridCard", (ToyoharaCore.Models.CustomModel.UpdateGridCardModel)ViewBag.GridCard)*@
-@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.Settings)
-@(Html.DevExtreme().TreeList<APL_SELECT_OBJECTS_AND_SUBOBJECTSResult>
-                        ()
-                        .ID("ObjectsTree")
-                        .DataSource(ds => ds.Mvc()
-                        .Controller("Common")
-                        .LoadAction("GetData")
-                        .Key("id").LoadParams(new
-                        {
-                            additionalParams = new JS("function(){return ReturnData('" + control + "', " + ViewBag.project_id + ");}")
-                //showSelected = new JS("function(){return showSelected;}"),
-                //selectedRecord = new JS("function(){return selectedRecord;}"),
-                //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
-                //rebind = new JS("function(){return rebind;}"),
-                //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
-            })
-                        )
-                        .KeyExpr("id")
-                        .ParentIdExpr("parent_id")
-                        //.SearchPanel(searchPanel => searchPanel.Visible(true).Width(250))
-                        .HeaderFilter(headerFilter => headerFilter.Visible(true))
-                        .Selection(s => s
-                        .Mode(SelectionMode.Single)
-                        )
-                        //.ColumnChooser(cc => cc.Enabled(true))
-                        .ColumnAutoWidth(true)
-                        .WordWrapEnabled(true)
-                        .ShowBorders(true)
-                        .Columns(columns =>
-                        {
-                            columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
-                            columns.AddFor(m => m.parent_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_parent_id_ru"])).Visible((bool)ViewData["CK_UI_parent_id"]).Width((int)ViewData["CK_UI_parent_id_width"]).VisibleIndex((int)ViewData["CK_UI_parent_id_pos"]).AllowEditing((bool)ViewData["CK_UI_parent_id_edit"]);
-                            columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]);
-                            columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_ru"])).Visible((bool)ViewData["CK_UI_start"]).Width((int)ViewData["CK_UI_start_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_edit"]);
-                            columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_ru"])).Visible((bool)ViewData["CK_UI_finish"]).Width((int)ViewData["CK_UI_finish_width"]).VisibleIndex((int)ViewData["CK_UI_finish_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_edit"]);
-                            columns.AddFor(m => m.tree_errors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tree_errors_ru"])).Visible((bool)ViewData["CK_UI_tree_errors"]).Width((int)ViewData["CK_UI_tree_errors_width"]).VisibleIndex((int)ViewData["CK_UI_tree_errors_pos"]).AllowEditing((bool)ViewData["CK_UI_tree_errors_edit"]);
-                            columns.AddFor(m => m.subcontractor_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_list_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_list"]).Width((int)ViewData["CK_UI_subcontractor_list_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_list_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_list_edit"]);
-                            columns.AddFor(m => m.project_1c_guid).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_guid_ru"])).Visible((bool)ViewData["CK_UI_project_1c_guid"]).Width((int)ViewData["CK_UI_project_1c_guid_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_guid_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_guid_edit"]);
-                            columns.AddFor(m => m.project_1c).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_ru"])).Visible((bool)ViewData["CK_UI_project_1c"]).Width((int)ViewData["CK_UI_project_1c_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_edit"]);
-                            columns.AddFor(m => m.is_parent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_parent_ru"])).Visible((bool)ViewData["CK_UI_is_parent"]).Width((int)ViewData["CK_UI_is_parent_width"]).VisibleIndex((int)ViewData["CK_UI_is_parent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_parent_edit"]);
-                            columns.AddFor(m => m.object_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_id_ru"])).Visible((bool)ViewData["CK_UI_object_id"]).Width((int)ViewData["CK_UI_object_id_width"]).VisibleIndex((int)ViewData["CK_UI_object_id_pos"]).AllowEditing((bool)ViewData["CK_UI_object_id_edit"]);
-                            columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ru"])).Visible((bool)ViewData["CK_UI_object_description"]).Width((int)ViewData["CK_UI_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_edit"]);
-                            columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]);
+<div id="ObjectLog"></div>
 
-                        }
-                        //.Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard))
-
-                        ).Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard).UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)).Paging(p => p.PageSize(30).Enabled(true))
-                                                                                                        .Pager(pager =>
-                                                                                                        {
-                                                                                                            pager.ShowPageSizeSelector(true);
-                                                                                                            pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                //pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
-                                                                                                pager.ShowInfo(true);
-                                                                                                            pager.ShowNavigationButtons(true);
-                                                                                                            pager.Visible(true);
-                                                                                                        })
-
-                                                                                                        .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
-                                                                                                        .HeaderFilter(f => f.Visible(true))
-                                                                                                        //.RemoteOperations(op=>op.Filtering(true).Grouping(true))
-                                                                                                        .ShowRowLines(true)
-                                                                                                        .ColumnAutoWidth(true)
-                                                                                                        .FilterSyncEnabled(true)
-                                                                                                        .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
-                                                                                                        .Width("100%")
-                                                                                                        .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
-                                                                                                        .OnContentReady("contentReady")
-                                                                                                        .Sorting(s => s.Mode(GridSortingMode.Multiple))
-                                                                                                        .AllowColumnResizing(true)
-                                                                                                        .AllowColumnReordering(true)
-                                                                                                        .Option("columnResizingMode", ColumnResizingMode.Widget)
-                                                                                                        .WordWrapEnabled(true)
-        .OnToolbarPreparing("onToolbarPreparing")
-        .OnContentReady("contentReady")
-    //.OnRowClick("onRowClick")
-    //.Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
-)
-<script>
-
-    $(function () {
-        var str = '@ViewBag.InsertObject'.toLowerCase();
-        var str2 = '@ViewBag.InsertSubobject'.toLowerCase();
-
-        if (str === 'true') {
-            //$('#AddItem').show();
-            $('#AddObject').show();
-        }
-        else {
-            //$('#AddItem').hide();
-            $('#AddObject').hide();
-        }
-
-        if (str2 === 'true') {
-            //$('#AddItem').show();
-            $('#AddSubObject').show();
-        }
-        else {
-            //$('#AddItem').hide();
-            $('#AddSubObject').hide();
-        }
-    });
-
-    function GetLink() {
-        var link = '/Projects/Objects?project_id=@ViewBag.project_id'+'&project_description=';
-        return link;
+<style>
+    #CodesTree {
+        max-width: 100% !important;
     }
 
-    @*$(function () {
-        var str = '@ViewBag.RoleAddUpdate'.toLowerCase();
-        if (str === 'true') {
-            //$('#AddItem').show();
-            $('#AddObject').show(); $('#AddSubObject').show();  }
-        else {
-            //$('#AddItem').hide();
-            $('#AddObject').hide(); $('#AddSubObject').hide();
-        }
-    });*@
+    #TechRoadGrid {
+        max-width: 100% !important;
+    }
+
+    #SubcontractorsGrid {
+        max-width: 100% !important;
+    }
+
+
+
+
+
+    .dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-dropdownlist-popup-wrapper.dx-selectbox-popup-wrapper,
+    .dx-overlay-wrapper.dx-dropdowneditor-overlay.dx-popup-wrapper.dx-datebox-wrapper.dx-datebox-wrapper-date.dx-datebox-wrapper-calendar,
+    .dx-overlay-wrapper.dx-header-filter-menu.dx-popup-wrapper {
+        z-index: 10000001 !important;
+    }
+</style>
+@*@Html.Partial("UpdateTreeGridCard", (ToyoharaCore.Models.CustomModel.UpdateGridCardModel)ViewBag.GridCard)*@
+
+<div id="subobject_uploader">@*@Html.Partial("FileUploader", (FileUploader)ViewBag.FileUploader)*@</div>
+@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.Settings)
+@*@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.Settings2)*@
+
+<div id="tech_road_partial"></div>
+<div id="project_documentation_code_partial"></div>
+<div id="subcotractors_partial"></div>
+
+@(Html.DevExtreme().TreeList<APL_SELECT_OBJECTS_AND_SUBOBJECTSResult>
+                                                                                                                    ()
+                                                                                                                    .ID("ObjectsTree")
+                                                                                                                    .DataSource(ds => ds.Mvc()
+                                                                                                                    .Controller("Common")
+                                                                                                                    .LoadAction("GetData")
+                                                                                                                    .Key("id").LoadParams(new
+                                                                                                                    {
+                                                                                                                        additionalParams = new JS("function(){return ReturnData('" + control + "', " + ViewBag.project_id + ");}")
+                                                                                                                        //showSelected = new JS("function(){return showSelected;}"),
+                                                                                                                        //selectedRecord = new JS("function(){return selectedRecord;}"),
+                                                                                                                        //only_new = new JS("function(){return document.getElementById('only_new').checked;}"),
+                                                                                                                        //rebind = new JS("function(){return rebind;}"),
+                                                                                                                        //ekk_guid_list = new JS("function(){return ReturnEkkNodes('ekk_code_name').selected_node.toString();}")
+                                                                                                                    })
+                                                                                                                    )
+                                                                                                                    .KeyExpr("id")
+                                                                                                                    .ParentIdExpr("parent_id")
+                                                                                                                    //.SearchPanel(searchPanel => searchPanel.Visible(true).Width(250))
+                                                                                                                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                                                                                                    .Selection(s => s.Mode(SelectionMode.Single))
+                                                                                                                    //.ColumnChooser(cc => cc.Enabled(true))
+                                                                                                                    .ColumnAutoWidth(true)
+                                                                                                                    .WordWrapEnabled(true)
+                                                                                                                    .ShowBorders(true)
+                                                                                                                    .Columns(columns =>
+                                                                                                                    {
+                                                                                                                        columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]);
+                                                                                                                        columns.AddFor(m => m.parent_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_parent_id_ru"])).Visible((bool)ViewData["CK_UI_parent_id"]).Width((int)ViewData["CK_UI_parent_id_width"]).VisibleIndex((int)ViewData["CK_UI_parent_id_pos"]).AllowEditing((bool)ViewData["CK_UI_parent_id_edit"]);
+                                                                                                                        columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]);
+                                                                                                                        columns.AddFor(m => m.start).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_start_ru"])).Visible((bool)ViewData["CK_UI_start"]).Width((int)ViewData["CK_UI_start_width"]).VisibleIndex((int)ViewData["CK_UI_start_pos"]).AllowEditing((bool)ViewData["CK_UI_start_edit"]);
+                                                                                                                        columns.AddFor(m => m.finish).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_finish_ru"])).Visible((bool)ViewData["CK_UI_finish"]).Width((int)ViewData["CK_UI_finish_width"]).VisibleIndex((int)ViewData["CK_UI_finish_pos"]).AllowEditing((bool)ViewData["CK_UI_finish_edit"]);
+                                                                                                                        columns.AddFor(m => m.tree_errors).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_tree_errors_ru"])).Visible((bool)ViewData["CK_UI_tree_errors"]).Width((int)ViewData["CK_UI_tree_errors_width"]).VisibleIndex((int)ViewData["CK_UI_tree_errors_pos"]).AllowEditing((bool)ViewData["CK_UI_tree_errors_edit"]);
+                                                                                                                        columns.AddFor(m => m.subcontractor_list).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subcontractor_list_ru"])).Visible((bool)ViewData["CK_UI_subcontractor_list"]).Width((int)ViewData["CK_UI_subcontractor_list_width"]).VisibleIndex((int)ViewData["CK_UI_subcontractor_list_pos"]).AllowEditing((bool)ViewData["CK_UI_subcontractor_list_edit"]);
+                                                                                                                        columns.AddFor(m => m.project_1c_guid).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_guid_ru"])).Visible((bool)ViewData["CK_UI_project_1c_guid"]).Width((int)ViewData["CK_UI_project_1c_guid_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_guid_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_guid_edit"]);
+                                                                                                                        columns.AddFor(m => m.project_1c).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_1c_ru"])).Visible((bool)ViewData["CK_UI_project_1c"]).Width((int)ViewData["CK_UI_project_1c_width"]).VisibleIndex((int)ViewData["CK_UI_project_1c_pos"]).AllowEditing((bool)ViewData["CK_UI_project_1c_edit"]);
+                                                                                                                        columns.AddFor(m => m.is_parent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_parent_ru"])).Visible((bool)ViewData["CK_UI_is_parent"]).Width((int)ViewData["CK_UI_is_parent_width"]).VisibleIndex((int)ViewData["CK_UI_is_parent_pos"]).AllowEditing((bool)ViewData["CK_UI_is_parent_edit"]);
+                                                                                                                        columns.AddFor(m => m.object_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_id_ru"])).Visible((bool)ViewData["CK_UI_object_id"]).Width((int)ViewData["CK_UI_object_id_width"]).VisibleIndex((int)ViewData["CK_UI_object_id_pos"]).AllowEditing((bool)ViewData["CK_UI_object_id_edit"]);
+                                                                                                                        columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ru"])).Visible((bool)ViewData["CK_UI_object_description"]).Width((int)ViewData["CK_UI_object_description_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_edit"]);
+                                                                                                                        columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_ru"])).Visible((bool)ViewData["CK_UI_project_description"]).Width((int)ViewData["CK_UI_project_description_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_edit"]);
+
+                                                                                                                    }
+                                                                                                                    )
+                                                                                                                    .Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard).UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)).Paging(p => p.PageSize(30).Enabled(true))
+                                                                                                                    .Pager(pager =>
+                                                                                                                    {
+                                                                                                                        pager.ShowPageSizeSelector(true);
+                                                                                                                        pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                        //pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                        pager.ShowInfo(true);
+                                                                                                                        pager.ShowNavigationButtons(true);
+                                                                                                                        pager.Visible(true);
+                                                                                                                    })
+
+                                                                                                                    .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                    .HeaderFilter(f => f.Visible(true))
+                                                                                                                    //.RemoteOperations(op=>op.Filtering(true).Grouping(true))
+                                                                                                                    .ShowRowLines(true)
+                                                                                                                    .ColumnAutoWidth(true)
+                                                                                                                    .FilterSyncEnabled(true)
+                                                                                                                    .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                                                                    .Width("100%")
+                                                                                                                    .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                                                    .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                    .AllowColumnResizing(true)
+                                                                                                                    .AllowColumnReordering(true)
+                                                                                                                    .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                    .WordWrapEnabled(true)
+                                                                                                                    .OnToolbarPreparing("onToolbarPreparing")
+                                                                                                                    .OnContentReady("contentReady")
+
+)
+
+
+<div id="partCode"></div>
+
+
+
+
+
+<script>
+    function CodesShow() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку, содержащую подобъект");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 0)
+            return alert("Выберите строку, содержащую подобъект");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Projects/ShowHideCodesUpdateAdd",
+            type: "Get",
+            data: {
+                param:"@ViewBag.project_id"
+                //selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                //flowWindowName: "GridCard",
+                //flowWindowRussianName: "Просмотр/Редактирование",
+                //gridId: "ObjectsTree",
+                //binding: true,
+                //close_Window: true,
+                //updateProc: "APL_UPDATE_SUBOBJECT2",
+                //id_func: "find_row_id",
+                //additionalParams: JSON.stringify(additionalParams)
+                /*selectedData[0]['id']*/
+            },
+            success: function (partialViewResult) {
+                $("#project_documentation_code_partial").html(partialViewResult);
+                // Reloading2('TechRoadGrid');
+                $('#projectDocumentationCodes').modal('show');
+            }
+
+            
+        });
+
+
+
+        //rebind_obj.rebindCodes = true;
+        //var treeGrid = $("#CodesTree").dxTreeList("instance")
+        //treeGrid.refresh();
+        //rebind_obj.rebindCodes = false;
+        //$.ajax({
+        //    async: true,
+        //    cache: false,
+        //    url: "/Projects/ShowHideCodesUpdateAdd",
+        //    type: "post",
+        //    data: {
+        //        param: selectedData[0]['id']
+        //        /*selectedData[0]['id']*/
+        //    },
+        //    success: function (data) {
+        //        var visible = JSON.parse(data);
+        //        for (var i = 0; i < visible.length; i++) {
+        //            if (visible[i].Key == "InsertProjectDocumentation") {
+        //                if (visible[i].Value === "true")
+        //                    $('#InsertProjectDocumentation').show();
+        //                else
+        //                    $('#InsertProjectDocumentation').hide();
+        //            }
+        //            else if (visible[i].Key == "InsertProjectDocumentationRevision") {
+        //                if (visible[i].Value === "true")
+        //                    $('#InsertProjectDocumentationRevision').show();
+        //                else
+        //                    $('#InsertProjectDocumentationRevision').hide();
+        //            }
+        //            else if (visible[i].Key == "EditProjectDocumentations") {
+        //                if (visible[i].Value === "true")
+        //                    $('#EditProjectDocumentations').show();
+        //                else
+        //                    $('#EditProjectDocumentations').hide();
+        //            }
+        //        }
+        //        $('#Codes').modal('show');
+        //    }
+        //});
+
+    }
+
+
+    var rebind_obj = new Object();
+    rebind_obj.rebindTechRoad = true;
+    rebind_obj.rebind = true;
+    rebind_obj.rebindCodes = true;
+
+
+   $(function () {
+
+       if ('@ViewBag.InsertObject'.toLowerCase() === 'true')  $('#AddObject').show(); else $('#AddObject').hide();
+       if ('@ViewBag.InsertSubobject'.toLowerCase() === 'true') $('#AddSubObject').show(); else $('#AddSubObject').hide();
+       if ('@ViewBag.ImportSubobjects'.toLowerCase() === 'true') $('#ImportSubobjects').show(); else $('#ImportSubobjects').hide();
+       if ('@ViewBag.EditObjectsAndSubobjects'.toLowerCase() === 'true') $('#UpdateItem').show(); else $('#UpdateItem').hide();
+       if ('@ViewBag.DeleteSubobject'.toLowerCase() === 'true') $('#DeleteSubobject').show(); else $('#DeleteSubobject').hide();
+       
+    });
+
+
+
+
+
 
     function contentReady() {
         rebind_obj.rebind = false;
     }
-    var rebind_obj = new Object();
-    rebind_obj.rebind = true;
+
+
+
+    function ReturnCodesData() {
+        rebind_obj.rebindCodes = true;
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedData = dataGrid.getSelectedRowsData();
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var subobject_id = null;
+        if (selectedKeys.length != 0)
+            subobject_id = selectedData[0]["id"];
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: rebind_obj.rebindCodes,
+            storedProcedure: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+            controller: controller,
+            subobject_id: subobject_id,
+            id: null
+
+        };
+        return JSON.stringify(obj);
+    }
+
+
+
+   function onToolbarPreparing(e) {
+        //var dataGrid = e.component;
+        //<button type="button" onclick="$('#UploaderFlowWindow').modal('show');">Лоадер</button>
+        e.toolbarOptions.items.unshift(
+            {
+                location: "before",
+                template: function (e) {
+                    return $(
+                        "<button title='Назад' class='btn btn_in_grid dx-button btn_pad_grid' onclick='Back();'><img src='/../../img/GridBtn/1-14.png' style='height:18px; width:auto;' alt='Назад'></img></button>" +
+                        "<button title='Добавить объект' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='AddObject();' id='AddObject'>Добавить объект</button>" +
+                        "<button title='Добавить подобъект' style='padding:6px;  margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='AddSubObject();' id='AddSubObject'>Добавить подобъект</button>" +
+                        "<button title='Загрузить подобъекты' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='ImportSubobjects();' id='ImportSubobjects'>Загрузить подобъекты</button>" +
+                        "<button title='Субподрядчики' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onClick='ShowSubcontractor();' id='Subcontractors'>Субподрядчики</button>" +
+                        "<button title='Тех. участки' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='ShowTechRoad();' id='ShowTechRoad'>Тех. участки</button>" +
+                        "<button title='Шифры ПСД' style='padding:6px; margin-right: 5px;' class='btn btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='CodesShow();' id='CodesShow'>Шифры ПСД</button>"
+                    )
+                }
+            },
+            {
+            location: "after",
+            template: function(e) {
+                    return $(
+                        "<button title='Редактировать' class='btn btn_in_grid dx-button btn_pad_grid' onclick='UpdateItem();' id='UpdateItem'><img src='/../../img/GridBtn/1-2.png' style='height:18px; width:auto;' alt='Редактировать'></img></button>" +
+                        "<button title='Удалить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='DeleteItem();' id='DeleteSubobject'><img src='/../../img/GridBtn/1-3.png' width='18 height='18' alt='Удалить' /></button>" +
+                        "<button title='Обновить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='Reloading(\"ObjectsTree\")' id='Reloading'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+                        "<button title='Очистить фильтры' onclick='ClearFiltersTreeList(\"ObjectsTree\")' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFilters'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                        "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExportExcel();' id='ExportExcel'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettings' id='UserSettings' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>"+
+                        "<button title='История изменения' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ObjectLog()' id='ObjectLog'><img src='/../../img/GridBtn/1-12.png' style='height:18px; width:auto;' alt='Групповое обновление'></img></button>"
+                       )
+                }
+        });
+    }
+
+
+    function DeleteItem() {
+        if (confirm("Вы действительно хотите удалить запись?")) {
+            rebind_obj.rebind = true;
+            var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+            var keys = dataGrid.getSelectedRowKeys();
+            var selectedData = dataGrid.getSelectedRowsData();
+            if (keys[0] == ',')
+                keys[0] = '';
+            var Records = [];
+            for (var i = 0; i < keys.length; i++) {
+                row_id = selectedData[i]["id"]; 
+                Records.push(row_id);
+            }
+            if (keys.length == 0) return alert("Вы не выбрали ни одной строки");
+            if (selectedData[0]["is_parent"] == 1) return alert('Удалить можно только Подобъект');
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: '/Projects/DeleteItem',
+                type: 'POST',
+                data: {
+                    Records: Records.toString()
+                },
+                success: function (data) {
+                    if (data != "" && data != null)
+                        alert(data.replace(/__/gi, '\n'));
+                    Reloading('ObjectsTree');
+                    dataGrid.deselectAll();
+                }
+            });
+        }
+    }
+
+    function ObjectLog() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var selectedData = dataGrid.getSelectedRowsData();
+        var object_type = selectedData[0]["is_parent"] == 1 ? 'object' : 'subobject'
+
+
+        if (selectedKeys.length == 0) { alert('Вы не выбрали ни одной строки'); }
+        if (selectedKeys.length > 1) { alert('Вы выбрали больше одной строки. Для просмотра истории нужно выбрать только одну строку'); }
+        if (selectedKeys.length == 1) {
+            
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/ObjectLog",
+                type: "Get",
+                data: {
+                    object_type: object_type,
+                    object_id: dataGrid.cellValue(dataGrid.getRowIndexByKey(selectedKeys[0]), "id")
+                },
+                success: function (partialViewResult) {
+                    $("#ObjectLog").html(partialViewResult);
+                    $('#ObjLog').modal('show');
+                }
+            });
+        }
+    }
+
+
+    function Back() {
+        window.location = "/Projects/Index";
+    }
+
+
     function ReturnData(controller, project_id) {
         var obj = {
             showSelected: null,
@@ -146,47 +387,84 @@
         return JSON.stringify(obj);
     }
 
-    function FiltersBeforeGridString(addObject, addSubObject, reloading, clearFilters, update, settings, otherFilters) {
-        //reloading, clearFilters, fullSearch, excel, showSelected,
-        return $(
-            //    "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + showSelected.function + "' id='" + showSelected.id + "'><img src='/../../img/GridBtn/1-7.png' style='height:18px; width:auto;' alt='Показать выбранные'></img></button>" +
-            "<button title='Добавить объект' style='padding:6px; margin-right: 5px;' class='btn btn-primary' onclick='" + addObject.function + ";' id='" + addObject.id + "'>Добавить объект</button>" +
-            "<button title='Добавить подобъект' style='padding:6px;  margin-right: 5px;' class='btn btn-primary' onclick='" + addSubObject.function + ";' id='" + addSubObject.id + "'>Добавить подобъект</button>" +
-            "<button title='Редактировать' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + update.name + "();' id='" + update.id + "'><img src='/../../img/GridBtn/1-2.png' style='height:18px; width:auto;' alt='Редактировать'></img></button>" +
-            //"<button title='Добавить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + add.name + "();' id='" + add.id + "'><img src='/../../img/GridBtn/1-1.png' style='height:18px; width:auto;' alt='Добавить'></img></button>" +
-            "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
-            "<button title='Очистить фильтры' onclick='" + clearFilters.name + "' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
-            //"<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='" + fullSearch.function + "' id='" + fullSearch.id + "' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
-            //"<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
-            "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
-            otherFilters);
-    }
-    function onToolbarPreparing(e) {
-        var dataGrid = e.component;
-        e.toolbarOptions.items.unshift({
-            location: "after",
-            template: FiltersBeforeGridString(
-                { function: 'AddObject()', id: 'AddObject'},
-                { function: 'AddSubObject()', id: 'AddSubObject'},
-                { function: 'Reloading("ObjectsTree")', id: 'Reloading', grid: 'Grid' },
-                { name: 'ClearFiltersTreeList("ObjectsTree")', id: 'ClearFilters' },
-                { name: 'UpdateItem', id: 'UpdateItem' },
 
-                //{ function: 'SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("show");', id: 'FullSearch' },
-                //{ name: 'ExportExcel', id: 'ExportExcel' },
-                //{ name: 'AddItem', id: 'AddItem' },
-                //{ function: 'showSelectedPicture(this,"Grid")', id: 'showSelectedPicture', grid: 'Grid' },
-                { name: 'UserSettings', id: 'UserSettings' },
-                '')
+
+    function ImportSubobjects() {
+
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку, содержащую объект");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 1)
+            return alert("Выберите строку, содержащую объект");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Projects/ImportSubobjects",
+            type: "Get",
+            data: {
+                object_id: selectedData[0]["id"]
+            },
+            success: function (partialViewResult) {
+                $("#subobject_uploader").html(partialViewResult);
+                // Reloading2('TechRoadGrid');
+                $('#UploaderFlowWindow').modal('show');
+            }
         });
     }
 
+
+
+
+
+    function ShowTechRoad() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку, содержащую подобъект");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 0)
+            return alert("Выберите строку, содержащую подобъект");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Projects/UpdateTechRoadWindow",
+            type: "Get",
+            data: {
+                param:"@ViewBag.project_id"
+                //selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                //flowWindowName: "GridCard",
+                //flowWindowRussianName: "Просмотр/Редактирование",
+                //gridId: "ObjectsTree",
+                //binding: true,
+                //close_Window: true,
+                //updateProc: "APL_UPDATE_SUBOBJECT2",
+                //id_func: "find_row_id",
+                //additionalParams: JSON.stringify(additionalParams)
+                /*selectedData[0]['id']*/
+            },
+            success: function (partialViewResult) {
+                $("#tech_road_partial").html(partialViewResult);
+               // Reloading2('TechRoadGrid');
+                $('#technical_road').modal('show');
+            }
+        });
+    }
+
+
+
+
+
+
+
+   
+
     var object_id = new Object();
-    object_id.find_row_id = FindRowId;
+    object_id.find_row_id = FindRowId("ObjectsTree");
     object_id.without_id = NullRowId;
     var ParamObj = new Object();
     ParamObj.paramFunc = ParamFunc;
-
     function NullRowId() {
         return null;
     }
@@ -196,20 +474,48 @@
         return selectedData[0]["id"];
     }
 
-    function FindRowId() {
-        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+    function FindRowId(GridName) {
+        var dataGrid = $("#" + GridName).dxTreeList("instance");
         var selectedData = dataGrid.getSelectedRowsData();
         return selectedData[0]["id"];
     }
 
     function AddObject() {
+
+
+        var ParamsForInsert = { id: null, project_id: "@ViewBag.project_id"  };
         $.ajax({
+            async: true,
+            cache: false,
+            url: "/Common/GridCardPartialUpdate",
+            type: "Get",
+            data: {
+                flowWindowName: "GridCard",
+                flowWindowRussianName: "Создание нового объекта",
+                selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                grid_setting_param_id: "@ViewBag.project_id",
+                //нужно для того, что взять данные из грида 
+                gridId: "ObjectsTree",
+                binding: true,
+                updateProc: "APL_UPDATE_OBJECT2",
+                additionalParams: JSON.stringify(ParamsForInsert),
+                gridType: "tree"
+            },
+            success: function (partialViewResult) {
+                var dropdownParams = {};
+                $("#part").html(partialViewResult);
+                OpenCard(false, "GridCard", "ObjectsTree", JSON.stringify(dropdownParams), "tree");
+            }
+        });
+
+
+        @*$.ajax({
             async: true,
             cache: false,
             url: "/Common/GridCardTreePartialUpdate",
             type: "Get",
             data: {
-                param_id: null,
+                param_id: 1,
                 selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
                 flowWindowName: "GridCard",
                 flowWindowRussianName: "Создание нового объекта",
@@ -218,14 +524,14 @@
                 close_Window: true,
                 updateProc: "APL_UPDATE_OBJECT2",
                 id_func: "without_id",
-                additionalParams:""
+                additionalParams: JSON.stringify({id:null, project_id: "@ViewBag.project_id" })
                 /*selectedData[0]['id']*/
             },
             success: function (partialViewResult) {
                 $("#part").html(partialViewResult);
                 OpenTreeCard(false, "GridCard", "ObjectsTree", null);
             }
-        });
+        });*@
     }
     function AddSubObject() {
         var dataGrid = $("#ObjectsTree").dxTreeList("instance");
@@ -236,31 +542,64 @@
         if (selectedData[0]["is_parent"] != 1)
             return alert("Для создания подобъекта необходимо выбрать объект");
         var object_id = selectedData[0]["object_id"];
+        var project_id = FindRowId("ObjectsTree");
         dataGrid.deselectAll();
-        var additionalParams = { object_id: object_id };
+
+        //ss();
+
+        var ParamsForInsert = { id: null, object_id: object_id };
         $.ajax({
             async: true,
             cache: false,
-            url: "/Common/GridCardTreePartialUpdate",
+            url: "/Common/GridCardPartialUpdate",
             type: "Get",
             data: {
-                param_id: null,
-                selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
                 flowWindowName: "GridCard",
                 flowWindowRussianName: "Создание нового подобъекта",
+                selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                grid_setting_param_id: "@ViewBag.project_id",
+                //нужно для того, что взять данные из грида 
                 gridId: "ObjectsTree",
                 binding: true,
-                close_Window: true,
                 updateProc: "APL_UPDATE_SUBOBJECT2",
-                id_func: "without_id",
-                additionalParams: JSON.stringify(additionalParams)
-                /*selectedData[0]['id']*/
+                additionalParams: JSON.stringify(ParamsForInsert),
+                gridType: "tree"
             },
             success: function (partialViewResult) {
+                var dropdownParams = {};
                 $("#part").html(partialViewResult);
-                OpenTreeCard(false, "GridCard", "ObjectsTree", null);
+                OpenCard(false, "GridCard", "ObjectsTree", JSON.stringify(dropdownParams), "tree");
             }
         });
+
+
+
+
+        //var additionalParams = { object_id: object_id, project_id: project_id };
+        //var additionalParams = { object_id: object_id, id: null};
+        //$.ajax({
+        //    async: true,
+        //    cache: false,
+        //    url: "/Common/GridCardTreePartialUpdate",
+        //    type: "Get",
+        //    data: {
+        //        param_id: 0,
+        //        selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+        //        flowWindowName: "GridCard",
+        //        flowWindowRussianName: "Создание нового подобъекта",
+        //        gridId: "ObjectsTree",
+        //        binding: true,
+        //        close_Window: true,
+        //        updateProc: "APL_UPDATE_SUBOBJECT2",
+        //        id_func: "without_id",
+        //        additionalParams: JSON.stringify(additionalParams)
+        //        /*selectedData[0]['id']*/
+        //    },
+        //    success: function (partialViewResult) {
+        //        $("#part").html(partialViewResult);
+        //        OpenTreeCard(false, "GridCard", "ObjectsTree", null);
+        //    }
+        //});
     }
         //function AddItem() {
         // var dataGrid = $("#Grid").dxDataGrid("instance");
@@ -271,7 +610,6 @@
         //OpenCard(true, "GridCard", "Grid", "paramFunc");
 
 
-
     function UpdateItem() {
 
         var dataGrid = $("#ObjectsTree").dxTreeList("instance");
@@ -279,70 +617,1068 @@
         if (selectedKeys.length == 0)
             return alert("Выберите строку!");
         var selectedData = dataGrid.getSelectedRowsData();
+
+
         if (selectedData[0]["is_parent"] == 1) {
 
             //dataGrid.deselectAll();
+
+
+            var ParamsForInsert = { id: selectedData[0]["id"] };
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/GridCardPartialUpdate",
+                type: "Get",
+                data: {
+                    flowWindowName: "GridCard",
+                    flowWindowRussianName: "Просмотр/Редактирование",
+                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                    grid_setting_param_id: "@ViewBag.project_id",
+                    //нужно для того, что взять данные из грида 
+                    gridId: "ObjectsTree",
+                    binding: true,
+                    updateProc: "APL_UPDATE_OBJECT2",
+                    additionalParams: JSON.stringify(ParamsForInsert),
+                    gridType: "tree"
+                },
+                success: function (partialViewResult) {
+                    var dropdownParams = {};
+                    $("#part").html(partialViewResult);
+                    OpenCard(true, "GridCard", "ObjectsTree", JSON.stringify(dropdownParams), "tree");
+                }
+            });
+
+
+
+
+
+            //var object_id = selectedData[0]["id"];
+            //var additionalParams = { id: object_id };
+            //$.ajax({
+            //    async: true,
+            //    cache: false,
+            //    url: "/Common/GridCardTreePartialUpdate",
+            //    type: "Get",
+            //    data: {
+            //        param_id: 1,
+            //        selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+            //        flowWindowName: "GridCard",
+            //        flowWindowRussianName: "Просмотр/Редактирование",
+            //        gridId: "ObjectsTree",
+            //        binding: true,
+            //        close_Window: true,
+            //        updateProc: "APL_UPDATE_OBJECT2",
+            //        id_func: "find_row_id",
+            //        additionalParams: JSON.stringify(additionalParams)
+            //        /*selectedData[0]['id']*/
+            //    },
+            //    success: function (partialViewResult) {
+            //        $("#part").html(partialViewResult);
+            //        OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+            //    }
+            //});
+        }
+        else {
+
+            var ParamsForInsert = {object_id: selectedData[0]["object_id"], id: selectedData[0]["id"]  };
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/GridCardPartialUpdate",
+                type: "Get",
+                data: {
+                    flowWindowName: "GridCard",
+                    flowWindowRussianName: "Просмотр/Редактирование",
+                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+                    grid_setting_param_id: "@ViewBag.project_id",
+                    //нужно для того, что взять данные из грида 
+                    gridId: "ObjectsTree",
+                    binding: true,
+                    updateProc: "APL_UPDATE_SUBOBJECT2",
+                    additionalParams: JSON.stringify(ParamsForInsert),
+                    gridType: "tree"
+                },
+                success: function (partialViewResult) {
+                    var dropdownParams = {};
+                    $("#part").html(partialViewResult);
+                    OpenCard(true, "GridCard", "ObjectsTree", JSON.stringify(dropdownParams), "tree");
+                }
+            });
+
+
+
+
+
+            //var object_id = selectedData[0]["object_id"];
+            //var additionalParams = { object_id: object_id, id: selectedData[0]["id"]  };
+            //$.ajax({
+            //    async: true,
+            //    cache: false,
+            //    url: "/Common/GridCardTreePartialUpdate",
+            //    type: "Get",
+            //    data: {
+            //        param_id: 0,
+            //        selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
+            //        flowWindowName: "GridCard",
+            //        flowWindowRussianName: "Просмотр/Редактирование",
+            //        gridId: "ObjectsTree",
+            //        binding: true,
+            //        close_Window: true,
+            //        updateProc: "APL_UPDATE_SUBOBJECT2",
+            //        id_func: "find_row_id",
+            //        additionalParams: JSON.stringify(additionalParams)
+            //        /*selectedData[0]['id']*/
+            //    },
+            //    success: function (partialViewResult) {
+            //        $("#part").html(partialViewResult);
+            //        OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+            //    }
+            //});
+        }
+    }
+
+
+
+
+
+   function ExportExcel() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: '/Projects/ExcelObject',
+            type: 'POST',
+            data: {
+                filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                sort: $("#ObjectsTree").dxTreeList("getDataSource").loadOptions().sort ? JSON.stringify($("#ObjectsTree").dxTreeList("getDataSource").loadOptions().sort) : "",
+                showSelected: null,
+                selectedRecord: null,
+                id: null,
+                project_id:"@ViewBag.project_id"
+
+                //only_new: document.getElementById('only_new').checked,
+                //ekk_guid_list: ReturnEkkNodes('ekk_code_name').selected_node.toString()
+
+            },
+            success: function (data) {
+
+                 @*alert("@ViewBag.link_inf");
+                var fileName = encodeURIComponent("@ViewBag.link_inf".replace(':', ' '));
+                alert(fileName);
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("ПЕРЕЧЕНЬ ОБЪЕКТОВ И ПОДОБЪЕКТОВ " + fileName);*@
+
+
+
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("ПЕРЕЧЕНЬ ОБЪЕКТОВ И ПОДОБЪЕКТОВ " + "@Html.Raw(ViewBag.link_inf)".replace(':', ' ').replace('\"', ''));
+            }
+        });
+    }
+
+
+
+
+</script>
+@*================= Общее - надо обощить =========================*@
+
+<script>
+    function Reloading(grid) { rebind_obj.rebind = true; var dataGrid = $("#" + grid).dxTreeList("getDataSource"); dataGrid.reload(); }
+
+    function Reloading2(grid) { rebind_obj.rebind = true; var dataGrid = $("#" + grid).dxDataGrid("getDataSource"); dataGrid.reload(); }
+
+    function ClearFilters(listName) {
+        var dataGrid = $("#" + listName).dxDataGrid("instance");
+        dataGrid.clearFilter();
+    }
+
+    function ClearFiltersTreeList(listName) {
+        var dataGrid = $("#" + listName).dxTreeList("instance");
+        dataGrid.clearFilter();
+
+    }
+
+
+
+    function onInitNewRow(e) {
+        // console.log(JSON.stringify(e));
+        e.data["id"] = 0;
+        //e.data["lno_id"] = 0;
+        //e.data["start"] = "";
+        //e.data["finish"] = "";
+    }
+
+
+</script>
+
+
+
+@*================= ТехУчастки =========================*@
+<script>
+
+    function contentTechRoadReady() {
+        rebind_obj.rebindTechRoad = false;
+    }
+
+
+    function onBeforeSendTechRoad(method, ajaxOptions) {
+        if (method === "update" || method === "insert") {
+            var id = null;
+            if (ajaxOptions.data.key != "0")
+                id = ajaxOptions.data.key;
+            var dataGrid = $("#TechRoadGrid").dxDataGrid("instance");
+            var data = dataGrid.getDataSource().items();
+            data = data.filter(function (elem) {
+                return (elem.key == id);
+            });
+            //var is_parent = data[0].data["is_parent"];
+            rebind_obj.rebind = true;
+            rebind_obj.rebindTechRoad = true;
+            ajaxOptions.data.additionalSelectParams = JSON.stringify(AdditionalSelectTechRoadParams());
+            ajaxOptions.data.additionalInsertParams = JSON.stringify(AdditionalInsertTechRoadParams(method, ajaxOptions, data));
+            ajaxOptions.data.additionalSupportParams = JSON.stringify(AdditionalSupportTechRoadParams());
+        }
+    }
+
+    function AdditionalSelectTechRoadParams() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var id = null;
+        if (selectedKeys.length != 0) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            id = selectedData[0]["id"];
+        }
+        var obj = {
+            id: id
+        };
+        return obj;
+    }
+    function AdditionalInsertTechRoadParams(method, ajaxOptions, data) {
+        var obj;
+        var id = null;
+        if (method === "update") {
+            id = ajaxOptions.data.key;
+            obj = {
+                id: id,
+                subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+            }
+        }
+        if (method === "insert") {
+            id = null;
+            obj = {
+                id: id,
+                subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+            }
+        }
+        return obj;
+    }
+    function AdditionalSupportTechRoadParams() {
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: true,
+            storedProcedureInsert: "APL_UPDATE_PROJECT_STATIONING2",
+            storedProcedureSelect: "APL_SELECT_PROJECTS_STATIONINGS2",
+            controller: controller
+        };
+        return obj;
+    }
+
+    function ReturnTechRoadData(controller) {
+        rebind_obj.rebindTechRoad = true;
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedData = dataGrid.getSelectedRowsData();
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var subobject_id = null;
+        if (selectedKeys.length != 0)
+            subobject_id = selectedData[0]["id"];
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: rebind_obj.rebindTechRoad,
+            storedProcedure: "APL_SELECT_PROJECTS_STATIONINGS2",
+            controller: controller,
+            id: subobject_id
+        };
+        return JSON.stringify(obj);
+    }
+
+
+    function AddTechRoad() {
+        var dataGrid = $("#TechRoadGrid").dxDataGrid("instance");
+        dataGrid.addRow();
+        var selectedData = dataGrid.getRowElement(0);
+        //selectedData.values["id"] = 0;
+        //selectedData.values["lno_id"] = 0;
+        //selectedData.values["lno_description"] = "бред";
+
+        //selectedData[0]["id"] = 0;
+
+
+    }
+
+
+    function ExcelTechRoad() {
+        var dataGrid = $("#TechRoadGrid").dxDataGrid("instance");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: '/Projects/ExcelTechRoad',
+            type: 'POST',
+            data: {
+                filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                sort: $("#TechRoadGrid").dxDataGrid("getDataSource").loadOptions().sort ? JSON.stringify($("#TechRoadGrid").dxDataGrid("getDataSource").loadOptions().sort) : "",
+                showSelected: null,
+                selectedRecord: null,
+                id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+                //only_new: document.getElementById('only_new').checked,
+                //ekk_guid_list: ReturnEkkNodes('ekk_code_name').selected_node.toString()
+
+            },
+            success: function (data) {
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("Технологические участки");
+            }
+        });
+    }
+
+
+
+
+</script>
+
+@*================= Шифры =========================*@
+<script>
+
+    function contentCodesReady() {
+        rebind_obj.rebindCodes = false;
+    }
+
+
+   
+
+
+
+    function ObjectLogCode() {
+        var dataGrid = $("#CodesTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var selectedData = dataGrid.getSelectedRowsData();
+        var object_type = selectedData[0]["is_parent"] == 1 ? 'project_documentation' : 'project_documentation_revision'
+        var object_id = selectedData[0]["is_parent"] == 1 ? dataGrid.cellValue(dataGrid.getRowIndexByKey(selectedKeys[0]), "project_documentation_id") : dataGrid.cellValue(dataGrid.getRowIndexByKey(selectedKeys[0]), "revision_id")
+
+        if (selectedKeys.length == 0) { alert('Вы не выбрали ни одной строки'); }
+        if (selectedKeys.length > 1) { alert('Вы выбрали больше одной строки. Для просмотра истории нужно выбрать только одну строку'); }
+        if (selectedKeys.length == 1) {
             
             $.ajax({
                 async: true,
                 cache: false,
-                url: "/Common/GridCardTreePartialUpdate",
+                url: "/Common/ObjectLog",
                 type: "Get",
                 data: {
-                    param_id: null,
-                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
-                    flowWindowName: "GridCard",
-                    flowWindowRussianName: "Просмотр/Редактирование",
-                    gridId: "ObjectsTree",
-                    binding: true,
-                    close_Window: true,
-                    updateProc: "APL_UPDATE_OBJECT2",
-                    id_func: "find_row_id",
-                    additionalParams: JSON.stringify(additionalParams)
-                    /*selectedData[0]['id']*/
+                    object_type: object_type,
+                    object_id: object_id
                 },
                 success: function (partialViewResult) {
-                    $("#part").html(partialViewResult);
-                    OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+                    $("#ObjectLogCode").html(partialViewResult);
+                    $('#ObjLog').modal('show');
                 }
             });
         }
-        else { 
-            var object_id = selectedData[0]["object_id"];
-            var additionalParams = { object_id: object_id };
+    }
+
+
+    function ExcelCodesExport() {
+        var dataGrid = $("#CodesTree").dxTreeList("instance");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: '/Projects/ExcelCodesExport',
+            type: 'POST',
+            data: {
+                filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                sort: $("#CodesTree").dxTreeList("getDataSource").loadOptions().sort ? JSON.stringify($("#CodesTree").dxTreeList("getDataSource").loadOptions().sort) : "",
+                showSelected: null,
+                selectedRecord: null,
+                subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+                //only_new: document.getElementById('only_new').checked,
+                //ekk_guid_list: ReturnEkkNodes('ekk_code_name').selected_node.toString()
+
+            },
+            success: function (data) {
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("Шифры ПСД");
+            }
+        });
+    }
+    function InsertProjectDocumentation() {
+
+
+
+        var ParamsForInsert = { id: null, subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"] };
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Common/GridCardPartialUpdate",
+            type: "Get",
+            data: {
+                flowWindowName: "GridCardCode",
+                flowWindowRussianName: "Создание нового шифра",
+                selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+                grid_setting_param_id: "@ViewBag.project_id",
+                //нужно для того, что взять данные из грида 
+                gridId: "CodesTree",
+                binding: true,
+                updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION2",
+                additionalParams: JSON.stringify(ParamsForInsert),
+                gridType: "tree"
+            },
+            success: function (partialViewResult) {
+                var dropdownParams = {};
+                $("#part").html(partialViewResult);
+                OpenCard(false, "GridCardCode", "CodesTree", JSON.stringify(dropdownParams), "tree");
+            }
+        });
+
+
+
+
+        //$.ajax({
+        //    async: true,
+        //    cache: false,
+        //    url: "/Common/GridCardTreePartialUpdate",
+        //    type: "Get",
+        //    data: {
+        //        param_id: 1,
+        //        selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+        //        flowWindowName: "GridCardCode",
+        //        flowWindowRussianName: "Создание нового шифра",
+        //        gridId: "CodesTree",
+        //        binding: true,
+        //        close_Window: true,
+        //        updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION2",
+        //        id_func: "without_id",
+        //        additionalParams: JSON.stringify({id:null, subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]})
+        //    },
+        //    success: function (partialViewResult) {
+
+        //        $("#partCode").html(partialViewResult);
+        //        OpenTreeCard(false, "GridCardCode", "CodesTree", null);
+        //    }
+        //});
+    }
+
+    function InsertProjectDocumentationRevision() {
+        var dataGrid = $("#CodesTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку!");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 1)
+            return alert("Для создания изма необходимо выбрать шифр");
+        var project_documentation_id = selectedData[0]["project_documentation_id"];
+
+
+
+
+
+        var ParamsForInsert = { project_documentation_id: project_documentation_id, id: null };
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Common/GridCardPartialUpdate",
+            type: "Get",
+            data: {
+                flowWindowName: "GridCardCode",
+                flowWindowRussianName: "Создание нового изменения к шифру",
+                selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+                grid_setting_param_id: "@ViewBag.project_id",
+                //нужно для того, что взять данные из грида 
+                gridId: "CodesTree",
+                binding: true,
+                updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION_REVISION",
+                additionalParams: JSON.stringify(ParamsForInsert),
+                gridType: "tree"
+            },
+            success: function (partialViewResult) {
+                var dropdownParams = {};
+                $("#part").html(partialViewResult);
+                OpenCard(false, "GridCardCode", "CodesTree", JSON.stringify(dropdownParams), "tree");
+            }
+        });
+
+
+        //var additionalParams = { project_documentation_id: project_documentation_id, id: null };
+        //$.ajax({
+        //    async: true,
+        //    cache: false,
+        //    url: "/Common/GridCardTreePartialUpdate",
+        //    type: "Get",
+        //    data: {
+        //        param_id: 0,
+        //        selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+        //        flowWindowName: "GridCardCode",
+        //        flowWindowRussianName: "Создание нового изменения к шифру",
+        //        gridId: "CodesTree",
+        //        binding: true,
+        //        close_Window: true,
+        //        updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION_REVISION",
+        //        id_func: "without_id",
+        //        additionalParams: JSON.stringify(additionalParams)
+        //        /*selectedData[0]['id']*/
+        //    },
+        //    success: function (partialViewResult) {
+
+        //        $("#partCode").html(partialViewResult);
+        //        OpenTreeCard(false, "GridCardCode", "CodesTree", null);
+        //    }
+        //});
+    }
+
+
+    function UpdateItemCode() {
+        var dataGrid = $("#CodesTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Выберите строку!");
+        if (selectedKeys.length > 1)
+            return alert("Выберите одну строку с шифром!");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] == 1) {
+
+
+
+
+
+            var ParamsForInsert = { id: selectedData[0]["project_documentation_id"]};
             $.ajax({
                 async: true,
                 cache: false,
-                url: "/Common/GridCardTreePartialUpdate",
+                url: "/Common/GridCardPartialUpdate",
                 type: "Get",
                 data: {
-                    param_id: null,
-                    selectProc: "APL_SELECT_OBJECTS_AND_SUBOBJECTS",
-                    flowWindowName: "GridCard",
-                    flowWindowRussianName: "Просмотр/Редактирование",
-                    gridId: "ObjectsTree",
+                    flowWindowName: "GridCardCode",
+                    flowWindowRussianName: "Просмотр/Редактирование шифра",
+                    selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+                    grid_setting_param_id: "@ViewBag.project_id",
+                    //нужно для того, что взять данные из грида 
+                    gridId: "CodesTree",
                     binding: true,
-                    close_Window: true,
-                    updateProc: "APL_UPDATE_SUBOBJECT2",
-                    id_func: "find_row_id",
-                    additionalParams: JSON.stringify(additionalParams)
-                    /*selectedData[0]['id']*/
+                    updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION2",
+                    additionalParams: JSON.stringify(ParamsForInsert),
+                    gridType: "tree"
                 },
                 success: function (partialViewResult) {
+                    var dropdownParams = {};
                     $("#part").html(partialViewResult);
-                    OpenTreeCard(true, "GridCard", "ObjectsTree", null);
+                    OpenCard(false, "GridCardCode", "CodesTree", JSON.stringify(dropdownParams), "tree");
                 }
             });
 
+
+
+
+
+            ////dataGrid.deselectAll();
+            //$.ajax({
+            //    async: true,
+            //    cache: false,
+            //    url: "/Common/GridCardTreePartialUpdate",
+            //    type: "Get",
+            //    data: {
+            //        param_id: 1,
+            //        selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+            //        flowWindowName: "GridCardCode",
+            //        flowWindowRussianName: "Просмотр/Редактирование шифра",
+            //        gridId: "CodesTree",
+            //        binding: true,
+            //        close_Window: true,
+            //        updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION2",
+            //        id_func: "find_row_id",
+            //        additionalParams: JSON.stringify({ id: selectedData[0]["project_documentation_id"] })
+            //        //JSON.stringify(additionalParams)
+            //        /*selectedData[0]['id']*/
+            //    },
+            //    success: function (partialViewResult) {
+
+            //        $("#partCode").html(partialViewResult);
+            //        OpenTreeCard(true, "GridCardCode", "CodesTree", null);
+            //    }
+            //});
         }
+        else {
 
+
+
+
+
+
+            var ParamsForInsert = { project_documentation_id: selectedData[0]["project_documentation_id"], id: selectedData[0]["revision_id"]  };
+            $.ajax({
+                async: true,
+                cache: false,
+                url: "/Common/GridCardPartialUpdate",
+                type: "Get",
+                data: {
+                    flowWindowName: "GridCardCode",
+                    flowWindowRussianName: "Просмотр/Редактирование изменения к шифру",
+                    selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+                    grid_setting_param_id: "@ViewBag.project_id",
+                    //нужно для того, что взять данные из грида 
+                    gridId: "CodesTree",
+                    binding: true,
+                    updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION_REVISION",
+                    additionalParams: JSON.stringify(ParamsForInsert),
+                    gridType: "tree"
+                },
+                success: function (partialViewResult) {
+                    var dropdownParams = {};
+                    $("#part").html(partialViewResult);
+                    OpenCard(true, "GridCardCode", "CodesTree", JSON.stringify(dropdownParams), "tree");
+                }
+            });
+
+
+
+            //var project_documentation_id = selectedData[0]["project_documentation_id"];
+            //var additionalParams = { project_documentation_id: project_documentation_id, id: selectedData[0]["revision_id"] };
+
+            //$.ajax({
+            //    async: true,
+            //    cache: false,
+            //    url: "/Common/GridCardTreePartialUpdate",
+            //    type: "Get",
+            //    data: {
+            //        param_id: 0,
+            //        selectProc: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+            //        flowWindowName: "GridCardCode",
+            //        flowWindowRussianName: "Просмотр/Редактирование изменения к шифру",
+            //        gridId: "CodesTree",
+            //        binding: true,
+            //        close_Window: true,
+            //        updateProc: "APL_UPDATE_PROJECT_DOCUMENTATION_REVISION",
+            //        id_func: "find_row_id",
+            //        additionalParams: JSON.stringify(additionalParams)
+            //        /*selectedData[0]['id']*/
+            //    },
+            //    success: function (partialViewResult) {
+
+            //        $("#partCode").html(partialViewResult);
+            //        OpenTreeCard(true, "GridCardCode", "CodesTree", null);
+            //    }
+            //});
+        }
     }
 
-    function ClearFiltersTreeList(listName) {
-            var dataGrid = $("#" + listName).dxTreeList("instance");
-            dataGrid.clearFilter();
 
+
+
+    function AdditionalSelectCodesParams() {
+        // id = ajaxOptions.data.key;
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        //var data = dataGrid.byKey(id);
+        //var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var id = null;
+        if (selectedKeys.length != 0) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            id = selectedData[0]["id"];
+        }
+        var obj = {
+            subobject_id: id
+        };
+        return obj;
     }
 
-    function Reloading(grid) { rebind_obj.rebind = true; var dataGrid = $("#" + grid).dxTreeList("getDataSource"); dataGrid.reload(); }
+    function AdditionalInsertCodesParams(method, ajaxOptions, is_parent, data) {
+        var obj;
+        var id = null;
+        if (method === "update") {
+            id = ajaxOptions.data.key;
+            var dataGrid = $("#CodesTree").dxTreeList("instance");
+            //var data = dataGrid.byKey(id);
+            if (is_parent == 1) {
+                obj = {
+                    id: data[0].data["project_documentation_id"],
+                    subobject_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+                }
+            }
+            if (is_parent == 0) {
+                obj = {
+                    id: data[0].data["revision_id"],
+                    project_documentation_id: data[0].data["project_documentation_id"]
+                }
+            }
+            return obj;
+        }
+    }
+
+    function AdditionalSupportCodesParams(is_parent) {
+        //var dataGrid = $("#Grid").dxDataGrid("instance");
+        //var selectedKeys = dataGrid.getSelectedRowKeys();
+        //var id = null;
+        var proc = "";
+        if (is_parent == 1)
+            proc = "APL_UPDATE_PROJECT_DOCUMENTATION2";
+        if (is_parent == 0)
+            proc = "APL_UPDATE_PROJECT_DOCUMENTATION_REVISION";
+        // if (selectedKeys.length != 0) {
+        //     var selectedData = dataGrid.getSelectedRowsData();
+        //     id = selectedData[0]["id"];
+        // }
+        var obj = {
+            //storedProcedureSelect: "APL_UPDATE_PROJECT_LOGISTICAL_NETWORK_OBJECT2",
+            showSelected: null,
+            selectedRecord: null,
+            rebind: true,
+            storedProcedureInsert: proc,
+            storedProcedureSelect: "APL_SELECT_PROJECT_DOCUMENTATIONS",
+            controller: controller
+        };
+        return obj;
+    }
+
+    function onBeforeSendCodes(method, ajaxOptions) {
+        if (method === "update" || method === "insert") {
+            //var dataGrid = $("#CodesTree").dxDataGrid("instance");
+            //var dataGrid = $("#ObjectsTree").dxDataGrid("instance");
+            //var selectedKeys = dataGrid.getSelectedRowKeys();
+            // var row = dataGrid.getRowIndexByKey(ajaxOptions.data.key);
+            //row.data[""]
+            //  var project_id = null;
+            //  if (selectedKeys.length != 0) {
+            //      var selectedData = dataGrid.getSelectedRowsData();
+            //      project_id = selectedData[0]["id"];
+            //  }
+            var id = null;
+            id = ajaxOptions.data.key;
+            var dataGrid = $("#CodesTree").dxTreeList("instance");
+            // var data = dataGrid.byKey(id);
+            var data = dataGrid.getDataSource().items();
+            data = data.filter(function (elem) {
+                return (elem.key == id);
+            });
+            var is_parent = data[0].data["is_parent"];
+            rebind_obj.rebindCodes = true;
+            ajaxOptions.data.additionalSelectParams = JSON.stringify(AdditionalSelectCodesParams());
+            ajaxOptions.data.additionalInsertParams = JSON.stringify(AdditionalInsertCodesParams(method, ajaxOptions, is_parent, data));
+            ajaxOptions.data.additionalSupportParams = JSON.stringify(AdditionalSupportCodesParams(is_parent));
+
+        }
+    }
+
+
 </script>
+
+@*================= субподрядчики =========================*@
+<script>
+
+    var ask_about_update = true;
+
+    function ShowSubcontractor() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        if (selectedKeys.length == 0)
+            return alert("Не выбрана строка. Выберите строку, содержащую объект");
+        var selectedData = dataGrid.getSelectedRowsData();
+        if (selectedData[0]["is_parent"] != 1)
+            return alert("Выберите строку, содержащую объект");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: "/Projects/UpdateSubcontractorWindow",
+            type: "Get",
+            data: {
+                param:"@ViewBag.project_id"
+            },
+            success: function (partialViewResult) {
+                $("#subcotractors_partial").html(partialViewResult);
+                $('#subcontractors').modal('show');
+            }
+        });
+    }
+
+
+
+
+    function ReturnDataSubcontractor(controller) {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedData = dataGrid.getSelectedRowsData();
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var object_id = null;
+        if (selectedKeys.length != 0)
+            object_id = selectedData[0]["id"];
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: true,
+            storedProcedure: "APL_SELECT_OBJECT_SUBCONTRACTORS",
+            controller: controller,
+            id: object_id
+        };
+        return JSON.stringify(obj);
+    }
+
+    function onBeforeSendSubcontractor(method, ajaxOptions) {
+        if (method === "update" || method === "insert") {
+            rebind_obj.rebind = true;
+            var change_subcontractor_ps;
+            if (ask_about_update == true) {
+
+
+                ////alertify.set({
+                ////    labels: {
+                ////        ok: "Да",
+                ////        cancel: "Нет"
+                ////    }
+                ////});
+                ////// button labels will be "Accept" and "Deny"
+                ////if (alertify.confirm("Заменить субподрядчика в тех.участках, попадающих в эти границы?")) {
+                ////    alert('yes');
+                ////    change_subcontractor_ps = true;
+                ////}
+                ////else {
+                ////    alert('no');
+                ////    change_subcontractor_ps = false;
+                ////}
+
+
+                //var options = {
+                //    message: "Заменить субподрядчика в тех.участках, попадающих в эти границы?",
+                //    title: '',
+                //   // size: eModal.size.xl,
+                //    subtitle: 'smaller text header',
+                //    label: "Yes"   // use the positive label as key
+                //    };
+
+                //eModal.confirm(options)
+                //    .then(callback, callbackCancel);
+
+                //if (confirm("Заменить субподрядчика в тех.участках, попадающих в эти границы?")) {
+                //    change_subcontractor_ps = true;
+                //}
+                //else change_subcontractor_ps = false;
+
+                //bootbox.confirm({
+                //    message: "Заменить субподрядчика в тех.участках, попадающих в эти границы?",
+                //    buttons: {
+                //        confirm: {
+                //            label: 'Да',
+                //            className: 'btn-success'
+                //        },
+                //        cancel: {
+                //            label: 'Нет',
+                //            className: 'btn-danger'
+                //        }
+                //    },
+                //    callback: function (result) {
+                //        alert('ура');
+                //    }
+                //});
+
+                //alert('2');
+
+
+                if (confirm("Заменить субподрядчика в тех.участках, попадающих в эти границы?")) {
+                    change_subcontractor_ps = true;
+                }
+                else change_subcontractor_ps = false;
+
+                ask_about_update = false;
+            }
+
+            ajaxOptions.data.additionalSelectParams = JSON.stringify(AdditionalSelectParamsSubcontractor());
+            ajaxOptions.data.additionalInsertParams = JSON.stringify(AdditionalInsertParamsSubcontractor(method, ajaxOptions, change_subcontractor_ps));
+            ajaxOptions.data.additionalSupportParams = JSON.stringify(AdditionalSupportParamsSubcontractor());
+        }
+    }
+
+
+
+    function AdditionalSelectParamsSubcontractor() {
+        var dataGrid = $("#ObjectsTree").dxTreeList("instance");
+        var selectedKeys = dataGrid.getSelectedRowKeys();
+        var id = null;
+        if (selectedKeys.length != 0) {
+            var selectedData = dataGrid.getSelectedRowsData();
+            id = selectedData[0]["id"];
+        }
+        var obj = {
+            id: id
+        };
+        return obj;
+    }
+
+
+    function AdditionalInsertParamsSubcontractor(method, ajaxOptions, change_subcontractor_ps) {
+        var obj;
+        var id = null;
+        if (method === "update") id = ajaxOptions.data.key;
+        if (method === "insert") id = null;
+        obj = {
+            id: id,
+            object_id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"],
+            change_subcontractor_ps: change_subcontractor_ps
+        }
+        return obj;
+    }
+
+
+
+
+
+    function AdditionalSupportParamsSubcontractor() {
+        var obj = {
+            showSelected: null,
+            selectedRecord: null,
+            rebind: true,
+            storedProcedureInsert: "APL_UPDATE_OBJECT_SUBCONTRACTOR",
+            storedProcedureSelect: "APL_SELECT_OBJECT_SUBCONTRACTORS",
+            controller: controller
+        };
+        return obj;
+    }
+
+    function AddSubcontractor() {
+        var dataGrid = $("#SubcontractorsGrid").dxDataGrid("instance");
+        dataGrid.addRow();
+        var selectedData = dataGrid.getRowElement(0);
+    }
+
+
+    function ExcelSubcontractors() {
+        var dataGrid = $("#SubcontractorsGrid").dxDataGrid("instance");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: '/Projects/ExcelSubcontractors',
+            type: 'POST',
+            data: {
+                filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
+                sort: $("#SubcontractorsGrid").dxDataGrid("getDataSource").loadOptions().sort ? JSON.stringify($("#SubcontractorsGrid").dxDataGrid("getDataSource").loadOptions().sort) : "",
+                id: $("#ObjectsTree").dxTreeList("instance").getSelectedRowsData()[0]["id"]
+            },
+            success: function (data) {
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("Субподрядчики");
+            }
+        });
+    }
+
+    function OnEditingStart() {
+        ask_about_update = true;
+    }
+
+
+   
+
+    function DeleteObjectSubcontractors() {
+        if (confirm("Вы действительно хотите удалить записи?")) {
+            var dataGrid = $("#SubcontractorsGrid").dxDataGrid("instance");
+            var keys = dataGrid.getSelectedRowKeys();
+            if (keys[0] == ',')
+                keys[0] = '';
+            var Records = [];
+            for (var i = 0; i < keys.length; i++) {
+                var row_index = dataGrid.getRowIndexByKey(keys[i]);
+                row_id = dataGrid.cellValue(row_index, "id");
+                Records.push(row_id);
+            }
+
+            if (keys.length == 0) return alert("Вы не выбрали ни одной строки");
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: '/Projects/DeleteObjectSubcontractors',
+                type: 'POST',
+                data: {
+                    Records: Records.toString()
+                },
+                success: function (data) {
+                    if (data != "" && data != null)
+                        alert(data.replace(/__/gi, '\n'));
+                    Reloading2("SubcontractorsGrid");
+                    dataGrid.deselectAll();
+                }
+            });
+        }
+    }
+
+
+
+
+
+
+
+    function DeleteProjectStationings() {
+        if (confirm("Вы действительно хотите удалить записи?")) {
+            var dataGrid = $("#TechRoadGrid").dxDataGrid("instance");
+            var keys = dataGrid.getSelectedRowKeys();
+            if (keys[0] == ',')
+                keys[0] = '';
+            var Records = [];
+            for (var i = 0; i < keys.length; i++) {
+                var row_index = dataGrid.getRowIndexByKey(keys[i]);
+                row_id = dataGrid.cellValue(row_index, "id");
+                Records.push(row_id);
+            }
+
+            if (keys.length == 0) return alert("Вы не выбрали ни одной строки");
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: '/Projects/DeleteProjectStationings',
+                type: 'POST',
+                data: {
+                    Records: Records.toString()
+                },
+                success: function (data) {
+                    if (data != "" && data != null)
+                        alert(data.replace(/__/gi, '\n'));
+                    Reloading2("TechRoadGrid");
+                    dataGrid.deselectAll();
+                }
+            });
+        }
+    }
+
+
+    
+    function DeleteProjectDocumentations() {
+        if (confirm("Вы действительно хотите удалить записи?")) {
+            var dataGrid = $("#CodesTree").dxTreeList("instance");
+            var keys = dataGrid.getSelectedRowKeys();
+            var selectedData = dataGrid.getSelectedRowsData();
+            if (keys[0] == ',')
+                keys[0] = '';
+            var Records0 = [];
+            var Records1 = [];
+            for (var i = 0; i < keys.length; i++) {
+                if (selectedData[i]["is_parent"] == 1) Records1.push(selectedData[i]["project_documentation_id"]);
+                else Records0.push(selectedData[i]["revision_id"]);
+            }
+
+            if (keys.length == 0) return alert("Вы не выбрали ни одной строки");
+
+            $.ajax({
+                async: true,
+                cache: false,
+                url: '/Projects/DeleteProjectDocumentations',
+                type: 'POST',
+                data: {
+                    Records_parent0: Records0.toString(),
+                    Records_parent1: Records1.toString()
+                },
+                success: function (data) {
+                    if (data != "" && data != null)
+                        alert(data.replace(/__/gi, '\n'));
+                    Reloading("CodesTree");
+                    dataGrid.deselectAll();
+                }
+            });
+        }
+    }
+
+
+
+
+</script>
+

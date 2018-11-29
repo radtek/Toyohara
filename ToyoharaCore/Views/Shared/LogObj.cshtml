@@ -1,0 +1,190 @@
+﻿
+
+<style>
+    #GridLogObject {
+        max-width: 100% !important;
+    }
+    .dx-loadindicator-content {
+        position:absolute;
+        z-index: 100005 !important;
+    }
+
+</style>
+
+
+<div id="ObjLog" class="modal fade object_log" tabindex="-1" role="dialog" style="z-index:20000;" data-backdrop="static">
+        <div class="modal-dialog" style="width: 80%; height:90%; margin-left: 10%; margin-top: 5%;" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title myModalLabel">История изменения</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" value="@ViewBag.object_type" id="objecttype" />
+                    <input type="hidden" value="@ViewBag.object_id" id="objectid"/>
+                    @Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.SettingsObjLog)
+
+
+
+
+                    @(Html.DevExtreme().DataGrid<SYS_SELECT_OBJECT_LOGResult>
+                                                                                                                            ()
+                                                                                                                            .ID("GridLogObject")
+                                                                                                                            .ShowBorders(true)
+                                                                                                                            .DataSource(d => d.Mvc()
+                                                                                                                            .LoadAction("GetData")
+                                                                                                                            .Controller("Common")
+                                                                                                                            .Key("id")
+                                                                                                                            .LoadParams(new
+                                                                                                                            {
+                                                                                                                                additionalParams = new JS("function(){return ReturnDataLogObject();}")
+                                                                                                                            })
+                                                                                                                            )
+                                                                                                                            .Columns(columns =>
+                                                                                                                            {
+                                                                                                                                columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_id_ObjLog"]).Width((int)ViewData["CK_UI_id_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_id_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_id_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.object_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_type_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_object_type_ObjLog"]).Width((int)ViewData["CK_UI_object_type_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_object_type_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_object_type_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.object_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_id_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_object_id_ObjLog"]).Width((int)ViewData["CK_UI_object_id_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_object_id_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_object_id_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_object_description_ObjLog"]).Width((int)ViewData["CK_UI_object_description_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_type_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_type_ObjLog"]).Width((int)ViewData["CK_UI_action_type_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_type_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_type_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_description_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_description_ObjLog"]).Width((int)ViewData["CK_UI_action_description_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_description_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_description_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_date).Format("dd.MM.y HH:mm:ss ").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_date_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_date_ObjLog"]).Width((int)ViewData["CK_UI_action_date_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_date_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_date_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_user_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_user_id_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_user_id_ObjLog"]).Width((int)ViewData["CK_UI_action_user_id_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_user_id_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_user_id_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_user_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_user_ObjLog"]).Width((int)ViewData["CK_UI_action_user_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_user_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_user_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_real_user_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_real_user_id_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_real_user_id_ObjLog"]).Width((int)ViewData["CK_UI_action_real_user_id_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_real_user_id_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_real_user_id_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.action_real_user).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_action_real_user_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_action_real_user_ObjLog"]).Width((int)ViewData["CK_UI_action_real_user_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_action_real_user_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_action_real_user_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.attribute).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_attribute_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_attribute_ObjLog"]).Width((int)ViewData["CK_UI_attribute_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_attribute_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_attribute_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.last_value).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_value_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_last_value_ObjLog"]).Width((int)ViewData["CK_UI_last_value_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_last_value_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_last_value_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.new_value).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_value_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_new_value_ObjLog"]).Width((int)ViewData["CK_UI_new_value_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_new_value_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_new_value_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.add_attr_last_value).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_add_attr_last_value_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_add_attr_last_value_ObjLog"]).Width((int)ViewData["CK_UI_add_attr_last_value_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_add_attr_last_value_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_add_attr_last_value_ObjLog_edit"]);
+                                                                                                                                columns.AddFor(m => m.add_attr_new_value).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_add_attr_new_value_ObjLog_ru"])).Visible((bool)ViewData["CK_UI_add_attr_new_value_ObjLog"]).Width((int)ViewData["CK_UI_add_attr_new_value_ObjLog_width"]).VisibleIndex((int)ViewData["CK_UI_add_attr_new_value_ObjLog_pos"]).AllowEditing((bool)ViewData["CK_UI_add_attr_new_value_ObjLog_edit"]);
+                                                                                                                            })
+                                                                                                                            //.Paging(p => p.PageSize(30))
+                                                                                                                            .Pager(pager =>
+                                                                                                                            {
+                                                                                                                                pager.ShowPageSizeSelector(true);
+                                                                                                                                pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                                    //pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                                                                                    pager.ShowInfo(true);
+                                                                                                                                pager.ShowNavigationButtons(true);
+                                                                                                                                pager.Visible(true);
+                                                                                                                            })
+
+                                                                                                                            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                                                                            .HeaderFilter(f => f.Visible(true))
+                                                                                                                            .RemoteOperations(true)
+                                                                                                                            .ShowRowLines(true)
+                                                                                                                            .ColumnAutoWidth(true)
+                                                                                                                            .FilterSyncEnabled(true)
+                                                                                                                            
+                                                                                                                            .Height(new JS("function() { return window.innerHeight*0.7;}"))
+                                                                                                                            .Width("100%")
+                                                                                                                            .LoadPanel(load => load.IndicatorSrc("/../../img/orig2.gif").ShowIndicator(true).Height(200).Width(200).Enabled(true).ShowPane(true))
+                                                                                                                            //.LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                                                                            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                                                                            .AllowColumnResizing(true)
+                                                                                                                            .AllowColumnReordering(true)
+                                                                                                                            .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                                                                            .WordWrapEnabled(true)
+                                                                                                                            .OnContentReady("contentReadyLogObject")
+                                                                                                                            .OnToolbarPreparing("onToolbarPreparingLogObject")
+                                                                                                                            //.Scrolling(scrolling => scrolling.Mode(GridScrollingMode.Infinite).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
+                                                                                                                            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always))
+                    )
+
+
+                    
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<script type="text/javascript">
+
+    rebindlogObj = true;
+
+   // $('#ObjLog').on('shown.bs.modal', function () { $("#loadPanelHelp").dxLoadPanel("instance").show(); })
+    
+     //заполнение модели для грида
+    function ReturnDataLogObject() {
+            var object_type = '@ViewBag.object_type'.toString();
+            var object_id = parseFloat('@ViewBag.object_id'.toString())
+            var obj = {
+                showSelected: null,
+                selectedRecord: '',
+                id: null,
+                rebind: rebindlogObj,
+                storedProcedure: "SYS_SELECT_OBJECT_LOG",
+                controller: '',
+                object_type: object_type,
+                object_id: object_id
+            };
+                return JSON.stringify(obj);            
+        }
+
+    
+
+
+    //при чтении контента положить данные в кэш
+    function contentReadyLogObject() {
+        $("#loadPanelHelp").dxLoadPanel("instance").hide();
+        //var dataGrid = e.component;
+        //dataGrid.updateDimensions();
+
+
+        rebindlogObj = false;
+    }
+
+
+
+
+    function onToolbarPreparingLogObject(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift({
+            location: "after",
+            template: $(
+                "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='Reloading(\"GridLogObject\");' id='ReloadingLogObject'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button>" +
+                "<button title='Очистить фильтры' onclick='ClearFilters(\"GridLogObject\");' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFiltersLogObject'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +                
+                "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExportExcelLogObject();' id='ExportExcelLogObject'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' onclick='SettingsShow();' id='LogUserSettings' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" 
+            )
+        });
+    }
+
+
+    function SettingsShow() { 
+        $("#LogUserSettings").modal("show");
+        //$("#loadPanelHelp").dxLoadPanel("instance").hide();
+        //$(\"#LogUserSettings\").modal(\"show\");
+    }
+
+    //выгрузка в Excel перечня загрузок
+    function ExportExcelLogObject() {
+        var dataGrid = $("#GridLogObject").dxDataGrid("instance");
+        $.ajax({
+            async: true,
+            cache: false,
+            url: '/Common/ExcelLog',
+            type: 'POST',
+            data: {
+                object_type: document.getElementById("objecttype").value,
+                object_id: parseFloat(document.getElementById("objectid").value),
+            },
+            success: function (data) {
+                window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("История изменения");
+            }
+        });
+    }
+
+
+
+
+
+</script>

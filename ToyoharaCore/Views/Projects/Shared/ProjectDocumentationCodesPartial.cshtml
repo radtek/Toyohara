@@ -1,0 +1,120 @@
+﻿
+
+
+@Html.Partial("Settings", (ToyoharaCore.Models.CustomModel.Settings)ViewBag.settings2)
+
+<div id="ObjectLogCode"></div>
+
+<div id="projectDocumentationCodes" class="modal fade" tabindex="-1" role="dialog" style="z-index:10000;" data-backdrop="static">
+    <div class="modal-dialog" style="width: 60%;" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Шифры ПСД</h4>
+            </div>
+            <div class="modal-body">
+                @(Html.DevExtreme().TreeList<APL_SELECT_PROJECT_DOCUMENTATIONSResult>()
+                                    .ID("CodesTree")
+                                    .DataSource(ds => ds.Mvc()
+                                        .Controller("Common")
+                                        .LoadAction("GetData")
+                                        .Key("id")
+                                        .LoadParams(new
+                                        {
+                                            additionalParams = new JS("function(){return ReturnCodesData();}")
+                                        })
+                                        .UpdateAction("PutData")
+                                        .OnBeforeSend("onBeforeSendCodes")
+                                    )
+                                    .KeyExpr("id")
+                                    .ParentIdExpr("parent_id")
+                                    .HeaderFilter(headerFilter => headerFilter.Visible(true))
+                                    .Selection(s => s.Mode(SelectionMode.Multiple).AllowSelectAll(true))
+                                    .ColumnAutoWidth(true)
+                                    .WordWrapEnabled(true)
+                                    .ShowBorders(true)
+                                .Columns(columns =>
+                                {
+                                    columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_id_grid_settings2"]).Width((int)ViewData["CK_UI_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_id_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.project_documentation_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_id_grid_settings2"]).Width((int)ViewData["CK_UI_project_documentation_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_id_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.revision_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_revision_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_revision_id_grid_settings2"]).Width((int)ViewData["CK_UI_revision_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_revision_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_revision_id_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.subobject_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subobject_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_subobject_id_grid_settings2"]).Width((int)ViewData["CK_UI_subobject_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_subobject_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_subobject_id_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.parent_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_parent_id_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_parent_id_grid_settings2"]).Width((int)ViewData["CK_UI_parent_id_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_parent_id_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_parent_id_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code_grid_settings2"]).Width((int)ViewData["CK_UI_project_documentation_code_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.project_documentation_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_date_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_date_grid_settings2"]).Width((int)ViewData["CK_UI_project_documentation_date_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_date_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_date_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.date_receive).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_date_receive_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_date_receive_grid_settings2"]).Width((int)ViewData["CK_UI_date_receive_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_date_receive_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_date_receive_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.is_parent).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_is_parent_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_is_parent_grid_settings2"]).Width((int)ViewData["CK_UI_is_parent_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_is_parent_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_is_parent_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.subobject_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_subobject_description_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_subobject_description_grid_settings2"]).Width((int)ViewData["CK_UI_subobject_description_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_subobject_description_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_subobject_description_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.object_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_object_description_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_object_description_grid_settings2"]).Width((int)ViewData["CK_UI_object_description_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_object_description_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_object_description_grid_settings2_edit"]);
+                                    columns.AddFor(m => m.project_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_description_grid_settings2_ru"])).Visible((bool)ViewData["CK_UI_project_description_grid_settings2"]).Width((int)ViewData["CK_UI_project_description_grid_settings2_width"]).VisibleIndex((int)ViewData["CK_UI_project_description_grid_settings2_pos"]).AllowEditing((bool)ViewData["CK_UI_project_description_grid_settings2_edit"]);
+                                }
+                                )
+                                .Scrolling(scrolling => scrolling.Mode(TreeListScrollingMode.Standard).UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)).Paging(p => p.PageSize(30).Enabled(true))
+                                .Pager(pager =>
+                                {
+                                    pager.ShowPageSizeSelector(true);
+                                    pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                    pager.ShowInfo(true);
+                                    pager.ShowNavigationButtons(true);
+                                    pager.Visible(true);
+                                })
+                                .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                .HeaderFilter(f => f.Visible(true))
+                                .ShowRowLines(true)
+                                .ColumnAutoWidth(false)
+                                .FilterSyncEnabled(true)
+                                .Width("100%")
+                                .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                .AllowColumnResizing(true)
+                                .AllowColumnReordering(true)
+                                .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                .WordWrapEnabled(true)
+                                .OnToolbarPreparing("onToolbarCodesPreparing")
+                                .OnContentReady("contentCodesReady")
+                )
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+     $(function () {
+         if ('@ViewBag.InsertProjectDocumentation'.toLowerCase() === 'true') $('#InsertProjectDocumentation').show(); else $('#InsertProjectDocumentation').hide();
+         if ('@ViewBag.InsertProjectDocumentationRevision'.toLowerCase() === 'true') $('#InsertProjectDocumentationRevision').show(); else $('#InsertProjectDocumentationRevision').hide();
+         if ('@ViewBag.EditProjectDocumentations'.toLowerCase() === 'true') $('#EditProjectDocumentations').show(); else $('#EditProjectDocumentations').hide();
+         if ('@ViewBag.DeleteProjectDocumentations'.toLowerCase() === 'true') $('#DeleteProjectDocumentations').show(); else $('#DeleteProjectDocumentations').hide();
+
+         
+    });
+
+    function onToolbarCodesPreparing(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift(
+            {
+                location: "before",
+                template: function (e) {
+                    return $(
+                        "<button title='Добавить шифр' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='InsertProjectDocumentation();' id='InsertProjectDocumentation'>Добавить шифр</button>" +
+                        "<button title='Добавить изменение к шифру' style='padding:6px; margin-right: 5px;' class='btn btn_in_grid dx-button btn_pad_grid btn_color' onclick='InsertProjectDocumentationRevision();' id='InsertProjectDocumentationRevision'>Добавить изменение к шифру</button>"
+                    )
+                }
+            },
+            {
+                location: "after",
+                template: $(
+                    "<button title='Редактировать' class='btn btn_in_grid dx-button btn_pad_grid' onclick='UpdateItemCode();' id='EditProjectDocumentations'><img src='/../../img/GridBtn/1-2.png' style='height:18px; width:auto;' alt='Редактировать'></img></button>" +
+                    "<button title='Удалить' class='btn btn_in_grid dx-button btn_pad_grid' onclick='DeleteProjectDocumentations();' id='DeleteProjectDocumentations'><img src='/../../img/GridBtn/1-3.png' width='18 height='18' alt='Удалить' /></button>" +
+                    "<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='Reloading(\"CodesTree\")' id='ReloadingCodesTree'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+                    "<button title='Очистить фильтры' onclick='ClearFiltersTreeList(\"CodesTree\")' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFiltersTreeList'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                    "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExcelCodesExport();' id='ExcelCodesExport'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                    "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettings2' id='UserSettings2' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
+                    "<button title='История изменения' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ObjectLogCode()' id='ObjectLogCode'><img src='/../../img/GridBtn/1-12.png' style='height:18px; width:auto;' alt='Групповое обновление'></img></button>"
+                )
+            });
+    }
+</script>

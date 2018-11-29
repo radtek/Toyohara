@@ -1,18 +1,7 @@
 ﻿var selectedRecord = '';
 var showSelected = null;
 var records;
- rebind = false;
-
-
-
-
-
-
-//функция для перезагрзуки страницы при обновлении Грида
-function GetLink() {
-    var link = '/Forms/Index';
-    return link;
-}
+rebind = true;
 
 //при чтении контента положить данные в кэш
 function contentReady() {
@@ -28,7 +17,8 @@ function ReturnData(controller) {
         id: null,
         rebind: rebind,
         storedProcedure: "OMC_SELECT_FORMS",
-        controller: controller
+        controller: controller,
+        hide_archive: document.getElementById('hide_archive').checked
     };
     return JSON.stringify(obj);
 }
@@ -36,11 +26,13 @@ function ReturnData(controller) {
 
 
 //маппинг кнопок и действия
-function FiltersBeforeGridString(reloading, clearFilters, excel, settings, add, otherFilters) {
-    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+function FiltersBeforeGridString(reloading, clearFilters, fullSearch, excel, settings, otherFilters) {
+    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button>" +
         "<button title='Очистить фильтры' onclick='" + clearFilters.name + "();' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+        "<button title='Расширенный поиск'  class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' onclick='" + fullSearch.function + "' id='" + fullSearch.id + "' ><img src='/../../img/GridBtn/1-10.png' style='height:18px; width:auto;' alt='Расширенный поиск'></img></button>" +
         "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
-        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +        
+        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +                
+        "<button title='История изменения' class='btn btn_in_grid dx-button btn_pad_grid' onclick='OpenLog()' id='o'><img src='/../../img/GridBtn/1-12.png' style='height:18px; width:auto;' alt='История изменения'></img></button>" +
         otherFilters);
 }
 
@@ -50,16 +42,15 @@ function onToolbarPreparing(e) {
     e.toolbarOptions.items.unshift({
         location: "after",
         template: FiltersBeforeGridString(
-            { function: 'Reloading("Grid")', id: 'Reloading', grid: 'Grid' },
+            { function: 'ReloadingGrid("Grid")', id: 'Reloading', grid: 'Grid' },
             { name: 'ClearFilters', id: 'ClearFilters' },
+            { function: 'SaveFullSearchFilters("FullSearch", "", ""); $("#FullSearch").modal("show");', id: 'FullSearch' },
             { name: 'ExportExcel', id: 'ExportExcel' },
             { name: 'UserSettings', id: 'UserSettings' },
             ''
         )
     });
 }
-
-
 
 //функция очищения фильтров
 function ClearFilters() {
@@ -69,16 +60,30 @@ function ClearFilters() {
 
 // по двойному щелчку по строке нужно открыть перечень позиции загруженной формы
 function onRowClick(e) {
-    alert('1');
-    //var component = e.component,
-    //    prevClickTime = component.lastClickTime;
-    //component.lastClickTime = new Date();
-    //if (prevClickTime && (component.lastClickTime - prevClickTime < 300)) {
-    //    window.location = '/SVR_loading/SVR_items/?svr_id=' + e.data.id.toString();
-    //}
+
+    var component = e.component,
+        prevClickTime = component.lastClickTime;
+        component.lastClickTime = new Date();
+    if (prevClickTime && (component.lastClickTime - prevClickTime < 300)) {
+        var dataGrid = $("#Grid").dxDataGrid("instance");
+        dataGrid.deselectAll();
+        dataGrid.selectRows(e.data.id);
+        try {
+            if (e.data.form_id.toString() == '5') {
+                window.location = '/Forms/SVRItems/?form_id=' + e.data.id.toString() + "&link_information_param=" + e.data.id.toString();
+            }
+            if (e.data.form_id.toString() == '4') {
+                window.location = '/Forms/RSSItems/?form_id=' + e.data.id.toString() + "&link_information_param=" + e.data.id.toString();
+            }
+        }
+        catch (err) { }
+    }
+    else {
+        //Single click code
+        //console.log('single click');
+    }
+
 }
-
-
 
 //выгрузка в Excel перечня загрузок
 function ExportExcel() {
@@ -92,7 +97,8 @@ function ExportExcel() {
             filter: dataGrid.option("filterValue") ? JSON.stringify(dataGrid.option("filterValue")) : "",
             sort: $("#Grid").dxDataGrid("getDataSource").loadOptions().sort ? JSON.stringify($("#Grid").dxDataGrid("getDataSource").loadOptions().sort) : "",
             showSelected: showSelected,
-            selectedRecord: selectedRecord
+            selectedRecord: selectedRecord,
+            hide_archive: document.getElementById('hide_archive').checked
         },
         success: function (data) {
             window.location = "/Common/ReturnFile?physicalPath=" + data + "&fileDownloadName=" + encodeURIComponent("Формы для расценки");

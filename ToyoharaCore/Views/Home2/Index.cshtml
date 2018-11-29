@@ -12,7 +12,7 @@
 
 @*@(Html.DevExtreme().Button().Text("Настройки").OnClick("ShowSettings"))*@
 <div style="width:0; height:0; display:none;">
-    <button class="btn btn-primary" onclick="Reloading(true);">Искать</button>
+    <button class="btn btn-primary" onclick="Reloading(true);">Обновить</button>
     <button class="btn btn-primary" data-toggle="modal" data-target="#UserSettings">Настройки</button>
     <button class="btn btn-primary" onclick="ReloadShowSelected(true);">Показать выбранные</button>
     <button class="btn btn-primary" onclick="ReloadShowSelected(false);">Показать все</button>
@@ -319,10 +319,7 @@ columns.AddFor(m => m.color).HeaderCellTemplate("цвет").Visible(true).Width(
 
     function Reloading() { var dataGrid = $("#Grid").dxDataGrid("getDataSource"); dataGrid.reload(); }
 
-    function GetLink() {
-        var link = '/Home2/Index';
-        return link;
-    }
+
     function reloadData() {
 
         var dataGrid = $("#Grid").dxDataGrid("instance");

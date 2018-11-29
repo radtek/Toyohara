@@ -36,6 +36,7 @@ namespace ToyoharaCore.Controllers
         //    this.delegated_user = JsonConvert.DeserializeObject<APL_SELECT_PROJECT_STATES_FOR_DDResult>(HttpContext.Session.GetString("deleagting_user"));
         //}
 
+        [AppAuthorizeAttribute]
         [FAQAttribute]
         public IActionResult Index()
         {
@@ -178,9 +179,9 @@ namespace ToyoharaCore.Controllers
             string j = JsonConvert.SerializeObject(loadrResults.data);
             List<UI_SELECT_LINK_FUNCTIONSResult> list = JsonConvert.DeserializeObject<List<UI_SELECT_LINK_FUNCTIONSResult>>(j);
 
-            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", "PRC_SELECT_ORDER_ITEMS_GKI" + ".xlsx");
+            string templatePath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExcelTemplates", "EMPTY" + ".xlsx");
             Guid guid = Guid.NewGuid();
-            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\Templates\\ExcelTemplates", guid + ".xlsx");
+            string physicalPath = Path.Combine(_env.ContentRootPath + "\\wwwroot\\AppData\\ExportFiles", guid + ".xlsx");
             System.IO.File.Copy(templatePath, physicalPath);
             //ExcelReports<PRC_SELECT_ORDER_ITEMS_GKIResult> excel = 
             //    new ExcelReports<PRC_SELECT_ORDER_ITEMS_GKIResult>(x,1,1, grid_settings, physicalPath, "PRC_SELECT_ORDER_ITEMS_GKI", 0, null,()=> portalDMTOS.PRC_SELECT_ORDER_ITEMS_GKI(show_classified, only_new, delegated_user.id, event_id).ToList());
@@ -189,7 +190,7 @@ namespace ToyoharaCore.Controllers
             new ExcelReports<UI_SELECT_LINK_FUNCTIONSResult>(x, 1, 1, delegated_user.id, physicalPath, "UI_SELECT_LINK_FUNCTIONS", 0, null);
             excel.ExcelReport();
             if (event_id != null)
-                portalDMTOS.SYS_FINISH_EVENT(event_id, physicalPath);
+                portalDMTOS.SYS_FINISH_EVENT(event_id, "ExportFiles\\" + physicalPath + ".xlsx");
             return Convert.ToString(guid);
         }
 

@@ -1,0 +1,97 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<script src="~/js/ReservationOrders/Items.js"></script>
+
+
+<input type="hidden" name="reservation_order_id" id="reservation_order_id" value=@ViewData["reservation_order_id"]>
+
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+
+
+
+@(Html.DevExtreme().DataGrid< NPS_SELECT_RESERVATION_ORDER_ITEMSResult >()
+                                                            .ID("Grid")
+                                                            .ShowBorders(true)
+                                                            .DataSource(d => d.Mvc()
+                                                            .LoadAction("GetData")
+                                                            .Controller("Common")
+                                                            .Key("id")
+                                                            .LoadParams(new
+                                                            {
+                                                                additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+                                                            })
+                                                            )
+                                                            .Selection(s => s.Mode(SelectionMode.Multiple).AllowSelectAll(true))
+                                                            .Columns(columns =>
+                                                            {
+                                                                columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.nps_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_nps_code_ru"])).Visible((bool)ViewData["CK_UI_nps_code"]).Width((int)ViewData["CK_UI_nps_code_width"]).VisibleIndex((int)ViewData["CK_UI_nps_code_pos"]).AllowEditing((bool)ViewData["CK_UI_nps_code_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.nom_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_nom_code_ru"])).Visible((bool)ViewData["CK_UI_nom_code"]).Width((int)ViewData["CK_UI_nom_code_width"]).VisibleIndex((int)ViewData["CK_UI_nom_code_pos"]).AllowEditing((bool)ViewData["CK_UI_nom_code_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.nom_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_nom_description_ru"])).Visible((bool)ViewData["CK_UI_nom_description"]).Width((int)ViewData["CK_UI_nom_description_width"]).VisibleIndex((int)ViewData["CK_UI_nom_description_pos"]).AllowEditing((bool)ViewData["CK_UI_nom_description_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.storage_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_storage_description_ru"])).Visible((bool)ViewData["CK_UI_storage_description"]).Width((int)ViewData["CK_UI_storage_description_width"]).VisibleIndex((int)ViewData["CK_UI_storage_description_pos"]).AllowEditing((bool)ViewData["CK_UI_storage_description_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.stock_price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stock_price_ru"])).Visible((bool)ViewData["CK_UI_stock_price"]).Width((int)ViewData["CK_UI_stock_price_width"]).VisibleIndex((int)ViewData["CK_UI_stock_price_pos"]).AllowEditing((bool)ViewData["CK_UI_stock_price_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.stock_summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stock_summa_ru"])).Visible((bool)ViewData["CK_UI_stock_summa"]).Width((int)ViewData["CK_UI_stock_summa_width"]).VisibleIndex((int)ViewData["CK_UI_stock_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_stock_summa_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.stock_unit).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stock_unit_ru"])).Visible((bool)ViewData["CK_UI_stock_unit"]).Width((int)ViewData["CK_UI_stock_unit_width"]).VisibleIndex((int)ViewData["CK_UI_stock_unit_pos"]).AllowEditing((bool)ViewData["CK_UI_stock_unit_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.stock_quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_stock_quantity_ru"])).Visible((bool)ViewData["CK_UI_stock_quantity"]).Width((int)ViewData["CK_UI_stock_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_stock_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_stock_quantity_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.prslno_quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_prslno_quantity_ru"])).Visible((bool)ViewData["CK_UI_prslno_quantity"]).Width((int)ViewData["CK_UI_prslno_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_prslno_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_prslno_quantity_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.prslno_unit).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_prslno_unit_ru"])).Visible((bool)ViewData["CK_UI_prslno_unit"]).Width((int)ViewData["CK_UI_prslno_unit_width"]).VisibleIndex((int)ViewData["CK_UI_prslno_unit_pos"]).AllowEditing((bool)ViewData["CK_UI_prslno_unit_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.prslno_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_prslno_code_ru"])).Visible((bool)ViewData["CK_UI_prslno_code"]).Width((int)ViewData["CK_UI_prslno_code_width"]).VisibleIndex((int)ViewData["CK_UI_prslno_code_pos"]).AllowEditing((bool)ViewData["CK_UI_prslno_code_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.prslno_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_prslno_description_ru"])).Visible((bool)ViewData["CK_UI_prslno_description"]).Width((int)ViewData["CK_UI_prslno_description_width"]).VisibleIndex((int)ViewData["CK_UI_prslno_description_pos"]).AllowEditing((bool)ViewData["CK_UI_prslno_description_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.base_estimate_price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_base_estimate_price_ru"])).Visible((bool)ViewData["CK_UI_base_estimate_price"]).Width((int)ViewData["CK_UI_base_estimate_price_width"]).VisibleIndex((int)ViewData["CK_UI_base_estimate_price_pos"]).AllowEditing((bool)ViewData["CK_UI_base_estimate_price_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.base_estimate_summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_base_estimate_summa_ru"])).Visible((bool)ViewData["CK_UI_base_estimate_summa"]).Width((int)ViewData["CK_UI_base_estimate_summa_width"]).VisibleIndex((int)ViewData["CK_UI_base_estimate_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_base_estimate_summa_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.estimate_price_coefficient).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_estimate_price_coefficient_ru"])).Visible((bool)ViewData["CK_UI_estimate_price_coefficient"]).Width((int)ViewData["CK_UI_estimate_price_coefficient_width"]).VisibleIndex((int)ViewData["CK_UI_estimate_price_coefficient_pos"]).AllowEditing((bool)ViewData["CK_UI_estimate_price_coefficient_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.estimate_summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_estimate_summa_ru"])).Visible((bool)ViewData["CK_UI_estimate_summa"]).Width((int)ViewData["CK_UI_estimate_summa_width"]).VisibleIndex((int)ViewData["CK_UI_estimate_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_estimate_summa_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.estimate_state).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_estimate_state_ru"])).Visible((bool)ViewData["CK_UI_estimate_state"]).Width((int)ViewData["CK_UI_estimate_state_width"]).VisibleIndex((int)ViewData["CK_UI_estimate_state_pos"]).AllowEditing((bool)ViewData["CK_UI_estimate_state_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.lno).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_lno_ru"])).Visible((bool)ViewData["CK_UI_lno"]).Width((int)ViewData["CK_UI_lno_width"]).VisibleIndex((int)ViewData["CK_UI_lno_pos"]).AllowEditing((bool)ViewData["CK_UI_lno_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.summary).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_summary_ru"])).Visible((bool)ViewData["CK_UI_summary"]).Width((int)ViewData["CK_UI_summary_width"]).VisibleIndex((int)ViewData["CK_UI_summary_pos"]).AllowEditing((bool)ViewData["CK_UI_summary_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.prslno_project).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_prslno_project_ru"])).Visible((bool)ViewData["CK_UI_prslno_project"]).Width((int)ViewData["CK_UI_prslno_project_width"]).VisibleIndex((int)ViewData["CK_UI_prslno_project_pos"]).AllowEditing((bool)ViewData["CK_UI_prslno_project_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.quantity_fact).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_fact_ru"])).Visible((bool)ViewData["CK_UI_quantity_fact"]).Width((int)ViewData["CK_UI_quantity_fact_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_fact_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_fact_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.quantity_with_quality_approve).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_with_quality_approve_ru"])).Visible((bool)ViewData["CK_UI_quantity_with_quality_approve"]).Width((int)ViewData["CK_UI_quantity_with_quality_approve_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_with_quality_approve_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_with_quality_approve_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.quantity_for_inspection).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_quantity_for_inspection_ru"])).Visible((bool)ViewData["CK_UI_quantity_for_inspection"]).Width((int)ViewData["CK_UI_quantity_for_inspection_width"]).VisibleIndex((int)ViewData["CK_UI_quantity_for_inspection_pos"]).AllowEditing((bool)ViewData["CK_UI_quantity_for_inspection_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.additional_costs).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_additional_costs_ru"])).Visible((bool)ViewData["CK_UI_additional_costs"]).Width((int)ViewData["CK_UI_additional_costs_width"]).VisibleIndex((int)ViewData["CK_UI_additional_costs_pos"]).AllowEditing((bool)ViewData["CK_UI_additional_costs_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.inspection_costs).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_inspection_costs_ru"])).Visible((bool)ViewData["CK_UI_inspection_costs"]).Width((int)ViewData["CK_UI_inspection_costs_width"]).VisibleIndex((int)ViewData["CK_UI_inspection_costs_pos"]).AllowEditing((bool)ViewData["CK_UI_inspection_costs_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.keep_costs).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_keep_costs_ru"])).Visible((bool)ViewData["CK_UI_keep_costs"]).Width((int)ViewData["CK_UI_keep_costs_width"]).VisibleIndex((int)ViewData["CK_UI_keep_costs_pos"]).AllowEditing((bool)ViewData["CK_UI_keep_costs_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.dispatched).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_dispatched_ru"])).Visible((bool)ViewData["CK_UI_dispatched"]).Width((int)ViewData["CK_UI_dispatched_width"]).VisibleIndex((int)ViewData["CK_UI_dispatched_pos"]).AllowEditing((bool)ViewData["CK_UI_dispatched_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.dispatched_date).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_dispatched_date_ru"])).Visible((bool)ViewData["CK_UI_dispatched_date"]).Width((int)ViewData["CK_UI_dispatched_date_width"]).VisibleIndex((int)ViewData["CK_UI_dispatched_date_pos"]).AllowEditing((bool)ViewData["CK_UI_dispatched_date_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.delivered).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivered_ru"])).Visible((bool)ViewData["CK_UI_delivered"]).Width((int)ViewData["CK_UI_delivered_width"]).VisibleIndex((int)ViewData["CK_UI_delivered_pos"]).AllowEditing((bool)ViewData["CK_UI_delivered_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.delivered_date).Format("dd.MM.y").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_delivered_date_ru"])).Visible((bool)ViewData["CK_UI_delivered_date"]).Width((int)ViewData["CK_UI_delivered_date_width"]).VisibleIndex((int)ViewData["CK_UI_delivered_date_pos"]).AllowEditing((bool)ViewData["CK_UI_delivered_date_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.sold).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_sold_ru"])).Visible((bool)ViewData["CK_UI_sold"]).Width((int)ViewData["CK_UI_sold_width"]).VisibleIndex((int)ViewData["CK_UI_sold_pos"]).AllowEditing((bool)ViewData["CK_UI_sold_edit"]).EncodeHtml(false);
+                                                                columns.AddFor(m => m.sold_date).Format("dd.MM.y").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_sold_date_ru"])).Visible((bool)ViewData["CK_UI_sold_date"]).Width((int)ViewData["CK_UI_sold_date_width"]).VisibleIndex((int)ViewData["CK_UI_sold_date_pos"]).AllowEditing((bool)ViewData["CK_UI_sold_date_edit"]).EncodeHtml(false);
+                                                            })
+
+                                                            .Paging(p => p.PageSize(30))
+                                                                    .Pager(pager =>
+                                                                    {
+                                                                        pager.ShowPageSizeSelector(true);
+                                                                        pager.AllowedPageSizes(new List<int> { 5, 10, 20, 30, 50 });
+                                                                        pager.ShowInfo(true);
+                                                                        pager.ShowNavigationButtons(true);
+                                                                        pager.Visible(true);
+                                                                    })
+                                                                    .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+                                                                    .HeaderFilter(f => f.Visible(true))
+                                                                    .RemoteOperations(true)
+                                                                    .ShowRowLines(true)
+                                                                    .ColumnAutoWidth(true)
+                                                                    .FilterSyncEnabled(true)
+                                                                    .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+                                                                    .Width("100%")
+                                                                    .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+                                                                    .Sorting(s => s.Mode(GridSortingMode.Multiple))
+                                                                    .AllowColumnResizing(true)
+                                                                    .AllowColumnReordering(true)
+                                                                    .Option("columnResizingMode", ColumnResizingMode.Widget)
+                                                                    .WordWrapEnabled(true)
+                                                                    .OnContentReady("contentReady")
+                                                                    .OnToolbarPreparing("onToolbarPreparing")
+                                                                    .OnSelectionChanged("selection_changed")
+                                                                    .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+<script>
+
+   
+</script>

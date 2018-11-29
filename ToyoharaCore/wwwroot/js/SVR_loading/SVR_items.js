@@ -5,11 +5,7 @@ var records;
 
 
 
-//функция для перезагрзуки страницы при обновлении Грида
-function GetLink() {
-    var link = '/SVR_loading/SVR_items/?svr_id='+document.getElementById("svr_id").value;
-    return link;
-}
+
 
 //при чтении контента положить данные в кэш
 function contentReady() {
@@ -47,20 +43,31 @@ function ExportExcel() {
 
 //маппинг кнопок и действия
 function FiltersBeforeGridStringItems(reloading, clearFilters, excel, settings, add, otherFilters) {
-    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Искать' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Искать' ></img></button>" +
+    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='" + reloading.function + "' id='" + reloading.id + "'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button>" +
         "<button title='Очистить фильтры' onclick='" + clearFilters.name + "();' class='btn btn_in_grid dx-button btn_pad_grid' id='" + clearFilters.id + "'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
         "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='" + excel.name + "();' id='" + excel.id + "'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
         "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#" + settings.name + "' id='" + settings.id + "' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>" +
         otherFilters);
 }
 
+//назад
+function Back() {
+    window.location = "/SVR_loading/Index";
+}
 //перечень кнопок для грида
 function onToolbarPreparing(e) {
     var dataGrid = e.component;
-    e.toolbarOptions.items.unshift({
+    e.toolbarOptions.items.unshift(
+        {
+            location: "before",
+            template: function (e) {
+                return $("<button title='Назад' class='btn btn_in_grid dx-button btn_pad_grid' onclick='Back();'><img src='/../../img/GridBtn/1-14.png' style='height:18px; width:auto;' alt='Назад'></img></button>")
+            }
+        },
+        {
         location: "after",
         template: FiltersBeforeGridStringItems(
-            { function: 'Reloading("Grid")', id: 'Reloading', grid: 'Grid' },
+            { function: 'ReloadingGrid("Grid")', id: 'Reloading', grid: 'Grid' },
             { name: 'ClearFilters', id: 'ClearFilters' },
             { name: 'ExportExcel', id: 'ExportExcel' },
             { name: 'UserSettings', id: 'UserSettings' },
@@ -76,7 +83,7 @@ function ReturnData(controller) {
         showSelected: null,
         selectedRecord: '',
         id: null,
-        SVR_id: parseFloat(document.getElementById("svr_id").value),
+        svr_id: parseFloat(document.getElementById("svr_id").value),
         rebind: rebind,
         storedProcedure: "OMC_SELECT_SVR_ITEMS",
         controller: controller

@@ -1,0 +1,134 @@
+﻿@{Layout = "~/Views/Shared/_Layout.cshtml";
+    string control = ViewContext.RouteData.Values["Controller"].ToString();
+}
+@using ToyoharaCore.Models
+@using ToyoharaCore.Models.CustomModel
+<link href="~/css/Forms/Index.css" rel="stylesheet" />
+<script src="~/js/Forms/SVRitemsDiff.js"></script>
+
+
+<input type="hidden" name="form_id" id="form_id" value=@ViewData["form_id"]>
+
+
+
+@Html.Partial("Settings", (Settings)ViewBag.Settings)
+
+
+
+@(Html.DevExtreme().DataGrid<OMC_SELECT_FORM_SVR_ITEMS_DIFFResult>
+    ()
+    .ID("Grid")
+    .ShowBorders(true)
+    .DataSource(d => d.Mvc()
+    .LoadAction("GetData")
+    .Controller("Common")
+    .Key("id")
+
+    .LoadParams(new
+    {
+        additionalParams = new JS("function(){return ReturnData('" + control + "');}")
+    })
+    )
+    .Selection(s => s.Mode(SelectionMode.Multiple).ShowCheckBoxesMode(DevExtreme.AspNet.Mvc.GridSelectionShowCheckBoxesMode.Always).AllowSelectAll(true))
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_id_ru"])).Visible((bool)ViewData["CK_UI_id"]).Width((int)ViewData["CK_UI_id_width"]).VisibleIndex((int)ViewData["CK_UI_id_pos"]).AllowEditing((bool)ViewData["CK_UI_id_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.phase).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_phase_ru"])).Visible((bool)ViewData["CK_UI_phase"]).Width((int)ViewData["CK_UI_phase_width"]).VisibleIndex((int)ViewData["CK_UI_phase_pos"]).AllowEditing((bool)ViewData["CK_UI_phase_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.diff_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_diff_type_ru"])).Visible((bool)ViewData["CK_UI_diff_type"]).Width((int)ViewData["CK_UI_diff_type_width"]).VisibleIndex((int)ViewData["CK_UI_diff_type_pos"]).AllowEditing((bool)ViewData["CK_UI_diff_type_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.form_item_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_form_item_id_ru"])).Visible((bool)ViewData["CK_UI_form_item_id"]).Width((int)ViewData["CK_UI_form_item_id_width"]).VisibleIndex((int)ViewData["CK_UI_form_item_id_pos"]).AllowEditing((bool)ViewData["CK_UI_form_item_id_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.svr_item_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_svr_item_id_ru"])).Visible((bool)ViewData["CK_UI_svr_item_id"]).Width((int)ViewData["CK_UI_svr_item_id_width"]).VisibleIndex((int)ViewData["CK_UI_svr_item_id_pos"]).AllowEditing((bool)ViewData["CK_UI_svr_item_id_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.form_id).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_form_id_ru"])).Visible((bool)ViewData["CK_UI_form_id"]).Width((int)ViewData["CK_UI_form_id_width"]).VisibleIndex((int)ViewData["CK_UI_form_id_pos"]).AllowEditing((bool)ViewData["CK_UI_form_id_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.local_estimate_number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_local_estimate_number_ru"])).Visible((bool)ViewData["CK_UI_local_estimate_number"]).Width((int)ViewData["CK_UI_local_estimate_number_width"]).VisibleIndex((int)ViewData["CK_UI_local_estimate_number_pos"]).AllowEditing((bool)ViewData["CK_UI_local_estimate_number_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.project_documentation_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_project_documentation_code_ru"])).Visible((bool)ViewData["CK_UI_project_documentation_code"]).Width((int)ViewData["CK_UI_project_documentation_code_width"]).VisibleIndex((int)ViewData["CK_UI_project_documentation_code_pos"]).AllowEditing((bool)ViewData["CK_UI_project_documentation_code_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.number).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_number_ru"])).Visible((bool)ViewData["CK_UI_number"]).Width((int)ViewData["CK_UI_number_width"]).VisibleIndex((int)ViewData["CK_UI_number_pos"]).AllowEditing((bool)ViewData["CK_UI_number_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.resource_code).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_resource_code_ru"])).Visible((bool)ViewData["CK_UI_resource_code"]).Width((int)ViewData["CK_UI_resource_code_width"]).VisibleIndex((int)ViewData["CK_UI_resource_code_pos"]).AllowEditing((bool)ViewData["CK_UI_resource_code_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_description_ru"])).Visible((bool)ViewData["CK_UI_description"]).Width((int)ViewData["CK_UI_description_width"]).VisibleIndex((int)ViewData["CK_UI_description_pos"]).AllowEditing((bool)ViewData["CK_UI_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_unit_description_ru"])).Visible((bool)ViewData["CK_UI_last_unit_description"]).Width((int)ViewData["CK_UI_last_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_last_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_last_unit_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_unit_description_ru"])).Visible((bool)ViewData["CK_UI_new_unit_description"]).Width((int)ViewData["CK_UI_new_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_new_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_new_unit_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_unit_description).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_unit_description_ru"])).Visible((bool)ViewData["CK_UI_color_unit_description"]).Width((int)ViewData["CK_UI_color_unit_description_width"]).VisibleIndex((int)ViewData["CK_UI_color_unit_description_pos"]).AllowEditing((bool)ViewData["CK_UI_color_unit_description_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_quantity_ru"])).Visible((bool)ViewData["CK_UI_last_quantity"]).Width((int)ViewData["CK_UI_last_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_last_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_last_quantity_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_quantity).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_quantity_ru"])).Visible((bool)ViewData["CK_UI_new_quantity"]).Width((int)ViewData["CK_UI_new_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_new_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_new_quantity_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_quantity).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_quantity_ru"])).Visible((bool)ViewData["CK_UI_color_quantity"]).Width((int)ViewData["CK_UI_color_quantity_width"]).VisibleIndex((int)ViewData["CK_UI_color_quantity_pos"]).AllowEditing((bool)ViewData["CK_UI_color_quantity_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_price_ru"])).Visible((bool)ViewData["CK_UI_last_price"]).Width((int)ViewData["CK_UI_last_price_width"]).VisibleIndex((int)ViewData["CK_UI_last_price_pos"]).AllowEditing((bool)ViewData["CK_UI_last_price_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_price).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_price_ru"])).Visible((bool)ViewData["CK_UI_new_price"]).Width((int)ViewData["CK_UI_new_price_width"]).VisibleIndex((int)ViewData["CK_UI_new_price_pos"]).AllowEditing((bool)ViewData["CK_UI_new_price_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_price).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_price_ru"])).Visible((bool)ViewData["CK_UI_color_price"]).Width((int)ViewData["CK_UI_color_price_width"]).VisibleIndex((int)ViewData["CK_UI_color_price_pos"]).AllowEditing((bool)ViewData["CK_UI_color_price_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_summa_ru"])).Visible((bool)ViewData["CK_UI_last_summa"]).Width((int)ViewData["CK_UI_last_summa_width"]).VisibleIndex((int)ViewData["CK_UI_last_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_last_summa_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_summa).Format("#,##0.###,#").HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_summa_ru"])).Visible((bool)ViewData["CK_UI_new_summa"]).Width((int)ViewData["CK_UI_new_summa_width"]).VisibleIndex((int)ViewData["CK_UI_new_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_new_summa_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_summa).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_summa_ru"])).Visible((bool)ViewData["CK_UI_color_summa"]).Width((int)ViewData["CK_UI_color_summa_width"]).VisibleIndex((int)ViewData["CK_UI_color_summa_pos"]).AllowEditing((bool)ViewData["CK_UI_color_summa_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_turnover_ru"])).Visible((bool)ViewData["CK_UI_last_turnover"]).Width((int)ViewData["CK_UI_last_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_last_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_last_turnover_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_turnover_ru"])).Visible((bool)ViewData["CK_UI_new_turnover"]).Width((int)ViewData["CK_UI_new_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_new_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_new_turnover_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_turnover).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_turnover_ru"])).Visible((bool)ViewData["CK_UI_color_turnover"]).Width((int)ViewData["CK_UI_color_turnover_width"]).VisibleIndex((int)ViewData["CK_UI_color_turnover_pos"]).AllowEditing((bool)ViewData["CK_UI_color_turnover_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.last_svr_delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_last_svr_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_last_svr_delivery_type"]).Width((int)ViewData["CK_UI_last_svr_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_last_svr_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_last_svr_delivery_type_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.new_svr_delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_new_svr_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_new_svr_delivery_type"]).Width((int)ViewData["CK_UI_new_svr_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_new_svr_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_new_svr_delivery_type_edit"]).EncodeHtml(false);
+        columns.AddFor(m => m.color_svr_delivery_type).HeaderCellTemplate(Convert.ToString(ViewData["CK_UI_color_svr_delivery_type_ru"])).Visible((bool)ViewData["CK_UI_color_svr_delivery_type"]).Width((int)ViewData["CK_UI_color_svr_delivery_type_width"]).VisibleIndex((int)ViewData["CK_UI_color_svr_delivery_type_pos"]).AllowEditing((bool)ViewData["CK_UI_color_svr_delivery_type_edit"]).EncodeHtml(false);
+    })
+    .Paging(p => p.PageSize(30))
+    .Pager(pager =>
+    {
+        pager.ShowPageSizeSelector(true);
+        pager.AllowedPageSizes(new List<int>
+        { 5, 10, 20, 30, 50 });
+        pager.AllowedPageSizes(new List<int>
+            { 5, 10, 20, 30, 50 });
+        pager.ShowInfo(true);
+        pager.ShowNavigationButtons(true);
+        pager.Visible(true);
+    })
+
+            .FilterRow(f => f.Visible(true).ApplyFilter(GridApplyFilterMode.Auto))
+            .HeaderFilter(f => f.Visible(true))
+            .RemoteOperations(true)
+            .ShowRowLines(true)
+            .ColumnAutoWidth(true)
+            .FilterSyncEnabled(true)
+            .Height(new JS("function() { return window.innerHeight-$('div.myheader').height();}"))
+            .Width("100%")
+            .LoadPanel(load => load.IndicatorSrc("/../../img/orig.gif").ShowIndicator(true).Height(200).Width(200))
+            .Sorting(s => s.Mode(GridSortingMode.Multiple))
+            .AllowColumnResizing(true)
+            .AllowColumnReordering(true)
+            .Option("columnResizingMode", ColumnResizingMode.Widget)
+            .WordWrapEnabled(true)
+            .OnContentReady("contentReady")
+            .OnToolbarPreparing("onToolbarPreparing")
+            .OnSelectionChanged("selection_changed")
+            .OnCellPrepared("getOnCellPrepared")
+            .Scrolling(scrolling => scrolling.UseNative(true).ShowScrollbar(DevExtreme.AspNet.Mvc.ShowScrollbarMode.Always)))
+
+
+
+<script>
+
+
+   $(function () {
+       if ('@ViewBag.CommitChanges'.toLowerCase() == "false") $('#CommitChanges').hide(); else $('#CommitChanges').show(); 
+    });
+
+
+
+    //перечень кнопок для грида
+    function onToolbarPreparing(e) {
+        var dataGrid = e.component;
+        e.toolbarOptions.items.unshift(
+            {
+                location: "before",
+                template: function (e) {
+                    return $(
+                        "<button title='Назад' class='btn btn_in_grid dx-button btn_pad_grid' onclick='Back();'><img src='/../../img/GridBtn/1-14.png' style='height:18px; width:auto;' alt='Назад'></img></button>" +
+                        "<button id='CommitChanges' title='Принять изменения' class='btn btn_in_grid dx-button btn_pad_grid' style='color:#337ab7; display: none;' onClick='CommitChanges();'>Принять изменения</button>"
+                    )
+                }
+            },
+            {
+                location: "after",
+                template: function (e) {
+                    return $("<button class='btn btn_in_grid dx-button btn_pad_grid' title='Обновить' onclick='ReloadingGrid(\"Grid\")' id='Reloading'><img src='/../../img/GridBtn/1-5.png' style='height:18px; width:auto;' alt='Обновить' ></img></button>" +
+                        "<button title='Очистить фильтры' onclick='ClearFilters();' class='btn btn_in_grid dx-button btn_pad_grid' id='ClearFilters'><img src='/../../img/GridBtn/1-9.png' style='height:18px; width:auto;'  alt='Очистить фильтры'></img></button>" +
+                        "<button title='Выгрузить Excel' class='btn btn_in_grid dx-button btn_pad_grid' onclick='ExportExcel();' id='ExportExcel'><img src='/../../img/GridBtn/1-4.png' style='height:18px; width:auto;' alt='Выгрузить Excel'></img></button>" +
+                        "<button title='Показать выбранные' class='btn btn_in_grid dx-button btn_pad_grid' onclick='showSelectedPicture(this, \"Grid\");' id='showSelectedPicture'><img src='/../../img/GridBtn/1-7.png' width='18' height='18' alt='Показать выбранные'></img></button>" +
+                        "<button title='Настройки' class= 'btn btn_in_grid dx-button btn_pad_grid' data-toggle='modal' data-target='#UserSettings' id='UserSettings' ><img src='/../../img/GridBtn/1-6.png' style='height:18px; width:auto;' alt='Настройки'></img></button>"                         
+                    )
+                }
+            });
+    }
+</script>

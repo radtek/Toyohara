@@ -18,6 +18,7 @@ namespace ToyoharaCore.Models.CustomModel
             this.СolumnPosition = columnPosition;
             this.ColumnRussianName = columnRussianName;
             this.ColumnName = columnName;
+            
         }
 
     }
